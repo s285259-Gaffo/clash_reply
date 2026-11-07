@@ -21,7 +21,6 @@ import json
 import re
 import unicodedata
 from dataclasses import dataclass, field
-from difflib import SequenceMatcher
 from pathlib import Path
 
 CARTELLA_MATERIALE = Path(__file__).parent / "materiale"
@@ -158,26 +157,6 @@ def _normalizza(t: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", t).strip()
 
 
-def _somiglianza(citazione: str, testo: str) -> float:
-    """Quanto la citazione compare nel testo (0..1): miglior finestra + sovrapposizione di parole."""
-    c, t = _normalizza(citazione), _normalizza(testo)
-    if not c or not t:
-        return 0.0
-    if c in t:
-        return 1.0
-    parole_c = c.split()
-    parole_t = set(t.split())
-    overlap = sum(w in parole_t for w in parole_c) / len(parole_c)
-    finestra = len(c)
-    migliore = 0.0
-    passo = max(1, finestra // 4)
-    for i in range(0, max(1, len(t) - finestra + 1), passo):
-        migliore = max(migliore, SequenceMatcher(None, c, t[i:i + finestra]).ratio())
-        if migliore > 0.9:
-            break
-    return max(migliore, overlap * 0.95)
-
-
 def normalizza_id(fid: str | None) -> str | None:
     """Accetta varianti come 'Slide 12', 's12', 'L3 41:20', 'Lezione 3 @ 41:20'."""
     if not fid:
@@ -194,40 +173,28 @@ def normalizza_id(fid: str | None) -> str | None:
 
 def verifica_citazione(corso: Corso, fid: str | None, citazione: str | None,
                        tipi_ammessi=("slide", "trascrizione"), soglia: float = 0.6) -> dict:
-    """Controlla che la fonte esista, sia tra quelle ammesse per quello studente fantasma
-    e che il testo citato compaia davvero (anche nei frammenti vicini della trascrizione)."""
+    """Richiede una citazione letterale non vuota nel frammento indicato.
+
+    La soglia resta nell'interfaccia per compatibilita' con i chiamanti precedenti,
+    ma una somiglianza approssimativa non costituisce una prova verificabile.
+    """
     fid = normalizza_id(fid)
     if not fid:
         return {"valida": False, "motivo": "nessuna fonte indicata"}
     fonte = corso.fonti.get(fid)
     if fonte is None:
-        # per le trascrizioni tollera un timestamp leggermente diverso: cerca il piu' vicino
-        m = re.match(r"^L(\d+)@(\d+):(\d+)$", fid)
-        if m:
-            lez, sec = int(m.group(1)), int(m.group(2)) * 60 + int(m.group(3))
-            vicini = [f for f in corso.fonti.values() if f.tipo == "trascrizione" and f.lezione == lez]
-            if vicini:
-                def secondi(f):
-                    mm, ss = f.id.split("@")[1].split(":")
-                    return int(mm) * 60 + int(ss)
-                fonte = min(vicini, key=lambda f: abs(secondi(f) - sec))
-                if abs(secondi(fonte) - sec) > 90:
-                    fonte = None
-    if fonte is None:
         return {"valida": False, "motivo": f"la fonte {fid} non esiste nel materiale"}
     if fonte.tipo not in tipi_ammessi:
         return {"valida": False, "motivo": f"{fonte.id} e' una {fonte.tipo}, non ammessa per questo studente"}
-    # confronta con la fonte e, per le trascrizioni, con le righe vicine
-    testo = fonte.testo
-    if fonte.tipo == "trascrizione":
-        stessi = [f for f in corso.fonti.values() if f.tipo == "trascrizione" and f.lezione == fonte.lezione]
-        idx = next((i for i, f in enumerate(stessi) if f.id == fonte.id), 0)
-        testo = " ".join(f.testo for f in stessi[max(0, idx - 2): idx + 3])
-    elif fonte.tipo == "slide":
-        testo = fonte.titolo + " " + fonte.testo
-    punteggio = _somiglianza(citazione or "", testo) if citazione else 0.0
-    if citazione and punteggio < soglia:
-        return {"valida": False, "fonte": fonte.id, "punteggio": round(punteggio, 2),
-                "motivo": f"il testo citato non compare in {fonte.id}"}
+    citata = _normalizza(citazione or "")
+    if len(citata) < 12 or len(citata.split()) < 2:
+        return {"valida": False, "fonte": fonte.id,
+                "motivo": "citazione assente o troppo breve per verificare il passo"}
+    # Un titolo o un frammento vicino possono aiutare la ricerca, ma non sono
+    # una prova che il minuto o la slide citati contengano proprio quelle parole.
+    testo = _normalizza(fonte.testo)
+    if citata not in testo:
+        return {"valida": False, "fonte": fonte.id, "punteggio": 0.0,
+                "motivo": f"il testo citato non compare letteralmente in {fonte.id}"}
     return {"valida": True, "fonte": fonte.id, "tipo": fonte.tipo, "lezione": fonte.lezione,
-            "punteggio": round(punteggio, 2)}
+            "punteggio": 1.0}

@@ -51,8 +51,106 @@ def estrai_json(testo: str):
     raise ValueError("JSON non valido nella risposta del modello")
 
 
-def chiedi(llm, agente_id: str, contenuto: str, tentativi: int = 2):
-    """Chiama un agente LLM con la sua specifica come system prompt e restituisce il JSON."""
+_AGENTI_PASSI = {"fantasma_slide", "fantasma_lezioni", "persona_visivo",
+                "persona_mnemonico", "persona_applicativo"}
+
+
+def valida_output(agente_id: str, dati, attesi: set | None = None) -> dict:
+    """Controlla forma e completezza prima che un output modifichi voti e lacune."""
+    if not isinstance(dati, dict):
+        raise ValueError(f"{agente_id}: il JSON deve essere un oggetto")
+    if agente_id == "analista":
+        if not str(dati.get("corso", "")).strip() or not isinstance(dati.get("obiettivi"), list):
+            raise ValueError("analista: corso o obiettivi mancanti")
+        esercizi = dati.get("esercizi")
+        if not isinstance(esercizi, list) or not esercizi:
+            raise ValueError("analista: manca la lista degli esercizi")
+        visti_es = set()
+        for es in esercizi:
+            if not isinstance(es, dict) or not str(es.get("id", "")).strip():
+                raise ValueError("analista: esercizio senza ID")
+            eid = str(es["id"])
+            if eid in visti_es:
+                raise ValueError(f"analista: esercizio duplicato {eid}")
+            visti_es.add(eid)
+            if not isinstance(es.get("passi"), list) or not es["passi"]:
+                raise ValueError(f"analista: esercizio {eid} senza passi")
+            if "punti" not in es or (es["punti"] is not None and
+                                      (not isinstance(es["punti"], (int, float)) or es["punti"] <= 0)):
+                raise ValueError(f"analista: punti mancanti o non validi in {eid}; usa null se assenti")
+            visti_passi = set()
+            for passo in es["passi"]:
+                if not isinstance(passo, dict) or not isinstance(passo.get("n"), int):
+                    raise ValueError(f"analista: numero del passo non valido in {eid}")
+                if passo["n"] in visti_passi or not str(passo.get("testo", "")).strip():
+                    raise ValueError(f"analista: passo duplicato o senza testo in {eid}")
+                visti_passi.add(passo["n"])
+                if passo.get("tipo") not in ("teoria", "applicazione"):
+                    raise ValueError(f"analista: tipo mancante nel passo {eid}/{passo['n']}")
+                if not isinstance(passo.get("minuti_stimati"), int) or passo["minuti_stimati"] < 1:
+                    raise ValueError(f"analista: minuti mancanti nel passo {eid}/{passo['n']}")
+        if attesi is not None and visti_es != attesi:
+            raise ValueError(f"analista: esercizi mancanti {sorted(attesi - visti_es)}, "
+                             f"esercizi estranei o suddivisi {sorted(visti_es - attesi)}")
+        if "durata_esame_minuti" not in dati or not isinstance(dati.get("domande_per_il_docente"), list):
+            raise ValueError("analista: durata o domande per il docente mancanti")
+    elif agente_id in _AGENTI_PASSI:
+        righe = dati.get("passi")
+        if not isinstance(righe, list):
+            raise ValueError(f"{agente_id}: manca la lista dei passi")
+        visti = set()
+        for r in righe:
+            if not isinstance(r, dict):
+                raise ValueError(f"{agente_id}: passo non valido")
+            k = (str(r.get("esercizio")), str(r.get("passo")))
+            if k in visti:
+                raise ValueError(f"{agente_id}: passo duplicato {k}")
+            visti.add(k)
+            if r.get("stato") not in ("giustificato", "non_trovato", "chiarimento"):
+                raise ValueError(f"{agente_id}: stato non valido nel passo {k}")
+            if r["stato"] == "giustificato" and (not r.get("fonte") or not r.get("citazione")):
+                raise ValueError(f"{agente_id}: fonte o citazione mancante nel passo {k}")
+        if attesi is not None and visti != attesi:
+            raise ValueError(f"{agente_id}: passi mancanti {sorted(attesi - visti)[:5]}, "
+                             f"passi estranei {sorted(visti - attesi)[:5]}")
+    else:
+        campo = {"fantasma_tecnico": "prerequisiti", "revisore_sequenza": "fuori_ordine",
+                 "cacciatore_trappole": "trappole", "cartografo": "schede"}.get(agente_id)
+        if campo and not isinstance(dati.get(campo), list):
+            raise ValueError(f"{agente_id}: manca la lista {campo}")
+        for r in dati.get(campo, []) if campo else []:
+            if not isinstance(r, dict):
+                raise ValueError(f"{agente_id}: voce non valida in {campo}")
+            if agente_id == "fantasma_tecnico":
+                if (not r.get("esercizio") or r.get("passo") is None or
+                        not r.get("prerequisito") or not isinstance(r.get("richiamato_nel_corso"), bool)):
+                    raise ValueError("fantasma_tecnico: prerequisito incompleto")
+                if r["richiamato_nel_corso"] and (not r.get("fonte") or not r.get("citazione")):
+                    raise ValueError("fantasma_tecnico: richiamo senza fonte")
+            elif agente_id == "revisore_sequenza":
+                if not all(r.get(k) for k in ("concetto", "usato_in", "citazione_uso",
+                                               "spiegato_in", "citazione_spiegazione")):
+                    raise ValueError("revisore_sequenza: sequenza senza le due prove")
+            elif agente_id == "cacciatore_trappole":
+                if not all(r.get(k) for k in ("esercizio", "frase_esame", "problema",
+                                               "fonte", "citazione")):
+                    raise ValueError("cacciatore_trappole: trappola senza le due prove")
+            elif agente_id == "cartografo":
+                if not all(r.get(k) for k in ("id", "titolo", "perche_conta", "suggerimento")):
+                    raise ValueError("cartografo: scheda incompleta")
+        if agente_id == "cartografo":
+            if not isinstance(dati.get("sintesi"), str):
+                raise ValueError("cartografo: manca la sintesi")
+            ids = [s.get("id") for s in dati["schede"] if isinstance(s, dict)]
+            if len(ids) != len(dati["schede"]) or len(set(ids)) != len(ids):
+                raise ValueError("cartografo: schede senza ID o duplicate")
+            if attesi is not None and set(ids) != attesi:
+                raise ValueError("cartografo: schede incomplete rispetto alle lacune verificate")
+    return dati
+
+
+def chiedi(llm, agente_id: str, contenuto: str, tentativi: int = 3, attesi: set | None = None):
+    """Chiama l'agente e accetta soltanto JSON valido e completo."""
     spec = PER_ID[agente_id]["spec"]
     messaggi = [{"role": "system", "content": spec}, {"role": "user", "content": contenuto}]
     ultimo = None
@@ -61,12 +159,12 @@ def chiedi(llm, agente_id: str, contenuto: str, tentativi: int = 2):
         risposta = llm.call(messaggi)
         _debug(agente_id, tentativo, messaggi, risposta, time.time() - t0)
         try:
-            return estrai_json(risposta)
+            return valida_output(agente_id, estrai_json(risposta), attesi)
         except ValueError as e:
             ultimo = e
             messaggi = messaggi + [{"role": "assistant", "content": str(risposta)[:2000]},
-                                   {"role": "user", "content": "La risposta non era JSON valido. "
-                                    "Rispondi di nuovo SOLO con il JSON richiesto, senza testo attorno."}]
+                                   {"role": "user", "content": f"La risposta non e' utilizzabile: {e}. "
+                                    "Rigenera SOLO il JSON completo richiesto, senza testo attorno."}]
     raise ultimo
 
 
@@ -149,18 +247,26 @@ def verifica_e_classifica(corso, brief, out_slide, out_lezioni, out_tecnico, out
                           out_trappole=None, out_personas=None) -> dict:
     registro = []  # log trasparente delle verifiche
 
-    def verifica(agente, fonte, citazione):
+    def verifica(agente, fonte, citazione, passo=None):
         tipi = PER_ID[agente].get("conoscenza", ("slide", "trascrizione"))
         esito = materiale.verifica_citazione(corso, fonte, citazione, tipi_ammessi=tipi)
+        if esito.get("valida") and passo is not None:
+            pertinenza = personas.verifica_pertinenza(passo, corso.fonti[esito["fonte"]], citazione)
+            esito["pertinenza"] = pertinenza
+            if not pertinenza["valida"]:
+                esito["valida"] = False
+                esito["motivo"] = pertinenza["motivo"]
         registro.append({"agente": agente, "fonte": fonte, "citazione": (citazione or "")[:120], **esito})
         return esito
 
     def indicizza(out, agente):
         risultato = {}
+        passi_brief = {(str(es.get("id")), str(p.get("n"))): p
+                       for es in brief.get("esercizi", []) for p in es.get("passi", [])}
         for p in (out or {}).get("passi", []):
             k = (str(p.get("esercizio")), str(p.get("passo")))
             if p.get("stato") == "giustificato":
-                p["_verifica"] = verifica(agente, p.get("fonte"), p.get("citazione"))
+                p["_verifica"] = verifica(agente, p.get("fonte"), p.get("citazione"), passi_brief.get(k))
             else:
                 p["_verifica"] = {"valida": False, "motivo": p.get("stato", "non_trovato")}
             risultato[k] = p
@@ -466,10 +572,12 @@ def _esegui_live(corso: materiale.Corso, emit_originale) -> dict:
 
     # FASE 1 - analista
     emit({"tipo": "agente_inizio", "id": "analista"})
+    esercizi_esame = set(re.findall(r"(?im)^#{1,4}\s*Esercizio\s+(\d+)\b", corso.esame))
     brief = chiedi(llm, "analista",
                    f"INTERVISTA/BRIEF DEL DOCENTE:\n{corso.brief or '(non fornito)'}\n\n"
                    f"INDICE DELLE LEZIONI:\n{_indice_lezioni(corso)}\n\n"
-                   f"TESTO D'ESAME:\n{corso.esame}\n\nSOLUZIONI UFFICIALI:\n{corso.soluzioni}")
+                   f"TESTO D'ESAME:\n{corso.esame}\n\nSOLUZIONI UFFICIALI:\n{corso.soluzioni}",
+                   attesi=esercizi_esame or None)
     max_es = int(os.getenv("MAX_ESERCIZI", "0") or 0)  # modalita' prova: solo i primi N esercizi
     if max_es > 0:
         brief["esercizi"] = [e for e in brief.get("esercizi", []) if 0 < _num_es(e.get("id")) <= max_es]
@@ -499,7 +607,9 @@ def _esegui_live(corso: materiale.Corso, emit_originale) -> dict:
         futuri = {}
         for aid, contenuto in lavori.items():
             emit({"tipo": "agente_inizio", "id": aid})
-            futuri[aid] = pool.submit(chiedi, llm, aid, contenuto)
+            attesi = {(str(es.get("id")), str(p.get("n"))) for es in brief.get("esercizi", [])
+                      for p in es.get("passi", [])} if aid in _AGENTI_PASSI else None
+            futuri[aid] = pool.submit(chiedi, llm, aid, contenuto, 3, attesi)
         for aid, fut in futuri.items():
             risultati[aid] = fut.result()
             emit({"tipo": "agente_fine", "id": aid, "output": _md_fantasma(aid, risultati[aid])})
@@ -527,7 +637,8 @@ def _esegui_live(corso: materiale.Corso, emit_originale) -> dict:
                                             "prerequisito", "problema", "evidenza")} for g in analisi["lacune"]]
         sintesi = chiedi(llm, "cartografo",
                          f"CORSO: {brief.get('corso', corso.nome)}\nOBIETTIVI: {brief.get('obiettivi', [])}\n\n"
-                         f"LACUNE VERIFICATE:\n{json.dumps(compatte, ensure_ascii=False, indent=1)}")
+                         f"LACUNE VERIFICATE:\n{json.dumps(compatte, ensure_ascii=False, indent=1)}",
+                         attesi={g["id"] for g in analisi["lacune"]})
     risultato = _assembla(corso, brief, analisi, sintesi, time.time() - t0)
     emit({"tipo": "agente_fine", "id": "cartografo", "output": risultato["sintesi"] or "Nessuna lacuna trovata."})
     emit({"tipo": "lacune", "risultato": risultato})

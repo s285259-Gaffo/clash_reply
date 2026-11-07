@@ -37,10 +37,12 @@ CONOSCENZA: brief/intervista del docente, testo d'esame, soluzioni ufficiali, in
 REGOLE:
 - Non risolvere gli esercizi e non giudicare il corso: prepari solo il brief.
 - Scomponi OGNI soluzione ufficiale in passi atomici numerati (un passo = una sola idea o regola usata).
+- Conserva esattamente gli ID degli esercizi del testo d'esame (1, 2, 3...): le parti a/b/c restano passi dello stesso esercizio. Non saltare esercizi.
 - Per ogni passo indica "tipo": "teoria" se il passo consiste nel RICHIAMARE una definizione, regola, teorema o formula (es. "regola della catena", "limite notevole del seno"); "applicazione" se consiste nel CALCOLARE o manipolare (sostituire, semplificare, combinare, valutare).
 - Se mancano informazioni importanti (es. a quale lezione si riferisce un esercizio, quali prerequisiti si danno per scontati) NON inventare: scrivi una domanda per il docente.
 - CRONOMETRO: per ogni passo stima "minuti_stimati" = minuti che servono a uno studente MEDIO per svolgerlo e scriverlo con il metodo insegnato a lezione (non con scorciatoie da esperto). Numeri interi, minimo 1.
 - Leggi dal testo d'esame la durata della prova in minuti ("durata_esame_minuti", es. "2 ore" -> 120) e i punti di ogni esercizio ("punti"). Se la durata non e' scritta metti null e aggiungi una domanda per il docente: non inventarla.
+- Se i punti di un esercizio non sono scritti, metti "punti": null e chiedi al docente. Ogni passo deve avere "tipo" e "minuti_stimati".
 PROCEDURA: 1) leggi obiettivi e contesto del docente; 2) per ogni esercizio indica l'argomento, la lezione in cui e' trattato e i punti; 3) scomponi la soluzione in passi e stima i minuti di ciascuno; 4) leggi la durata dell'esame; 5) elenca i prerequisiti dati per scontati; 6) elenca le domande di chiarimento.
 MEMORIA: nessuna tra un'esecuzione e l'altra; il brief viene passato agli altri agenti.
 FORMATO DI USCITA: SOLO JSON valido:
@@ -62,7 +64,7 @@ OBIETTIVO: per ogni passo delle soluzioni d'esame, dimostrare DOVE nelle slide h
 CONOSCENZA: esclusivamente le slide fornite. {FORMATO_FONTI}
 REGOLE:
 - Fai finta di NON conoscere la materia oltre le slide: la tua conoscenza generale di matematica NON conta. Se una regola non e' nelle slide, per te non esiste.
-- Ogni passo deve avere una fonte [Sxx] e una citazione COPIATA PAROLA PER PAROLA (max 12 parole) dalla slide. Le citazioni vengono controllate da un programma: citazioni inventate verranno scoperte.
+- Ogni passo deve avere una fonte [Sxx] e una citazione NON VUOTA, COPIATA PAROLA PER PAROLA (max 12 parole) dal corpo della stessa slide. La frase citata deve giustificare proprio quel passo, non soltanto parlare dello stesso argomento.
 - Se non trovi una fonte, scrivi stato "non_trovato". Meglio ammettere una lacuna che inventare.
 - Se il passo e' ambiguo e serve un chiarimento del docente, stato "chiarimento" con la domanda.
 PROCEDURA: per ogni esercizio e ogni passo del brief: cerca nelle slide -> cita. Nessuna spiegazione: solo il JSON.
@@ -83,7 +85,7 @@ OBIETTIVO: per ogni passo delle soluzioni d'esame, dimostrare DOVE nel corso (sl
 CONOSCENZA: slide e trascrizioni delle videolezioni fornite. {FORMATO_FONTI}
 REGOLE:
 - La tua conoscenza generale NON conta: vale solo cio' che e' nel materiale del corso.
-- Ogni passo deve avere una fonte ([Sxx] oppure [Lx@mm:ss]) e una citazione COPIATA PAROLA PER PAROLA (max 12 parole). Un programma controlla le citazioni.
+- Ogni passo deve avere una fonte ([Sxx] oppure [Lx@mm:ss]) e una citazione NON VUOTA, COPIATA PAROLA PER PAROLA (max 12 parole) dal corpo di quel frammento. La frase citata deve giustificare proprio quel passo.
 - Preferisci la slide se il concetto c'e' anche li'; se c'e' SOLO a voce, cita il minuto della lezione.
 - Se non trovi nulla: stato "non_trovato". Mai inventare.
 PROCEDURA: per ogni esercizio e passo del brief: cerca nelle slide, poi nelle trascrizioni -> cita. Nessuna spiegazione: solo il JSON.
@@ -105,7 +107,7 @@ CONOSCENZA: solo le slide fornite. {FORMATO_FONTI}
 REGOLE:
 - La tua conoscenza generale NON conta: vale solo cio' che e' nelle slide.
 - Cita SOLO righe "visive": una formula, una riga di tabella, una voce di elenco breve. Se cio' che serve c'e' solo dentro una frase lunga e discorsiva, per te non esiste: stato "non_trovato".
-- Ogni passo giustificato ha una fonte [Sxx] e una citazione COPIATA PAROLA PER PAROLA (max 12 parole) dalla riga visiva. Un programma controlla che la citazione esista e che la riga sia davvero visiva.
+- Ogni passo giustificato ha una fonte [Sxx] e una citazione NON VUOTA, COPIATA PAROLA PER PAROLA (max 12 parole) dalla riga visiva pertinente. Un programma controlla che la citazione esista e che la riga sia davvero visiva.
 - Mai inventare: meglio "non_trovato".
 PROCEDURA: per ogni esercizio e passo del brief: cerca una formula, tabella o elenco nelle slide -> cita. Solo il JSON.
 MEMORIA: nessuna.
@@ -125,8 +127,8 @@ CONOSCENZA: slide e trascrizioni delle videolezioni. {FORMATO_FONTI}
 REGOLE:
 - I passi sono marcati [teoria] o [applicazione].
 - Passo [teoria]: cita dove la definizione o la regola e' enunciata (slide o minuto della lezione).
-- Passo [applicazione]: ce la fai SOLO se nel corso c'e' un esempio svolto o un esercizio risolto simile (in slide: righe "Esempio", esercizi svolti; a lezione: "vediamo un esempio", "facciamo un esercizio"). Cita l'esempio. Se nel corso c'e' solo la regola generale e nessun esempio simile: stato "non_trovato".
-- Citazione COPIATA PAROLA PER PAROLA (max 12 parole). Un programma controlla che la citazione esista e, per i passi di applicazione, che venga davvero da un esempio.
+- Passo [applicazione]: ce la fai SOLO se nel corso c'e' un esempio svolto o un esercizio risolto che usa lo stesso metodo e gli stessi concetti del passo. Cita la riga dello svolgimento, non il titolo "Esempio". Se nel corso c'e' solo la regola generale o un esempio di altro metodo: stato "non_trovato".
+- Citazione NON VUOTA, COPIATA PAROLA PER PAROLA (max 12 parole) dal corpo della fonte indicata. Un programma controlla che esista e, per i passi di applicazione, che venga davvero da un esempio pertinente.
 - La tua conoscenza generale NON conta. Mai inventare.
 PROCEDURA: per ogni passo: e' teoria o applicazione? -> cerca la definizione oppure l'esempio svolto -> cita. Solo il JSON.
 MEMORIA: nessuna.
@@ -147,7 +149,7 @@ REGOLE:
 - I passi sono marcati [teoria] o [applicazione].
 - Passo [applicazione]: cita la procedura o un esempio del corso che mostra come si fa.
 - Passo [teoria]: ce la fai SOLO se la regola compare APPLICATA in un esempio svolto (riga "Esempio", esercizio risolto, "vediamo un esempio" a lezione). Cita l'esempio. Se la regola e' solo enunciata come definizione o teorema: stato "non_trovato".
-- Citazione COPIATA PAROLA PER PAROLA (max 12 parole). Un programma controlla che la citazione esista e, per i passi di teoria, che venga davvero da un esempio.
+- Citazione NON VUOTA, COPIATA PAROLA PER PAROLA (max 12 parole) dal corpo della fonte indicata. Per i passi di teoria cita lo svolgimento di un esempio pertinente, non la sola etichetta.
 - La tua conoscenza generale NON conta. Mai inventare.
 PROCEDURA: per ogni passo: e' teoria o applicazione? -> cerca la procedura oppure l'esempio in cui la regola e' usata -> cita. Solo il JSON.
 MEMORIA: nessuna.

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verifica crash test · analisi1_simulato</title>
+<style>
+body { font: 16px/1.55 system-ui,sans-serif; margin: 0 auto; padding: 32px 20px; max-width: 1050px;
+       color: #18212f; background: #f5f7fb; }
+h1 { margin-bottom: 4px; } h2 { margin-top: 0; font-size: 1.25rem; }
+section { background: white; border: 1px solid #d8e0ea; border-radius: 12px; margin: 22px 0; padding: 24px;
+           box-shadow: 0 2px 10px #1620360a; }
+.nota { background: #fff4d4; padding: 12px 16px; border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; margin-top: 12px; } th,td { text-align: left; padding: 8px;
+       border-bottom: 1px solid #e5eaf0; vertical-align: top; }
+th { background: #edf2f8; } details { margin-top: 14px; } summary { cursor: pointer; font-weight: 600; }
+</style></head><body>
+<h1>Verifica dei report · analisi1_simulato</h1>
+<p class="nota">I report gia' salvati sono precedenti ai nuovi controlli. La simulazione e' indicata a parte.
+Per misurare i nuovi controlli serve una nuova esecuzione reale del crash test.</p>
+
+        <section>
+          <h2>Esecuzione reale salvata · mappa_lacune_20261107-1242.json</h2>
+          <p><em>Confronto parziale: esercizi 1, 2</em></p>
+          <p>Passi analizzati: <strong>20</strong> ·
+             Lacune segnalate: <strong>5</strong> ·
+             Precisione: <strong>0.8</strong> ·
+             Recall: <strong>1.0</strong> ·
+             Falso amico segnalato: <strong>0</strong></p>
+          <details><summary>Lacune segnalate</summary>
+            <table><thead><tr><th>Tipo</th><th>Esercizio</th><th>Passo</th><th>Descrizione</th></tr></thead>
+            <tbody><tr><td>rossa</td><td>1a</td><td>3</td><td>Assenza del limite notevole dell&#x27;esponenziale</td></tr><tr><td>verde</td><td>2a</td><td>5</td><td>Formula della retta tangente solo orale</td></tr><tr><td>verde</td><td>2a</td><td>6</td><td>Semplificazione della retta tangente sprovvista di supporto</td></tr><tr><td>rossa</td><td>2b</td><td>1</td><td>Proprietà dei logaritmi prima della derivazione</td></tr><tr><td>gialla</td><td></td><td></td><td>Propedeuticità invertita per l&#x27;integrale del logaritmo</td></tr></tbody></table>
+          </details>
+          <details><summary>Lacune della chiave non trovate</summary>
+            <ul><li>Nessuna</li></ul>
+          </details>
+        </section>
+        <section>
+          <h2>Esecuzione reale salvata · mappa_lacune_20261107-1232.json</h2>
+          <p><em>Confronto parziale: esercizi 1</em></p>
+          <p>Passi analizzati: <strong>9</strong> ·
+             Lacune segnalate: <strong>3</strong> ·
+             Precisione: <strong>0.67</strong> ·
+             Recall: <strong>1.0</strong> ·
+             Falso amico segnalato: <strong>0</strong></p>
+          <details><summary>Lacune segnalate</summary>
+            <table><thead><tr><th>Tipo</th><th>Esercizio</th><th>Passo</th><th>Descrizione</th></tr></thead>
+            <tbody><tr><td>rossa</td><td>1a</td><td>3</td><td>Passaggio formale nel cambio di variabile dei limiti</td></tr><tr><td>prerequisito</td><td>1a</td><td>3</td><td>Mancanza del limite notevole dell&#x27;esponenziale</td></tr><tr><td>gialla</td><td></td><td></td><td>Inversione temporale nell&#x27;uso dell&#x27;integrale di ln(x)</td></tr></tbody></table>
+          </details>
+          <details><summary>Lacune della chiave non trovate</summary>
+            <ul><li>Nessuna</li></ul>
+          </details>
+        </section>
+        <section>
+          <h2>Simulazione · demo_completa.json</h2>
+          <p><em>Confronto sull&#x27;intero esame</em></p>
+          <p>Passi analizzati: <strong>44</strong> ·
+             Lacune segnalate: <strong>10</strong> ·
+             Precisione: <strong>0.88</strong> ·
+             Recall: <strong>0.88</strong> ·
+             Falso amico segnalato: <strong>0</strong></p>
+          <details><summary>Lacune segnalate</summary>
+            <table><thead><tr><th>Tipo</th><th>Esercizio</th><th>Passo</th><th>Descrizione</th></tr></thead>
+            <tbody><tr><td>rossa</td><td>1</td><td>3</td><td>Limite notevole dell&#x27;esponenziale</td></tr><tr><td>verde</td><td>2</td><td>5</td><td>Equazione della retta tangente solo a voce</td></tr><tr><td>prerequisito</td><td>2</td><td>7</td><td>Proprietà dei logaritmi</td></tr><tr><td>prerequisito</td><td>3</td><td>5</td><td>Formula di duplicazione del coseno</td></tr><tr><td>rossa</td><td>4</td><td>2</td><td>Cambio degli estremi nella sostituzione</td></tr><tr><td>verde</td><td>4</td><td>11</td><td>Zeri e segno di f solo a voce</td></tr><tr><td>verde</td><td>4</td><td>12</td><td>Area con funzione che cambia segno</td></tr><tr><td>gialla</td><td></td><td></td><td>Formula di ln x prima del metodo per parti</td></tr><tr><td>trappola</td><td>4</td><td></td><td>“Area” letta come integrale</td></tr><tr><td>trappola</td><td>4</td><td></td><td>“Usando la sostituzione” con estremi</td></tr></tbody></table>
+          </details>
+          <details><summary>Lacune della chiave non trovate</summary>
+            <ul><li>Criterio di scelta nell&#x27;integrazione per parti: il logaritmo si deriva sempre (il polinomio associato si integra)</li></ul>
+          </details>
+        </section>
+</body></html>

@@ -42,6 +42,69 @@ _RE_TEORIA = re.compile(r"^\W*(\w+\W+){0,3}?(regola|limite notevole|limiti notev
 _RE_ESEMPIO = re.compile(r"esempi|eserciz|svolt|vediamo|facciamo|calcoliamo|proviamo|per esempio|ad esempio",
                          re.IGNORECASE)
 _RE_MATH = re.compile(r"\$[^$]*\$")
+# I concetti sono controllati sul passaggio e sulla riga citata. Le varianti
+# testuali e LaTeX sono equivalenti, ma due metodi diversi non lo sono.
+_CONCETTI = {
+    "esponenziale": r"esponenzial|(?:^|\W)e\s*\^|\\exp\b",
+    "seno": r"\bsen(?:o)?\b|\\sin\b|\bsin\b",
+    "coseno": r"\bcos(?:eno)?\b|\\cos\b",
+    "logaritmo": r"logaritm|\\ln\b|\bln\b|\\log\b",
+    "tangente": r"tangent",
+    "sostituzione": r"sostituz|cambio\s+(?:di\s+)?variabil",
+    "estremi": r"estrem|limiti\s+di\s+integrazion",
+    "parti": r"per\s+parti",
+    "area": r"\barea\b",
+    "valore assoluto": r"valore\s+assoluto|\|\s*f\s*\|",
+    "derivata": r"derivat|\\frac\s*\{?\s*d|f\s*['′]",
+    "integrale": r"integral|\\int\b",
+    "limite": r"\blimit|\\lim\b",
+    "prodotto": r"prodotto|\\cdot\b",
+    "catena": r"catena|compost",
+}
+_PAROLE_GENERALI = set("passo applicazione applicare usare calcolare risultato formula regola caso "
+                       "funzione ottenere valore valori scrivere riscrivere fatto della dello degli delle "
+                       "quindi tramite mediante prima dopo questo questa stesso stessa come dove quando "
+                       "con per nel nella del dei dal alla alle gli una uno che dai".split())
+
+
+def _concetti(testo: str) -> set[str]:
+    return {nome for nome, pattern in _CONCETTI.items() if re.search(pattern, testo or "", re.I)}
+
+
+def _parole_distintive(testo: str) -> set[str]:
+    return {w for w in materiale._normalizza(testo).split()
+            if len(w) >= 5 and w not in _PAROLE_GENERALI and not w.isdigit()}
+
+
+def verifica_pertinenza(passo: dict, fonte: materiale.Fonte, citazione: str) -> dict:
+    """Schermo conservativo: la citazione deve parlare del metodo del passo.
+
+    Il controllo non e' una dimostrazione matematica: i casi dubbi restano da
+    rivedere dal docente. Evita che una citazione vera ma fuori tema dia punti.
+    """
+    testo_passo = str(passo.get("testo") or "")
+    riga = riga_citata(fonte, citazione)
+    prova = f"{fonte.titolo} {riga}" if fonte.tipo == "slide" else riga
+    richiesti = _concetti(testo_passo)
+    presenti = _concetti(prova)
+    mancanti = richiesti - presenti
+    # Una formula per la retta tangente richiede la retta stessa, non la sola
+    # affermazione che la derivata ne sia la pendenza.
+    if "tangente" in richiesti and re.search(r"equazione|\by\s*=", testo_passo, re.I):
+        if not re.search(r"\by\s*(?:=|uguale)\b|\by\s*=", riga, re.I):
+            mancanti.add("equazione della tangente")
+    # Un limite con (e^t-1)/t non e' attestato dal solo limite che produce e^a.
+    if ("esponenziale" in richiesti and "limite" in richiesti
+            and re.search(r"e\s*\^.*?[-−]\s*1", testo_passo, re.I)
+            and not re.search(r"e\s*\^.*?[-−]\s*1", riga, re.I)):
+        mancanti.add("rapporto esponenziale")
+    if mancanti:
+        return {"valida": False, "motivo": "la citazione non prova: " + ", ".join(sorted(mancanti))}
+    if not richiesti:
+        comuni = _parole_distintive(testo_passo) & _parole_distintive(prova)
+        if not comuni:
+            return {"valida": False, "motivo": "nessun nesso riconoscibile fra passo e citazione"}
+    return {"valida": True, "motivo": "concetti del passo presenti nella citazione"}
 
 
 # --------------------------------------------------------------------------- #
@@ -86,13 +149,24 @@ def e_visiva(fonte: materiale.Fonte, riga: str) -> bool:
 def e_esempio(corso: materiale.Corso, fonte: materiale.Fonte, riga: str) -> bool:
     """La fonte mostra la regola APPLICATA: riga 'Esempio', slide di esercizi, o 'vediamo un esempio' a lezione."""
     if fonte.tipo == "slide":
-        return bool(_RE_ESEMPIO.search(riga) or _RE_ESEMPIO.search(fonte.titolo))
+        # Il titolo "esempi" non trasforma un enunciato in un esempio svolto.
+        svolgimento = bool(re.search(r"(?:=|\\Rightarrow|⇒|quindi|allora)", riga, re.I))
+        return svolgimento and bool(_RE_ESEMPIO.search(riga) or _RE_ESEMPIO.search(fonte.titolo)
+                                    or re.search(r"\bil caso\b", fonte.titolo, re.I))
     stessi = [f for f in corso.fonti.values() if f.tipo == "trascrizione" and f.lezione == fonte.lezione]
     i = next((k for k, f in enumerate(stessi) if f.id == fonte.id), 0)
-    return bool(_RE_ESEMPIO.search(" ".join(f.testo for f in stessi[max(0, i - 1): i + 3])))
+    return bool(_RE_ESEMPIO.search(" ".join(f.testo for f in stessi[max(0, i - 1): i + 1]))
+                and re.search(r"(?:=|uguale|quindi|allora|otteniamo|si\s+ha)", riga, re.I))
 
 
-def esito(persona: str, corso, tipo: str, candidati: list) -> tuple[bool, str]:
+def esempio_simile(corso: materiale.Corso, fonte: materiale.Fonte, riga: str, passo: dict) -> bool:
+    """Un esempio svolto deve usare i concetti del passo, non solo avere l'etichetta."""
+    richiesti = _concetti(str(passo.get("testo") or ""))
+    prova = f"{fonte.titolo} {riga}" if fonte.tipo == "slide" else riga
+    return e_esempio(corso, fonte, riga) and richiesti <= _concetti(prova)
+
+
+def esito(persona: str, corso, tipo: str, candidati: list, passo: dict | None = None) -> tuple[bool, str]:
     """candidati: [(Fonte, riga)] gia' verificati. Restituisce (ce la fa?, motivo se no)."""
     if not candidati:
         return False, "non trova questo passo nel materiale che ha studiato"
@@ -107,11 +181,13 @@ def esito(persona: str, corso, tipo: str, candidati: list) -> tuple[bool, str]:
             return False, "spiegato solo a voce, senza una formula o uno schema"
         return False, "c'e' solo dentro testo discorsivo, senza formula, tabella o elenco"
     if persona == "mnemonico":
-        if tipo == "teoria" or any(e_esempio(corso, f, r) for f, r in candidati):
+        if tipo == "teoria" or (passo is not None and
+                               any(esempio_simile(corso, f, r, passo) for f, r in candidati)):
             return True, ""
         return False, "nessun esempio svolto simile da imitare"
     if persona == "applicativo":
-        if tipo == "applicazione" or any(e_esempio(corso, f, r) for f, r in candidati):
+        if tipo == "applicazione" or (passo is not None and
+                                    any(esempio_simile(corso, f, r, passo) for f, r in candidati)):
             return True, ""
         return False, "regola solo enunciata, mai mostrata applicata in un esempio"
     return False, "profilo sconosciuto"
@@ -203,7 +279,7 @@ def esiti_da_agenti(corso, brief: dict, indicizzati: dict) -> dict:
                 if v.get("valida") and v.get("fonte") in corso.fonti:
                     f = corso.fonti[v["fonte"]]
                     candidati.append((f, riga_citata(f, x.get("citazione"))))
-                esiti[k] = esito(p["id"], corso, tipo_passo(passo), candidati)
+                esiti[k] = esito(p["id"], corso, tipo_passo(passo), candidati, passo)
         risultato[p["id"]] = esiti
     return risultato
 
@@ -260,9 +336,9 @@ def esiti_simulati(corso, brief: dict, stato_passi: list) -> dict:
             tipo = tipo_passo(passo)
             for p in PERSONAS:
                 if p["id"] == "frettoloso":  # e' esattamente il fantasma 'solo slide' del crash test reale
-                    risultato["frettoloso"][k] = (True, "") if st == "slide" else esito("frettoloso", corso, tipo, candidati)
+                    risultato["frettoloso"][k] = (True, "") if st == "slide" else esito("frettoloso", corso, tipo, candidati, passo)
                 else:
-                    risultato[p["id"]][k] = esito(p["id"], corso, tipo, candidati)
+                    risultato[p["id"]][k] = esito(p["id"], corso, tipo, candidati, passo)
     return risultato
 
 
