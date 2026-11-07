@@ -1,0 +1,117 @@
+# analista - tentativo 0 - 29.9s - prompt 11791 caratteri
+
+=== RISPOSTA ===
+{
+  "corso": "Analisi Matematica 1",
+  "obiettivi": [
+    "Saper calcolare limiti, derivate e integrali con sicurezza",
+    "Saper giustificare i passaggi logici durante la risoluzione degli esercizi",
+    "Applicare le tecniche di integrazione (sostituzione, parti) e derivazione (catena, prodotto) in contesti standard"
+  ],
+  "esercizi": [
+    {
+      "id": "1",
+      "argomento": "Limiti",
+      "lezione_argomento": 1,
+      "passi": [
+        {"n": 1, "testo": "Verifica della forma indeterminata tramite sostituzione diretta del valore limite."},
+        {"n": 2, "testo": "Manipolazione algebrica dell'espressione per ricondursi ai limiti notevoli (es. moltiplicazione/divisione per fattori opportuni)."},
+        {"n": 3, "testo": "Applicazione dei limiti notevoli (es. limite esponenziale, limite del seno, limite del coseno)."},
+        {"n": 4, "testo": "Applicazione dell'algebra dei limiti per combinare i risultati parziali."},
+        {"n": 5, "testo": "Applicazione del limite notevole $(1+a/x)^x \\to e^a$ per forme indeterminate $1^\\infty$."}
+      ]
+    },
+    {
+      "id": "2",
+      "argomento": "Derivate",
+      "lezione_argomento": 2,
+      "passi": [
+        {"n": 1, "testo": "Identificazione della regola di derivazione appropriata (prodotto, catena, logaritmo)."},
+        {"n": 2, "testo": "Applicazione della regola della catena per funzioni composte."},
+        {"n": 3, "testo": "Applicazione delle proprietà dei logaritmi per semplificare la funzione prima di derivare."},
+        {"n": 4, "testo": "Calcolo del valore della derivata in un punto specifico."},
+        {"n": 5, "testo": "Determinazione dell'equazione della retta tangente tramite la formula $y=f(x_0)+f'(x_0)(x-x_0)$."}
+      ]
+    },
+    {
+      "id": "3",
+      "argomento": "Integrali indefiniti",
+      "lezione_argomento": 3,
+      "passi": [
+        {"n": 1, "testo": "Identificazione della tecnica di integrazione (sostituzione o identità trigonometrica)."},
+        {"n": 2, "testo": "Applicazione della sostituzione di variabile e calcolo del differenziale."},
+        {"n": 3, "testo": "Riconduzione a un integrale immediato o noto."},
+        {"n": 4, "testo": "Ritorno alla variabile originale dopo l'integrazione."},
+        {"n": 5, "testo": "Verifica del risultato tramite derivazione (opzionale ma consigliata)."}
+      ]
+    },
+    {
+      "id": "4",
+      "argomento": "Integrali definiti e aree",
+      "lezione_argomento": 4,
+      "passi": [
+        {"n": 1, "testo": "Applicazione della sostituzione di variabile con aggiornamento degli estremi di integrazione."},
+        {"n": 2, "testo": "Applicazione della formula di integrazione per parti."},
+        {"n": 3, "testo": "Applicazione del Teorema Fondamentale del Calcolo Integrale."},
+        {"n": 4, "testo": "Studio del segno della funzione per calcolare l'area di una regione (spezzamento dell'integrale)."},
+        {"n": 5, "testo": "Calcolo dell'integrale del valore assoluto tramite somma di integrali su intervalli definiti."}
+      ]
+    }
+  ],
+  "prerequisiti_dati_per_scontati": [
+    "Algebra di base (equazioni e disequazioni)",
+    "Geometria analitica della retta",
+    "Trigonometria (formule di duplicazione, valori notevoli)",
+    "Proprietà di esponenziali e logaritmi"
+  ],
+  "domande_per_il_docente": [
+    "Le slide sono strutturate come schemi: come possiamo integrare i 'trucchi' metodologici spiegati solo a voce nelle videolezioni per supportare chi studia prevalentemente dalle slide?",
+    "Dato che il precorso di settembre è seguito da meno della metà degli studenti, è opportuno inserire nel materiale dei moduli di autovalutazione sui prerequisiti (es. trigonometria)?",
+    "Quali passaggi logici sono considerati 'giustificazioni sufficienti' per evitare penalizzazioni in sede d'esame, dato che la docente richiede esplicitamente di vedere il ragionamento?"
+  ]
+}
+
+=== ULTIMO MESSAGGIO (primi 3000 caratteri) ===
+INTERVISTA/BRIEF DEL DOCENTE:
+# Intervista alla docente — Prof.ssa Elena Rinaldi, Analisi Matematica 1
+(Intervista simulata, raccolta prima dell'inizio del semestre)
+
+**D: Ci descrive il corso?**
+R: È il primo corso di Analisi del primo anno di Ingegneria, primo semestre. Il blocco che vi ho dato copre quattro lezioni: limiti e limiti notevoli, derivate, integrali indefiniti con la sostituzione, integrazione per parti e integrali definiti. Ogni lezione dura circa un'ora e mezza ed è registrata.
+
+**D: Chi sono gli studenti?**
+R: Circa 400 iscritti. La maggioranza viene dal liceo scientifico, ma ogni anno c'è una quota consistente, direi un quarto, che arriva dagli istituti tecnici. Ci sono anche studenti che lavorano e seguono soprattutto dalle registrazioni, e molti che ripassano solo dalle slide la settimana prima dell'esame.
+
+**D: Quali sono gli obiettivi del corso?**
+R: Che sappiano calcolare limiti, derivate e integrali con sicurezza e soprattutto giustificare i passaggi. All'esame non chiedo dimostrazioni di teoremi in questo blocco: chiedo esercizi, ma voglio vedere il ragionamento, non solo il risultato.
+
+**D: Com'è strutturato l'esame?**
+R: Scritto di due ore, quattro esercizi, uno per ciascun argomento: limiti, derivate, integrali indefiniti, integrali definiti e aree. Il tema di giugno 2025 è rappresentativo.
+
+**D: Quali prerequisiti dà per scontati?**
+R: Il programma di matematica delle superiori: algebra, equazioni e disequazioni, geometria analitica della retta, trigonometria con le formule principali, esponenziali e logaritmi con le loro proprietà. In aula non ho tempo di riprenderli: c'è un precorso facoltativo a settembre, ma lo segue meno della metà degli studenti.
+
+**D: Come usa le slide e le videolezioni?**
+R: Le slide sono uno schema: le definizioni, le formule e qualche esempio. Molte spiegazioni e i "trucchi" che servono negli esercizi li dico a voce durante la lezione. So che non è l'ideale per chi studia solo dalle slide, per questo vorrei capire dove il materiale ha dei buchi.
+
+**D: Cosa si aspetta da questo strumento?**
+R: Vorrei sapere, prima che inizi il semestre, quali passaggi del tema d'esame non sono coperti dal materiale, o lo sono solo a voce, o arrivano troppo tardi. Le decisioni su cosa cambiare le prendo io: alcune cose le lascio volutamente come esercizio di autonomia.
+
+
+
+INDICE DELLE LEZIONI:
+[S1] Lezione 1: Il concetto di limite
+[S2] Lezione 1: Limiti all'infinito e limiti infiniti
+[S3] Lezione 1: Algebra dei limiti
+[S4] Lezione 1: Forme indeterminate
+[S5] Lezione 1: Limiti notevoli (1): funzioni trigonometriche
+[S6] Lezione 1: Limiti notevoli con argomento qualsiasi
+[S7] Lezione 1: Limiti notevoli (2): logaritmo e numero $e$
+[S8] Lezione 1: Riepilogo ed esercizi
+[S9] Lezione 2: Rapporto incrementale e derivata
+[S10] Lezione 2: Significato geometrico
+[S11] Lezione 2: Derivate delle funzioni elementari
+[S12] Lezione 2: Linearità
+[S13] Lezione 2: Regola del prodotto
+[S14] Lezione 2: Regola del quoziente
+[S15]

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studente Fantasma</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f4f0; --card:#ffffff; --ink:#1c1b19; --muted:#6b6862; --line:#e3e0d8;
+    --accent:#4b3fd8; --accent-soft:#ebe9fd; --ok:#1f8a4c; --err:#c0392b;
+    --rossa:#d64541; --rossa-soft:#fdeceb; --verde:#1f8a4c; --verde-soft:#e4f4eb;
+    --gialla:#b7791f; --gialla-soft:#fdf3df; --prereq:#2b6cb0; --prereq-soft:#e6f0fb;
+    --trappola:#7b3fbf; --trappola-soft:#f2eafb; --voce-bar:#9ccfae;
+    --sim:#8a5a00; --sim-soft:#fff3d6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#131312; --card:#1d1c1a; --ink:#f0eee9; --muted:#a19d94; --line:#2f2e2b;
+      --accent:#9d95ff; --accent-soft:#25224a; --ok:#4cc184; --err:#ff6b5b;
+      --rossa:#ff7a72; --rossa-soft:#3a1d1b; --verde:#4cc184; --verde-soft:#173025;
+      --gialla:#f2b44d; --gialla-soft:#3a2e15; --prereq:#7fb3f0; --prereq-soft:#18273a;
+      --trappola:#c39bff; --trappola-soft:#2d1f44; --voce-bar:#2f6e4a; --sim:#f2c46d; --sim-soft:#3a2e15; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 16px 80px}
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  h1{margin:0;font-size:30px;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:4px 0 0}
+  .badge{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+  .badge.demo{background:var(--sim-soft);color:var(--sim)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .avvio{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:22px 0}
+  .avvio label{font-weight:600}
+  select{padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;min-width:240px;max-width:100%}
+  .riep{color:var(--muted);font-size:14px;flex:1;min-width:220px}
+  button{padding:10px 20px;border:0;border-radius:10px;background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+  button:disabled{opacity:.5;cursor:default}
+  button.sec{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:6px 12px;font-size:13px}
+  button.sec.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .pipeline{display:flex;align-items:stretch;gap:8px;margin:6px 0 22px;overflow-x:auto;padding:4px 2px 8px}
+  .fase{display:flex;flex-direction:column;gap:10px;flex:1 1 0;min-width:200px}
+  .fase .etichetta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .freccia{align-self:center;color:var(--muted);font-size:22px;padding-top:18px}
+  .agent{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .2s, box-shadow .2s}
+  .agent .top{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px}
+  .agent .ico{font-size:20px}
+  .agent .role{color:var(--muted);font-size:12.5px;margin-top:3px}
+  .agent .tag{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--line);color:var(--muted);margin-left:auto}
+  .agent .st{font-size:12px;margin-top:8px;color:var(--muted)}
+  .agent.lavora{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .agent.lavora .st{color:var(--accent)}
+  .agent.lavora .st::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:6px;animation:pulse 1s infinite}
+  .agent.fatto{border-color:var(--ok)}
+  .agent.fatto .st{color:var(--ok)}
+  .agent.sel{outline:2px solid var(--ink);outline-offset:2px}
+  @keyframes pulse{50%{opacity:.25}}
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 14px}
+  .kpi .card{padding:12px 14px}
+  .kpi .n{font-size:26px;font-weight:700;letter-spacing:-.02em}
+  .kpi .l{font-size:12.5px;color:var(--muted)}
+  .valut{border-left:4px solid var(--accent);margin-bottom:14px}
+  .filtri{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+  .lacune{display:grid;gap:12px}
+  .lacuna{border-left:5px solid var(--line)}
+  .lacuna.rossa{border-left-color:var(--rossa)} .lacuna.verde{border-left-color:var(--verde)}
+  .lacuna.gialla{border-left-color:var(--gialla)} .lacuna.prerequisito{border-left-color:var(--prereq)}
+  .lacuna.voluta,.lacuna.falso_allarme{opacity:.55}
+  .tipo{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px}
+  .tipo.rossa{background:var(--rossa-soft);color:var(--rossa)} .tipo.verde{background:var(--verde-soft);color:var(--verde)}
+  .tipo.gialla{background:var(--gialla-soft);color:var(--gialla)} .tipo.prerequisito{background:var(--prereq-soft);color:var(--prereq)}
+  .lacuna h3{margin:8px 0 4px;font-size:17px}
+  .dove{color:var(--muted);font-size:14px}
+  .ev{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .fonte{font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 9px;max-width:100%}
+  .fonte b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;margin-right:6px}
+  .riga{font-size:14px;margin:4px 0}
+  .riga b{color:var(--muted);font-weight:600}
+  .decidi{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center}
+  .decidi span{font-size:12.5px;color:var(--muted);margin-right:4px}
+  .pannello{margin-top:22px}
+  .pannello h4{margin:0 0 8px;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+  .md :is(h1,h2,h3){line-height:1.25}
+  .md pre{overflow:auto;background:var(--bg);padding:12px;border-radius:8px;white-space:pre-wrap}
+  .err{color:var(--err)}
+  .vuoto{color:var(--muted)}
+  .sez{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:26px 0 8px}
+  .sez h2{margin:0;font-size:21px}
+  a.btn{color:var(--accent);font-weight:600;text-decoration:none;font-size:14px}
+  /* trappole, certezza, simulazione, privacy */
+  .lacuna.trappola{border-left-color:var(--trappola)}
+  .tipo.trappola{background:var(--trappola-soft);color:var(--trappola)}
+  .cert{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-left:6px;vertical-align:1px}
+  .cert.alta{color:var(--ok);border-color:currentColor} .cert.bassa{color:var(--err);border-color:currentColor}
+  .sim{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--sim-soft);color:var(--sim);margin-left:8px;vertical-align:4px}
+  .privacy{color:var(--muted);font-size:13px;margin:2px 0 12px}
+  .frase{font-style:italic;background:var(--trappola-soft);border-radius:6px;padding:1px 6px}
+  /* copertura: barra impilata */
+  .cop{margin-bottom:14px}
+  .cop .testa{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .cop .grande{font-size:30px;font-weight:700;letter-spacing:-.02em}
+  .barra{display:flex;height:16px;border-radius:999px;overflow:hidden;background:var(--line);margin:10px 0 8px}
+  .barra span{display:block;height:100%}
+  .b-slide{background:var(--verde)} .b-voce{background:var(--voce-bar)} .b-mai{background:var(--rossa)}
+  .legenda{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+  .legenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:0}
+  /* priorita' della settimana */
+  .prio{border:1px solid var(--accent);background:var(--accent-soft);border-radius:14px;padding:14px 16px;margin:6px 0 16px}
+  .prio h3{margin:0 0 10px;font-size:16px}
+  .prio .lacune{gap:10px}
+  /* cronometro */
+  .tabella{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+  .car{font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px}
+  .car.basso{background:var(--verde-soft);color:var(--verde)} .car.medio{background:var(--gialla-soft);color:var(--gialla)}
+  .car.alto{background:var(--rossa-soft);color:var(--rossa)}
+  .tempo{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:8px;max-width:420px}
+  .tempo span{display:block;height:100%;background:var(--accent)}
+  @media (max-width:640px){.pipeline{flex-direction:column}.freccia{transform:rotate(90deg);padding:0}}
+
+  /* --- barra di navigazione comune --- */
+  .topbar{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 1px 8px rgba(0,0,0,.04)}
+  .topbar .in{max-width:1180px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:18px;min-height:56px;flex-wrap:wrap}
+  .topbar .brand{font-weight:700;font-size:16px;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .topbar .tabs{display:flex;gap:4px;flex-wrap:wrap}
+  .topbar .tabs a{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--muted);font-size:14.5px;font-weight:500}
+  .topbar .tabs a{border:0;background:transparent}
+  .topbar .tabs a.on{background:var(--accent-soft);border:0}
+  .topbar .tabs a:hover{background:var(--bg);color:var(--ink)}
+  .topbar .tabs a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+  .topbar .chi{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--line);color:var(--muted);font-weight:500}
+  @media (max-width:640px){.topbar .in{gap:6px;padding:8px 12px}.topbar .tabs{width:100%}.topbar .tabs a{flex:1;justify-content:center;padding:8px 6px;font-size:13px}.topbar .chi{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in"><a class="brand" href="/">👻 Studente Fantasma</a><nav class="tabs"><a href="/" class="on">🔬 Crash test <span class="chi">docente</span></a><a href="/docente">📬 Segnalazioni <span class="chi">docente</span></a><a href="/studente">🎓 Tutor <span class="chi">studente</span></a></nav></div></div>
+<div class="wrap">
+  <header>
+    <div><h1>👻 <span id="titolo">Studente Fantasma</span></h1><p class="sub" id="sottotitolo"></p></div>
+    <span class="badge" id="modalita">…</span>
+  </header>
+
+  <div class="card avvio">
+    <label for="corso">Corso</label>
+    <select id="corso"></select>
+    <div class="riep" id="riep"></div>
+    <button id="vai">Avvia il crash test</button>
+  </div>
+
+  <div class="pipeline" id="pipeline"></div>
+
+  <div id="risultati" hidden>
+    <div class="sez"><h2>🗺️ Mappa delle Lacune<span class="sim" id="simBadge" hidden>simulazione</span></h2><a class="btn" id="scarica" href="#" target="_blank">Scarica il report ↓</a></div>
+    <p class="privacy">🔒 Report privato del docente · le decisioni restano tue · nessun dato usato per valutare la didattica</p>
+    <p class="vuoto" id="sintesi"></p>
+    <div id="copertura"></div>
+    <div class="kpi" id="kpi"></div>
+    <div id="valutazione"></div>
+    <div id="priorita"></div>
+    <div class="filtri" id="filtri"></div>
+    <div class="lacune" id="lacune"></div>
+    <div class="card pannello" id="cronometro" hidden></div>
+    <div class="card pannello" id="domande" hidden><h4>Domande per il docente</h4><ul id="domandeLista"></ul></div>
+  </div>
+
+  <div class="card pannello">
+    <h4 id="outTitolo">Lavoro degli agenti</h4>
+    <div class="md" id="out"><p class="vuoto">Scegli un corso e avvia il crash test: gli studenti fantasma provano a superare l'esame usando solo il materiale del corso. Clicca su un agente per vedere cosa ha prodotto.</p></div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const md = t => (window.marked ? marked.parse(String(t ?? "")) : "<pre>" + esc(t) + "</pre>");
+const ETICHETTE = {rossa:"🔴 Mai spiegato", verde:"🟢 Solo a voce", gialla:"🟡 Fuori ordine", prerequisito:"🔵 Prerequisito dato per scontato", trappola:"🪤 Trappola nel testo"};
+// ordine di importanza per la "priorita' della settimana"
+const PESO = {rossa:0, prerequisito:1, trappola:2, gialla:3, verde:4};
+const numEs = x => { const m = String(x ?? "").match(/\d+/); return m ? +m[0] : 0; };
+const DECISIONI = {da_sistemare:"Da sistemare", voluta:"Voluta", falso_allarme:"Falso allarme"};
+let agenti = [], corsi = [], output = {}, risultato = null, filtro = "tutte";
+
+function mostra(id){
+  document.querySelectorAll(".agent").forEach(a => a.classList.toggle("sel", a.dataset.id === id));
+  const a = agenti.find(x => x.id === id);
+  if (a && output[id]) { $("#outTitolo").textContent = a.icona + " " + a.nome; $("#out").innerHTML = md(output[id]); }
+}
+function stato(id, cls, txt){
+  const el = document.querySelector(`.agent[data-id="${id}"]`);
+  if (!el) return;
+  el.classList.remove("lavora","fatto"); if (cls) el.classList.add(cls);
+  el.querySelector(".st").textContent = txt;
+}
+function aggiornaRiepilogo(){
+  const c = corsi.find(x => x.nome === $("#corso").value);
+  if (!c) { $("#riep").textContent = "Nessun corso nella cartella materiale."; $("#vai").disabled = true; return; }
+  if (c.errore) { $("#riep").innerHTML = `<span class="err">${esc(c.errore)}</span>`; $("#vai").disabled = true; return; }
+  $("#vai").disabled = false;
+  $("#riep").textContent = `${c.slide} slide · ${c.frammenti_trascrizione} frammenti di videolezione · lezioni ${c.lezioni.join(", ")} · ` +
+    (c.ha_esame ? "esame ✓" : "esame mancante") + (c.ha_soluzioni ? " · soluzioni ✓" : "") + (c.ha_chiave ? " · corso di test con lacune note" : "");
+}
+
+async function caricaConfig(){
+  for (let i = 0; i < 60; i++) {
+    try { const r = await fetch("/api/config"); if (r.ok) return await r.json(); } catch (e) {}
+    $("#modalita").textContent = "Avvio del server…";
+    await new Promise(res => setTimeout(res, 1000));
+  }
+  throw new Error("Server non raggiungibile");
+}
+
+async function init(){
+  const c = await caricaConfig();
+  $("#sottotitolo").textContent = c.sottotitolo;
+  const b = $("#modalita");
+  b.textContent = c.modalita === "demo" ? "Modalità demo" : "Modello: " + c.modello;
+  b.classList.toggle("demo", c.modalita === "demo");
+  corsi = c.corsi || [];
+  $("#corso").innerHTML = corsi.map(x => `<option value="${esc(x.nome)}">${esc(x.nome)}</option>`).join("");
+  $("#corso").onchange = aggiornaRiepilogo; aggiornaRiepilogo();
+  agenti = c.agenti;
+  const nFasi = Math.max(...agenti.map(a => a.fase || 1));
+  const colonne = [];
+  for (let f = 1; f <= nFasi; f++) {
+    const qui = agenti.filter(a => (a.fase || 1) === f);
+    colonne.push(`<div class="fase">
+      <div class="etichetta">Fase ${f}${qui.length > 1 ? " · in parallelo" : ""}</div>
+      ${qui.map(a => `
+        <div class="agent" data-id="${a.id}">
+          <div class="top"><span class="ico">${a.icona}</span>${esc(a.nome)}${a.codice ? '<span class="tag">codice</span>' : ""}</div>
+          <div class="role">${esc(a.ruolo)}</div>
+          <div class="st">In attesa</div>
+        </div>`).join("")}
+    </div>`);
+  }
+  $("#pipeline").innerHTML = colonne.join('<div class="freccia">→</div>');
+  document.querySelectorAll(".agent").forEach(el => el.onclick = () => mostra(el.dataset.id));
+}
+
+// una scheda lacuna (usata sia nel riquadro priorita' sia nella lista)
+function scheda(g){
+  return `
+    <div class="card lacuna ${g.tipo} ${g.revisione||""}" data-k="${esc(g.chiave)}">
+      <span class="tipo ${g.tipo}">${ETICHETTE[g.tipo] || esc(g.tipo)}</span>${g.certezza ? `<span class="cert ${g.certezza}" title="Grado di certezza calcolato dal verificatore">certezza ${esc(g.certezza)}</span>` : ""}
+      <h3>${esc(g.titolo)}</h3>
+      ${g.tipo === "trappola" ? `<div class="dove">${g.esercizio ? `Esercizio <b>${esc(g.esercizio)}</b> · ` : ""}nel testo d'esame: <span class="frase">“${esc(g.frase_esame)}”</span></div>`
+        : g.esercizio ? `<div class="dove">Serve in: <b>Esercizio ${esc(g.esercizio)}, passo ${esc(g.passo)}</b> — ${esc(g.testo_passo)}</div>` : (g.testo_passo ? `<div class="dove">${esc(g.testo_passo)}</div>` : "")}
+      ${g.tipo === "trappola" && g.problema ? `<div class="riga"><b>Doppia lettura:</b> ${esc(g.problema)}</div>` : ""}
+      ${g.evidenza && g.evidenza.length ? `<div class="ev">${g.evidenza.map(e => `<div class="fonte"><b>${esc(e.fonte)}</b>${esc(e.nota||"")}${e.citazione?` — “${esc(e.citazione)}”`:""}</div>`).join("")}</div>` : ""}
+      ${g.perche_conta && g.perche_conta !== g.problema ? `<div class="riga"><b>Perché conta:</b> ${esc(g.perche_conta)}</div>` : ""}
+      ${g.suggerimento ? `<div class="riga"><b>Suggerimento:</b> ${esc(g.suggerimento)}</div>` : ""}
+      <div class="decidi"><span>Decisione del docente:</span>
+        ${Object.entries(DECISIONI).map(([k,l]) => `<button class="sec ${g.revisione===k?"on":""}" data-d="${k}">${l}</button>`).join("")}
+      </div>
+    </div>`;
+}
+
+// le 3 segnalazioni piu' importanti: tipo, poi punti dell'esercizio, poi esercizio piu' in alto
+function priorita(r){
+  const punti = {};
+  ((r.brief || {}).esercizi || []).forEach(e => { if (e.punti) punti[numEs(e.id)] = Math.max(punti[numEs(e.id)] || 0, +e.punti); });
+  return r.lacune
+    .filter(g => g.revisione !== "voluta" && g.revisione !== "falso_allarme")
+    .map((g, i) => ({g, i}))
+    .sort((a, b) => (PESO[a.g.tipo] ?? 9) - (PESO[b.g.tipo] ?? 9)
+      || (punti[numEs(b.g.esercizio)] || 0) - (punti[numEs(a.g.esercizio)] || 0)
+      || (numEs(a.g.esercizio) || 99) - (numEs(b.g.esercizio) || 99) || a.i - b.i)
+    .slice(0, 3).map(x => x.g);
+}
+
+function disegnaCopertura(c){
+  if (!c || !c.passi) { $("#copertura").innerHTML = ""; return; }
+  $("#copertura").innerHTML = `<div class="card cop">
+    <div class="testa"><div><div class="grande">${c.pct_slide}%</div><div class="l vuoto">dei passi delle soluzioni d'esame ha una fonte nelle slide</div></div>
+      <div class="vuoto" style="font-size:13px">${c.passi} passi analizzati · misura il materiale, non gli studenti</div></div>
+    <div class="barra" role="img" aria-label="Copertura: ${c.pct_slide}% slide, ${c.pct_voce}% solo a voce, ${c.pct_mai}% mai spiegati">
+      <span class="b-slide" style="width:${c.pct_slide}%"></span><span class="b-voce" style="width:${c.pct_voce}%"></span><span class="b-mai" style="width:${c.pct_mai}%"></span></div>
+    <div class="legenda"><span><i class="b-slide"></i>Giustificati dalle slide · ${c.slide} (${c.pct_slide}%)</span>
+      <span><i class="b-voce"></i>Solo a voce · ${c.voce} (${c.pct_voce}%)</span>
+      <span><i class="b-mai"></i>Senza fonte nel materiale · ${c.mai} (${c.pct_mai}%)</span></div></div>`;
+}
+
+function disegnaCronometro(t){
+  const el = $("#cronometro");
+  if (!t || !(t.esercizi || []).length) { el.hidden = true; return; }
+  el.hidden = false;
+  const quota = t.quota_tempo ? Math.min(100, t.quota_tempo) : 0;
+  el.innerHTML = `<h4>⏱️ Cronometro e carico</h4>
+    <p style="margin:0"><b>${esc(t.messaggio)}</b></p>
+    ${quota ? `<div class="tempo" title="${t.quota_tempo}% del tempo"><span style="width:${quota}%"></span></div>` : ""}
+    <p class="vuoto" style="font-size:13px;margin:6px 0 10px">Minuti stimati per uno studente medio con il metodo visto a lezione. Il carico conta le lezioni diverse citate dalle fonti verificate.</p>
+    <div class="tabella"><table><thead><tr><th>Esercizio</th><th>Punti</th><th>Minuti</th><th>Lezioni coinvolte</th><th>Carico</th><th>Nota</th></tr></thead><tbody>
+    ${t.esercizi.map(e => `<tr><td><b>${esc(e.esercizio)}</b> ${esc(e.argomento || "")}</td><td>${esc(e.punti ?? "–")}</td><td>~${esc(e.minuti)}</td>
+      <td>${(e.lezioni || []).length ? esc(e.lezioni.join(", ")) + (e.distanza_lezioni ? ` <span class="vuoto">(distanza ${e.distanza_lezioni})</span>` : "") : "–"}</td>
+      <td><span class="car ${esc(e.carico)}">${esc(e.carico)}</span></td><td>${esc(e.suggerimento || "")}</td></tr>`).join("")}
+    </tbody></table></div>`;
+}
+
+function disegnaRisultati(){
+  const r = risultato; if (!r) return;
+  r.lacune = r.lacune || [];
+  $("#risultati").hidden = false;
+  const sim = r.simulato || /simulaz|replay/i.test(r.origine || "");
+  $("#simBadge").hidden = !sim;
+  $("#simBadge").title = r.origine || "";
+  $("#sintesi").textContent = r.sintesi || "";
+  $("#scarica").href = "/api/report/" + encodeURIComponent($("#corso").value);
+  disegnaCopertura(r.copertura);
+  const conta = t => r.lacune.filter(g => g.tipo === t).length;
+  const kpi = [
+    [r.passi_totali, "passi delle soluzioni analizzati"],
+    [conta("rossa"), "🔴 mai spiegati"], [conta("verde"), "🟢 solo a voce"],
+    [conta("gialla"), "🟡 fuori ordine"], [conta("prerequisito"), "🔵 prerequisiti"],
+    [conta("trappola"), "🪤 trappole nel testo"],
+    [r.citazioni_scartate, "citazioni inventate scartate"],
+  ];
+  $("#kpi").innerHTML = kpi.map(([n,l]) => `<div class="card"><div class="n">${n ?? 0}</div><div class="l">${l}</div></div>`).join("");
+  const v = r.valutazione;
+  $("#valutazione").innerHTML = v ? `<div class="card valut">
+      <b>Test su corso con lacune piantate:</b> trovate <b>${v.trovate} su ${v.piantate}</b> (recall ${Math.round(v.recall*100)}%) ·
+      precisione ${Math.round(v.precision*100)}% · falso amico segnalato: ${v.falso_amico_segnalato ? "sì" : "no"}
+      ${v.mancate && v.mancate.length ? `<div class="riga"><b>Mancate:</b> ${v.mancate.map(esc).join("; ")}</div>` : ""}</div>` : "";
+  // priorita' della settimana (solo nella vista "tutte")
+  const top = filtro === "tutte" ? priorita(r) : [];
+  $("#priorita").innerHTML = top.length ? `<div class="prio"><h3>📌 Priorità della settimana</h3><div class="lacune">${top.map(scheda).join("")}</div></div>` : "";
+  const tipi = ["tutte","rossa","verde","gialla","prerequisito","trappola"].filter(t => t === "tutte" || t !== "trappola" || conta(t));
+  $("#filtri").innerHTML = tipi.map(t => `<button class="sec ${filtro===t?"on":""}" data-f="${t}">${t==="tutte"?"Tutte ("+r.lacune.length+")":ETICHETTE[t]+" ("+conta(t)+")"}</button>`).join("");
+  document.querySelectorAll("#filtri button").forEach(b => b.onclick = () => { filtro = b.dataset.f; disegnaRisultati(); });
+  const lista = r.lacune.filter(g => (filtro === "tutte" || g.tipo === filtro) && !top.includes(g));
+  $("#lacune").innerHTML = lista.length ? (top.length ? '<h4 class="vuoto" style="margin:4px 0 0;font-size:13px;text-transform:uppercase;letter-spacing:.06em">Tutte le altre segnalazioni</h4>' : "") + lista.map(scheda).join("")
+    : (top.length ? "" : '<p class="vuoto">Nessuna lacuna di questo tipo.</p>');
+  document.querySelectorAll(".lacuna .decidi button").forEach(b => b.onclick = async () => {
+    const chiave = b.closest(".lacuna").dataset.k;
+    const g = r.lacune.find(x => x.chiave === chiave);
+    const nuova = g.revisione === b.dataset.d ? "" : b.dataset.d;
+    try {
+      const res = await fetch("/api/revisione", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({corso: $("#corso").value, chiave, decisione: nuova})});
+      if (res.ok) { g.revisione = nuova || null; disegnaRisultati(); }
+    } catch (e) {}
+  });
+  disegnaCronometro(r.cronometro);
+  const dom = r.domande_per_il_docente || [];
+  $("#domande").hidden = !dom.length;
+  $("#domandeLista").innerHTML = dom.map(d => `<li>${esc(d)}</li>`).join("");
+}
+
+$("#vai").onclick = async () => {
+  if (!agenti.length) await init();
+  output = {}; risultato = null; filtro = "tutte";
+  $("#risultati").hidden = true;
+  agenti.forEach(a => stato(a.id, "", "In attesa"));
+  $("#vai").disabled = true;
+  $("#outTitolo").textContent = "Lavoro degli agenti";
+  $("#out").innerHTML = '<p class="vuoto">Il crash test è in corso…</p>';
+  let r;
+  try {
+    r = await fetch("/api/run", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({corso: $("#corso").value})});
+  } catch (e) { $("#vai").disabled = false; return; }
+  if (!r.ok) { $("#out").innerHTML = `<p class="err">${esc((await r.json()).detail || "Errore")}</p>`; $("#vai").disabled = false; return; }
+  const {run_id} = await r.json();
+  const es = new EventSource("/api/stream/" + run_id);
+  es.onmessage = m => {
+    const ev = JSON.parse(m.data);
+    if (ev.tipo === "avviso") $("#modalita").textContent = "⚠ " + ev.messaggio;
+    if (ev.tipo === "modello") setTimeout(() => { $("#modalita").textContent = "Modello: " + ev.modello; }, 2500);
+    if (ev.tipo === "inizio" && ev.modello) $("#modalita").textContent = "Modello: " + ev.modello;
+    if (ev.tipo === "agente_inizio") stato(ev.id, "lavora", "Sta lavorando…");
+    if (ev.tipo === "agente_fine") { output[ev.id] = ev.output; stato(ev.id, "fatto", "Fatto ✓"); mostra(ev.id); }
+    if (ev.tipo === "lacune") { risultato = ev.risultato; disegnaRisultati(); $("#risultati").scrollIntoView({behavior:"smooth"}); }
+    if (ev.tipo === "errore") {
+      $("#outTitolo").textContent = "Errore";
+      $("#out").innerHTML = `<p class="err"><b>${esc(ev.consiglio || "Qualcosa è andato storto.")}</b></p><pre>${esc(ev.messaggio)}</pre>`;
+      document.querySelectorAll(".agent.lavora").forEach(a => stato(a.dataset.id, "", "Interrotto"));
+    }
+  };
+  es.addEventListener("chiuso", () => { es.close(); $("#vai").disabled = false; });
+  es.onerror = () => { es.close(); $("#vai").disabled = false; };
+};
+
+init();
+</script>
+</body>
+</html>

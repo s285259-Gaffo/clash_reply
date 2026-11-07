@@ -1,0 +1,83 @@
+[
+  {
+    "id": "V1",
+    "tipo": "verde",
+    "descrizione": "Equazione della retta tangente y = f(x0) + f'(x0)(x - x0)",
+    "esercizio_esame": "Esercizio 2",
+    "passaggio_soluzione": "Passo 5: L'equazione della retta tangente in x0 è y = f(x0) + f'(x0)(x - x0).",
+    "dove_compare": "trascrizione_lezione_02 [25:15]",
+    "perche_e_una_lacuna": "La docente la detta a voce e dice che la chiede a ogni appello, ma la Slide 10 parla solo di coefficiente angolare (pendenza) della tangente, senza l'equazione della retta: chi ripassa dalle slide non ha la formula."
+  },
+  {
+    "id": "V2",
+    "tipo": "verde",
+    "descrizione": "Criterio di scelta nell'integrazione per parti: il logaritmo si deriva sempre (il polinomio associato si integra)",
+    "esercizio_esame": "Esercizio 4",
+    "passaggio_soluzione": "Passo 5: Si integra per parti scegliendo di derivare il logaritmo e integrare il polinomio: f = ln x, g' = x.",
+    "dove_compare": "trascrizione_lezione_04 [19:20]",
+    "perche_e_una_lacuna": "Le Slide 25-27 e 32 danno la formula e esempi con il polinomio che si deriva (x e^x, x cos x), ma la regola pratica su quale fattore derivare, e in particolare che con il logaritmo si deriva il logaritmo e si integra il polinomio, è detta solo a voce. Dalle slide si sarebbe portati a derivare x, come negli esempi."
+  },
+  {
+    "id": "V3",
+    "tipo": "verde",
+    "descrizione": "Area con funzione che cambia segno: integrale del valore assoluto, spezzando l'intervallo negli zeri",
+    "esercizio_esame": "Esercizio 4",
+    "passaggio_soluzione": "Passo 12: Poiché f cambia segno, l'area è l'integrale di |f| = integrale da 0 a 1 di (1 - x^2) + integrale da 1 a 2 di (x^2 - 1).",
+    "dove_compare": "trascrizione_lezione_04 [49:15]",
+    "perche_e_una_lacuna": "La Slide 28 dice solo che, se f >= 0, l'integrale definito è l'area. Il procedimento per f che cambia segno (zeri, spezzare, cambiare segno ai pezzi negativi) è spiegato solo in videolezione (49:15-55:50). Chi usa le slide calcola l'integrale da 0 a 2 di x^2 - 1 = 2/3 invece dell'area 2."
+  },
+  {
+    "id": "R1",
+    "tipo": "rossa",
+    "descrizione": "Limite notevole dell'esponenziale: (e^t - 1)/t tende a 1 per t che tende a 0",
+    "esercizio_esame": "Esercizio 1",
+    "passaggio_soluzione": "Passo 3: (e^{2x} - 1)/(2x) tende a 1 per il limite notevole lim_{t->0} (e^t - 1)/t = 1, con t = 2x.",
+    "dove_compare": null,
+    "perche_e_una_lacuna": "La Lezione 1 presenta i limiti notevoli di seno, coseno, logaritmo e del numero e ((1 + a/x)^x), ma mai quello dell'esponenziale, né in slide né a voce. La soluzione ufficiale lo usa come noto. Si potrebbe ricavare solo con un ragionamento non visto a lezione (derivata di e^x in 0 come limite del rapporto incrementale)."
+  },
+  {
+    "id": "R2",
+    "tipo": "rossa",
+    "descrizione": "Cambio degli estremi di integrazione nella sostituzione per integrali definiti",
+    "esercizio_esame": "Esercizio 4",
+    "passaggio_soluzione": "Passo 2: Si cambiano gli estremi di integrazione: per x = 0 si ha t = cos 0 = 1; per x = pi/2 si ha t = cos(pi/2) = 0.",
+    "dove_compare": null,
+    "perche_e_una_lacuna": "La sostituzione è spiegata in Lezione 3 solo per integrali indefiniti (con il ritorno alla variabile x); in Lezione 4 gli integrali definiti sono calcolati con primitive dirette e per parti, mai per sostituzione. Alla domanda di uno studente (trascrizione_lezione_04 [80:30]) la docente conferma che all'esame ci saranno, ma non spiega come trattare gli estremi. Lo studente potrebbe aggirarlo tornando a x, ma il passaggio della soluzione ufficiale non ha fonte."
+  },
+  {
+    "id": "G1",
+    "tipo": "gialla",
+    "descrizione": "Integrazione per parti (formula di integrale di ln x = x ln x - x) usata nella tabella della Lezione 3 ma spiegata solo nella Lezione 4",
+    "esercizio_esame": "Esercizio 4",
+    "passaggio_soluzione": "Passo 7: Formula per parti negli integrali definiti: integrale di x ln x = [x^2/2 ln x] da 1 a e - integrale di x^2/2 * 1/x.",
+    "dove_compare": "trascrizione_lezione_04 [29:10]; slide_lezione_04 Slide 27 (usato prima, senza spiegazione, in slide_lezione_03 Slide 20)",
+    "perche_e_una_lacuna": "La tabella degli integrali immediati della Slide 20 (Lezione 3) contiene la riga 'ln x -> x ln x - x + c', che non è immediata: si ottiene per parti, metodo introdotto solo in Lezione 4 (Slide 27, e a voce 'ecco da dove viene la riga della tabella'). Chi studia in ordine trova in L3 un risultato senza giustificazione."
+  },
+  {
+    "id": "P1",
+    "tipo": "prerequisito",
+    "descrizione": "Formula di duplicazione del coseno / identità sin^2 x = (1 - cos 2x)/2",
+    "esercizio_esame": "Esercizio 3",
+    "passaggio_soluzione": "Passo 5: Si usa l'identità sin^2 x = (1 - cos(2x))/2 (dalla formula di duplicazione cos(2x) = 1 - 2 sin^2 x).",
+    "dove_compare": null,
+    "perche_e_una_lacuna": "Trigonometria delle superiori, data per scontata nel brief della docente e mai richiamata in slide o lezioni. Senza di essa l'integrale di sin^2 x non si risolve con i metodi del corso. Gli studenti da istituto tecnico che non hanno seguito il precorso rischiano di non conoscerla."
+  },
+  {
+    "id": "P2",
+    "tipo": "prerequisito",
+    "descrizione": "Proprietà dei logaritmi: ln(a/b) = ln a - ln b, ln(a^k) = k ln a",
+    "esercizio_esame": "Esercizio 2",
+    "passaggio_soluzione": "Passo 7: Con le proprietà dei logaritmi, per x > 0: g(x) = 2 ln x - (1/2) ln(x + 1).",
+    "dove_compare": null,
+    "perche_e_una_lacuna": "Proprietà delle superiori, mai richiamate nel materiale (la docente le dà per scontate nel brief). Senza semplificare prima, la derivata richiede catena + quoziente + radice ed è molto più lunga e soggetta a errori; la richiesta di 'unica frazione semplificata' presuppone questa strada."
+  },
+  {
+    "id": "N1",
+    "tipo": "non_lacuna",
+    "descrizione": "Limite notevole del seno con argomento 3x (non x): 3x/sin(3x) tende a 1",
+    "esercizio_esame": "Esercizio 1",
+    "passaggio_soluzione": "Passo 4: 3x/sin(3x) tende a 1 per il limite notevole del seno applicato all'argomento 3x.",
+    "dove_compare": "slide_lezione_01 Slide 6 (anche trascrizione_lezione_01 [48:15])",
+    "perche_e_una_lacuna": "FALSO AMICO, non è una lacuna: la Slide 6 lo dice con parole diverse ('Il limite notevole resta vero se al posto di x c'è una qualunque espressione che tende a zero', 'se g(x) -> 0 allora sin g(x)/g(x) -> 1'), con esempi su sin(5x) e sin(4x)/sin(2x). Un sistema che cerca solo la parola 'argomento' o '3x' potrebbe segnalarla per errore."
+  }
+]

@@ -1,0 +1,1687 @@
+{
+  "origine": "simulazione dimostrativa",
+  "simulato": true,
+  "corso": {
+    "nome": "analisi1_simulato",
+    "slide": 32,
+    "frammenti_trascrizione": 136,
+    "lezioni": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "ha_esame": true,
+    "ha_soluzioni": true,
+    "ha_chiave": true
+  },
+  "brief": {
+    "corso": "Analisi Matematica 1 — Ingegneria (Prof.ssa Elena Rinaldi)",
+    "obiettivi": [
+      "Calcolare limiti, derivate e integrali con sicurezza.",
+      "Giustificare ogni passaggio del procedimento risolutivo."
+    ],
+    "durata_esame_minuti": 120,
+    "esercizi": [
+      {
+        "id": "1",
+        "argomento": "Limiti e limiti notevoli",
+        "lezione_argomento": 1,
+        "punti": 7,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Sostituendo x=0 si ottiene 0/0: forma indeterminata",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 2,
+            "testo": "Moltiplicare e dividere per 2x e per 3x per far comparire i limiti notevoli",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 3,
+            "testo": "Limite notevole dell'esponenziale (e^t - 1)/t -> 1 con t = 2x",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 4,
+            "testo": "Limite notevole del seno applicato all'argomento 3x -> 0",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 5,
+            "testo": "Algebra dei limiti (limite del prodotto): risultato 2/3",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 6,
+            "testo": "Sostituendo x=0 si ottiene 0/0: forma indeterminata",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 7,
+            "testo": "Far comparire (2x)^2 al denominatore riorganizzando i fattori",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 8,
+            "testo": "Limite notevole del coseno con argomento 2x e x/sin x -> 1",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 9,
+            "testo": "Algebra dei limiti: 1/2 * 4 * 1 = 2",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 10,
+            "testo": "Riconoscere la forma indeterminata 1^infinito",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 11,
+            "testo": "Limite notevole (1 + a/x)^x -> e^a con a = 2",
+            "minuti_stimati": 2
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "argomento": "Derivate e retta tangente",
+        "lezione_argomento": 2,
+        "punti": 8,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Regola del prodotto (uv)' = u'v + uv'",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 2,
+            "testo": "Regola della catena per e^(-x^2)",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 3,
+            "testo": "Combinare e raccogliere e^(-x^2): f'(x) = e^(-x^2)(1 - 2x^2)",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 4,
+            "testo": "Calcolare f(1) e f'(1)",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 5,
+            "testo": "Equazione della retta tangente y = f(x0) + f'(x0)(x - x0)",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 6,
+            "testo": "Sostituire i valori: y = (2 - x)/e",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 7,
+            "testo": "Proprietà dei logaritmi: g(x) = 2 ln x - (1/2) ln(x + 1)",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 8,
+            "testo": "Linearità e regola della catena: g'(x) = 2/x - 1/(2(x+1))",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 9,
+            "testo": "Denominatore comune: g'(x) = (3x + 4)/(2x(x + 1))",
+            "minuti_stimati": 3
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "argomento": "Integrali indefiniti e sostituzione",
+        "lezione_argomento": 3,
+        "punti": 7,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Sostituzione t = x^2 + 1, dt = 2x dx",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 2,
+            "testo": "Riscrivere l'integrale in t: (1/2) integrale di t^(1/2) dt",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 3,
+            "testo": "Tabella degli integrali immediati: t^(3/2)/3",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 4,
+            "testo": "Tornare alla variabile x",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 5,
+            "testo": "Identità sin^2 x = (1 - cos 2x)/2 (formula di duplicazione)",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 6,
+            "testo": "Linearità dell'integrale",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 7,
+            "testo": "Integrale con argomento lineare: integrale di cos(2x) = sin(2x)/2",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 8,
+            "testo": "Risultato x/2 - sin(2x)/4 + c",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 9,
+            "testo": "Verifica derivando il risultato",
+            "minuti_stimati": 2
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "argomento": "Integrali definiti e aree",
+        "lezione_argomento": 4,
+        "punti": 8,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Sostituzione t = cos x, dt = -sin x dx",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 2,
+            "testo": "Cambiare gli estremi di integrazione: x=0 -> t=1, x=pi/2 -> t=0",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 3,
+            "testo": "Scambiare gli estremi cambia il segno",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 4,
+            "testo": "Teorema fondamentale: [t^3/3] da 0 a 1 = 1/3",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 5,
+            "testo": "Per parti: derivare il logaritmo e integrare il polinomio (f = ln x, g' = x)",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 6,
+            "testo": "f' = 1/x e g = x^2/2",
+            "minuti_stimati": 1
+          },
+          {
+            "n": 7,
+            "testo": "Formula per parti negli integrali definiti",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 8,
+            "testo": "Valutare [x^2/2 ln x] da 1 a e = e^2/2",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 9,
+            "testo": "Integrale di x/2 da 1 a e = (e^2 - 1)/4",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 10,
+            "testo": "Risultato (e^2 + 1)/4",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 11,
+            "testo": "Zeri di f in [0,2] e segno di f",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 12,
+            "testo": "f cambia segno: l'area è l'integrale di |f|, spezzando in x = 1",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 13,
+            "testo": "Integrale da 0 a 1 di (1 - x^2) = 2/3",
+            "minuti_stimati": 2
+          },
+          {
+            "n": 14,
+            "testo": "Integrale da 1 a 2 di (x^2 - 1) = 4/3",
+            "minuti_stimati": 3
+          },
+          {
+            "n": 15,
+            "testo": "Area = 2/3 + 4/3 = 2 (additività)",
+            "minuti_stimati": 1
+          }
+        ]
+      }
+    ],
+    "prerequisiti_dati_per_scontati": [
+      "Algebra e frazioni algebriche",
+      "Equazioni e disequazioni",
+      "Trigonometria con le formule principali",
+      "Esponenziali e logaritmi con le loro proprietà"
+    ],
+    "domande_per_il_docente": [
+      "Il cambio degli estremi nella sostituzione (Es. 4a) è lasciato volutamente all'autonomia degli studenti?",
+      "Il precorso di settembre richiama le formule di duplicazione e le proprietà dei logaritmi?"
+    ]
+  },
+  "lacune": [
+    {
+      "esercizio": "1",
+      "passo": "3",
+      "testo_passo": "Limite notevole dell'esponenziale (e^t - 1)/t -> 1 con t = 2x",
+      "tipo": "rossa",
+      "evidenza": [],
+      "certezza": "media",
+      "nota_slide": "il testo citato non compare in S7",
+      "nota_lezioni": "non_trovato",
+      "id": "g1",
+      "chiave": "rossa:es1-p3",
+      "titolo": "Limite notevole dell'esponenziale",
+      "perche_conta": "Serve all'Es. 1a (7 punti): senza, il limite non si chiude con i metodi del corso.",
+      "suggerimento": "Valuta una riga in S7 accanto agli altri limiti notevoli, o un cenno a voce in lezione 1.",
+      "revisione": null
+    },
+    {
+      "esercizio": "2",
+      "passo": "5",
+      "testo_passo": "Equazione della retta tangente y = f(x0) + f'(x0)(x - x0)",
+      "tipo": "verde",
+      "evidenza": [
+        {
+          "fonte": "L2@25:15",
+          "citazione": "La retta tangente al grafico di f nel punto x zero è: y uguale f di x zero più f primo di x zero per x meno x zero",
+          "nota": "spiegato solo a voce"
+        }
+      ],
+      "nota_slide": "non_trovato",
+      "certezza": "alta",
+      "id": "g2",
+      "chiave": "verde:es2-p5",
+      "titolo": "Equazione della retta tangente solo a voce",
+      "perche_conta": "Serve all'Es. 2a: la slide S10 parla solo di coefficiente angolare.",
+      "suggerimento": "Valuta una riga in S10 con la formula detta a L2@25:15.",
+      "revisione": null
+    },
+    {
+      "esercizio": "2",
+      "passo": "7",
+      "testo_passo": "Proprietà dei logaritmi: g(x) = 2 ln x - (1/2) ln(x + 1)",
+      "tipo": "prerequisito",
+      "prerequisito": "Proprietà dei logaritmi: ln(a/b) = ln a - ln b, ln(a^k) = k ln a",
+      "evidenza": [],
+      "perche": "mai richiamate in slide o a voce",
+      "certezza": "media",
+      "id": "g3",
+      "chiave": "prerequisito:proprietà-dei-logaritmi-ln-a-b-ln-a-ln-b",
+      "titolo": "Proprietà dei logaritmi",
+      "perche_conta": "Questo passo non ha una fonte nel materiale: è dato per scontato dalle superiori.",
+      "suggerimento": "Valuta un richiamo in una slide della lezione 2 o un rimando al precorso.",
+      "revisione": null
+    },
+    {
+      "esercizio": "3",
+      "passo": "5",
+      "testo_passo": "Identità sin^2 x = (1 - cos 2x)/2 (formula di duplicazione)",
+      "tipo": "prerequisito",
+      "prerequisito": "Formula di duplicazione del coseno: sin^2 x = (1 - cos 2x)/2",
+      "evidenza": [],
+      "perche": "trigonometria delle superiori non richiamata",
+      "certezza": "media",
+      "id": "g4",
+      "chiave": "prerequisito:formula-di-duplicazione-del-coseno-sin-2",
+      "titolo": "Formula di duplicazione del coseno",
+      "perche_conta": "Senza questa identità l'Es. 3b non si risolve con i metodi del corso.",
+      "suggerimento": "Valuta un richiamo in una slide della lezione 3 o un rimando al precorso.",
+      "revisione": null
+    },
+    {
+      "esercizio": "4",
+      "passo": "2",
+      "testo_passo": "Cambiare gli estremi di integrazione: x=0 -> t=1, x=pi/2 -> t=0",
+      "tipo": "rossa",
+      "evidenza": [],
+      "certezza": "alta",
+      "nota_slide": "non_trovato",
+      "nota_lezioni": "non_trovato",
+      "id": "g5",
+      "chiave": "rossa:es4-p2",
+      "titolo": "Cambio degli estremi nella sostituzione",
+      "perche_conta": "Serve all'Es. 4a: la sostituzione è mostrata solo per integrali indefiniti.",
+      "suggerimento": "Valuta un esempio di sostituzione con estremi dopo S30, oppure segnalalo come esercizio di autonomia.",
+      "revisione": null
+    },
+    {
+      "esercizio": "4",
+      "passo": "11",
+      "testo_passo": "Zeri di f in [0,2] e segno di f",
+      "tipo": "verde",
+      "evidenza": [
+        {
+          "fonte": "L4@52:30",
+          "citazione": "trovo gli zeri della funzione, spezzo l'integrale in quei punti",
+          "nota": "spiegato solo a voce"
+        }
+      ],
+      "nota_slide": "non_trovato",
+      "certezza": "alta",
+      "id": "g6",
+      "chiave": "verde:es4-p11",
+      "titolo": "Zeri e segno di f solo a voce",
+      "perche_conta": "Serve all'Es. 4c: il procedimento per le aree è descritto solo in videolezione.",
+      "suggerimento": "Valuta una slide dopo S28 che riprenda L4@52:30.",
+      "revisione": null
+    },
+    {
+      "esercizio": "4",
+      "passo": "12",
+      "testo_passo": "f cambia segno: l'area è l'integrale di |f|, spezzando in x = 1",
+      "tipo": "verde",
+      "evidenza": [
+        {
+          "fonte": "L4@49:15",
+          "citazione": "Quindi l'area è l'integrale del valore assoluto di f",
+          "nota": "spiegato solo a voce"
+        }
+      ],
+      "nota_slide": "non_trovato",
+      "certezza": "alta",
+      "id": "g7",
+      "chiave": "verde:es4-p12",
+      "titolo": "Area con funzione che cambia segno",
+      "perche_conta": "Chi ripassa solo dalle slide calcola l'integrale (2/3) invece dell'area (2).",
+      "suggerimento": "Valuta una slide dopo S28 che riprenda quanto detto a L4@49:15.",
+      "revisione": null
+    },
+    {
+      "tipo": "gialla",
+      "concetto": "Integrale di ln x nella tabella (si ricava per parti)",
+      "esercizio": "",
+      "passo": "",
+      "testo_passo": "Usato in lezione 3, spiegato in lezione 4",
+      "certezza": "alta",
+      "evidenza": [
+        {
+          "fonte": "S20",
+          "citazione": "Integrali immediati",
+          "nota": "usato qui"
+        },
+        {
+          "fonte": "S27",
+          "citazione": "Ecco da dove viene la formula della tabella degli integrali immediati",
+          "nota": "spiegato solo qui"
+        }
+      ],
+      "id": "g8",
+      "chiave": "gialla:integrale-di-ln-x-nella-tabella-si-ricav",
+      "titolo": "Formula di ln x prima del metodo per parti",
+      "perche_conta": "In lezione 3 la riga della tabella arriva senza giustificazione.",
+      "suggerimento": "Valuta un rimando in S20 alla lezione 4 (S27).",
+      "revisione": null
+    },
+    {
+      "tipo": "trappola",
+      "esercizio": "4",
+      "passo": "",
+      "frase_esame": "Calcolare l'area della regione compresa tra il grafico di",
+      "problema": "Nelle slide 'area' coincide con l'integrale definito (solo se f >= 0); a voce 'area' implica il valore assoluto. Chi ripassa dalle slide calcola 2/3.",
+      "testo_passo": "Nel testo d'esame: “Calcolare l'area della regione compresa tra il grafico di”",
+      "certezza": "alta",
+      "evidenza": [
+        {
+          "fonte": "S28",
+          "citazione": "è l'area della regione tra il grafico di",
+          "nota": "nel materiale del corso"
+        }
+      ],
+      "id": "g9",
+      "chiave": "trappola:calcolare-l-area-della-regione-compresa-",
+      "titolo": "“Area” letta come integrale",
+      "perche_conta": "Chi ripassa dalle slide può rispondere 2/3 invece di 2 pur avendo studiato.",
+      "suggerimento": "Valuta se ricordare nella consegna che f cambia segno; la scelta resta tua.",
+      "revisione": null
+    },
+    {
+      "tipo": "trappola",
+      "esercizio": "4",
+      "passo": "",
+      "frase_esame": "usando la sostituzione",
+      "problema": "Nel corso la procedura di sostituzione termina sempre tornando alla x: per un integrale definito la consegna si può leggere in due modi (cambiare gli estremi o tornare alla x).",
+      "testo_passo": "Nel testo d'esame: “usando la sostituzione”",
+      "certezza": "alta",
+      "evidenza": [
+        {
+          "fonte": "S22",
+          "citazione": "tornare alla variabile x",
+          "nota": "nel materiale del corso"
+        }
+      ],
+      "id": "g10",
+      "chiave": "trappola:usando-la-sostituzione",
+      "titolo": "“Usando la sostituzione” con estremi",
+      "perche_conta": "Due procedimenti diversi sono entrambi coerenti con il materiale.",
+      "suggerimento": "Valuta se precisare nella consegna cosa fare con gli estremi; la scelta resta tua.",
+      "revisione": null
+    }
+  ],
+  "copertura": {
+    "passi": 44,
+    "slide": 37,
+    "voce": 3,
+    "mai": 4,
+    "pct_slide": 84,
+    "pct_voce": 7,
+    "pct_mai": 9
+  },
+  "cronometro": {
+    "durata_esame_minuti": 120,
+    "minuti_totali": 89,
+    "quota_tempo": 74,
+    "messaggio": "Con il metodo insegnato a lezione servono ~89 minuti, ne hai dati 120 (74% del tempo disponibile).",
+    "esercizi": [
+      {
+        "esercizio": "1",
+        "argomento": "Limiti e limiti notevoli",
+        "punti": 7,
+        "passi": 11,
+        "minuti": 20,
+        "lezioni": [
+          1
+        ],
+        "n_lezioni": 1,
+        "distanza_lezioni": 0,
+        "carico": "basso",
+        "suggerimento": ""
+      },
+      {
+        "esercizio": "2",
+        "argomento": "Derivate e retta tangente",
+        "punti": 8,
+        "passi": 9,
+        "minuti": 20,
+        "lezioni": [
+          2
+        ],
+        "n_lezioni": 1,
+        "distanza_lezioni": 0,
+        "carico": "basso",
+        "suggerimento": ""
+      },
+      {
+        "esercizio": "3",
+        "argomento": "Integrali indefiniti e sostituzione",
+        "punti": 7,
+        "passi": 9,
+        "minuti": 17,
+        "lezioni": [
+          3
+        ],
+        "n_lezioni": 1,
+        "distanza_lezioni": 0,
+        "carico": "basso",
+        "suggerimento": ""
+      },
+      {
+        "esercizio": "4",
+        "argomento": "Integrali definiti e aree",
+        "punti": 8,
+        "passi": 15,
+        "minuti": 32,
+        "lezioni": [
+          2,
+          3,
+          4
+        ],
+        "n_lezioni": 3,
+        "distanza_lezioni": 2,
+        "carico": "alto",
+        "suggerimento": "Valuta di spezzarlo in sotto-domande A/B/C: richiede di collegare 3 lezioni diverse (dalla 2 alla 4)."
+      }
+    ]
+  },
+  "stato_passi": [
+    {
+      "esercizio": "1",
+      "passo": "1",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "2",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "3",
+      "stato": "mai",
+      "lezione": null,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "4",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "5",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "6",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "7",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "8",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "9",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "10",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "1",
+      "passo": "11",
+      "stato": "slide",
+      "lezione": 1,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "1",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "2",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "3",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "4",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "5",
+      "stato": "voce",
+      "lezione": 2,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "6",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "7",
+      "stato": "mai",
+      "lezione": null,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "8",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "2",
+      "passo": "9",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "1",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "2",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "3",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "4",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "5",
+      "stato": "mai",
+      "lezione": null,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "6",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "7",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "8",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "3",
+      "passo": "9",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "1",
+      "stato": "slide",
+      "lezione": 3,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "2",
+      "stato": "mai",
+      "lezione": null,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "3",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "4",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "5",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "6",
+      "stato": "slide",
+      "lezione": 2,
+      "minuti": 1.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "7",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "8",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "9",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "10",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "11",
+      "stato": "voce",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "12",
+      "stato": "voce",
+      "lezione": 4,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "13",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 2.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "14",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 3.0
+    },
+    {
+      "esercizio": "4",
+      "passo": "15",
+      "stato": "slide",
+      "lezione": 4,
+      "minuti": 1.0
+    }
+  ],
+  "passi_totali": 44,
+  "passi_coperti_da_slide": 37,
+  "citazioni_scartate": 3,
+  "domande_per_il_docente": [
+    "Il cambio degli estremi nella sostituzione (Es. 4a) è lasciato volutamente all'autonomia degli studenti?",
+    "Il precorso di settembre richiama le formule di duplicazione e le proprietà dei logaritmi?"
+  ],
+  "sintesi": "L'84% dei passi delle soluzioni ha una fonte nelle slide; due passi non hanno una fonte nel materiale e due si appoggiano a prerequisiti delle superiori. Il tempo stimato sta nelle due ore.",
+  "secondi": 94.0,
+  "valutazione": {
+    "piantate": 8,
+    "trovate": 7,
+    "recall": 0.88,
+    "segnalate": 8,
+    "corrispondenti": 7,
+    "precision": 0.88,
+    "falso_amico_segnalato": 0,
+    "mancate": [
+      "Criterio di scelta nell'integrazione per parti: il logaritmo si deriva sempre (il polinomio associato si integra)"
+    ]
+  },
+  "registro_verifiche": [
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S4",
+      "citazione": "Forme che non si risolvono con l'algebra dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "moltiplicare e dividere per la stessa quantità per far comparire la forma del limite notevole",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S7",
+      "citazione": "esponenziale meno uno fratto t tende proprio a uno",
+      "valida": false,
+      "punteggio": 0.4,
+      "motivo": "il testo citato non compare in S7"
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Il limite notevole resta vero se al posto di x c'è una qualunque espressione che tende a zero",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S4",
+      "citazione": "Forme che non si risolvono con l'algebra dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Il limite notevole resta vero se al posto di x c'è una qualunque espressione che tende a zero",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S4",
+      "citazione": "Forme che non si risolvono con l'algebra dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S7",
+      "citazione": "Generalizzazione",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S13",
+      "citazione": "Regola del prodotto",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S15",
+      "citazione": "Derivata della funzione esterna calcolata nella interna, per la derivata della interna",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S16",
+      "citazione": "Spesso servono più regole insieme: prodotto + catena, quoziente + catena",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S10",
+      "citazione": "coefficiente angolare della retta tangente al grafico",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S10",
+      "citazione": "coefficiente angolare della retta tangente al grafico",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S12",
+      "citazione": "Linearità",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S14",
+      "citazione": "Regola del quoziente",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S22",
+      "citazione": "Idea: è la regola della catena letta al contrario",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S22",
+      "citazione": "calcolare dt e riscrivere tutto in funzione di t",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S20",
+      "citazione": "Integrali immediati",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S22",
+      "citazione": "tornare alla variabile x",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S19",
+      "citazione": "Linearità dell'integrale",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S21",
+      "citazione": "Funzioni con argomento lineare",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S21",
+      "citazione": "Funzioni con argomento lineare",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S18",
+      "citazione": "Un integrale indefinito si controlla sempre derivando il risultato",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S22",
+      "citazione": "Si pone t=g(x), quindi dt=g'(x) dx",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S29",
+      "citazione": "Proprietà dell'integrale definito",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S25",
+      "citazione": "f = fattore che si deriva, g' = fattore che si integra",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S11",
+      "citazione": "Derivate delle funzioni elementari",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S32",
+      "citazione": "Per parti negli integrali definiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S32",
+      "citazione": "va valutato subito agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S29",
+      "citazione": "Additività",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S4",
+      "citazione": "Forme che non si risolvono con l'algebra dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "moltiplicare e dividere per la stessa quantità per far comparire la forma del limite notevole",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "Il limite notevole resta vero se al posto di x c'è una qualunque espressione che tende a zero",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S4",
+      "citazione": "Forme che non si risolvono con l'algebra dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "Il limite notevole resta vero se al posto di x c'è una qualunque espressione che tende a zero",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S4",
+      "citazione": "Forme che non si risolvono con l'algebra dei limiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S7",
+      "citazione": "Generalizzazione",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S13",
+      "citazione": "Regola del prodotto",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S15",
+      "citazione": "Derivata della funzione esterna calcolata nella interna, per la derivata della interna",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S16",
+      "citazione": "Spesso servono più regole insieme: prodotto + catena, quoziente + catena",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S10",
+      "citazione": "coefficiente angolare della retta tangente al grafico",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L2@25:15",
+      "citazione": "La retta tangente al grafico di f nel punto x zero è: y uguale f di x zero più f primo di x zero per x meno x zero",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S10",
+      "citazione": "coefficiente angolare della retta tangente al grafico",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S12",
+      "citazione": "Linearità",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S14",
+      "citazione": "Regola del quoziente",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S22",
+      "citazione": "Idea: è la regola della catena letta al contrario",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S22",
+      "citazione": "calcolare dt e riscrivere tutto in funzione di t",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S20",
+      "citazione": "Integrali immediati",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S22",
+      "citazione": "tornare alla variabile x",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S19",
+      "citazione": "Linearità dell'integrale",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S21",
+      "citazione": "Funzioni con argomento lineare",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S21",
+      "citazione": "Funzioni con argomento lineare",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S18",
+      "citazione": "Un integrale indefinito si controlla sempre derivando il risultato",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S22",
+      "citazione": "Si pone t=g(x), quindi dt=g'(x) dx",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S29",
+      "citazione": "Proprietà dell'integrale definito",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S25",
+      "citazione": "f = fattore che si deriva, g' = fattore che si integra",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S11",
+      "citazione": "Derivate delle funzioni elementari",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S32",
+      "citazione": "Per parti negli integrali definiti",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S32",
+      "citazione": "va valutato subito agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L4@52:30",
+      "citazione": "trovo gli zeri della funzione, spezzo l'integrale in quei punti",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 4,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L4@49:15",
+      "citazione": "Quindi l'area è l'integrale del valore assoluto di f",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S30",
+      "citazione": "trovare una primitiva e valutarla agli estremi",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S29",
+      "citazione": "Additività",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_tecnico",
+      "fonte": "L4@52:30",
+      "citazione": "trovo gli zeri della funzione nell'intervallo",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S20",
+      "citazione": "Integrali immediati",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S27",
+      "citazione": "Ecco da dove viene la formula della tabella degli integrali immediati",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S5",
+      "citazione": "si dimostra con la derivata del seno in zero",
+      "valida": false,
+      "punteggio": 0.45,
+      "motivo": "il testo citato non compare in S5"
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S9",
+      "citazione": "Derivata: f'(x_0) = lim del rapporto incrementale",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 0.83
+    },
+    {
+      "agente": "cacciatore_trappole",
+      "fonte": "S28",
+      "citazione": "è l'area della regione tra il grafico di",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "cacciatore_trappole",
+      "fonte": "S22",
+      "citazione": "tornare alla variabile x",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "cacciatore_trappole",
+      "fonte": "S8",
+      "citazione": "Se c'è 0/0 con seni, coseni o logaritmi: cercare il limite notevole giusto",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.94
+    },
+    {
+      "agente": "cacciatore_trappole",
+      "fonte": "esame",
+      "citazione": "Calcolare il limite usando solo i limiti notevoli",
+      "valida": false,
+      "motivo": "la frase non compare nel testo d'esame"
+    }
+  ],
+  "nota_origine": "Risultato dimostrativo costruito per la demo su tutti e 4 gli esercizi: output degli agenti scritti a mano, ma citazioni copiate dai file del corso e passate dal vero verificatore; copertura, cronometro, carico, certezza e valutazione calcolati dal codice.",
+  "output_agenti": {
+    "analista": "**Corso:** Analisi Matematica 1 — Ingegneria (Prof.ssa Elena Rinaldi)\n\n**Esercizi e passi da giustificare:**\n- Esercizio 1 (Limiti e limiti notevoli, lezione 1, 7 punti): 11 passi, ~20 min stimati\n- Esercizio 2 (Derivate e retta tangente, lezione 2, 8 punti): 9 passi, ~20 min stimati\n- Esercizio 3 (Integrali indefiniti e sostituzione, lezione 3, 7 punti): 9 passi, ~17 min stimati\n- Esercizio 4 (Integrali definiti e aree, lezione 4, 8 punti): 15 passi, ~32 min stimati\n\n**Durata dell'esame letta dal testo:** 120 minuti\n\n**Prerequisiti dati per scontati:** Algebra e frazioni algebriche; Equazioni e disequazioni; Trigonometria con le formule principali; Esponenziali e logaritmi con le loro proprietà\n\n**Domande per il docente:**\n- Il cambio degli estremi nella sostituzione (Es. 4a) è lasciato volutamente all'autonomia degli studenti?\n- Il precorso di settembre richiama le formule di duplicazione e le proprietà dei logaritmi?",
+    "fantasma_slide": "**38 passi su 44 con una fonte**\n\n- ✅ Es. 1 passo 1 [S4]\n- ✅ Es. 1 passo 2 [S6]\n- ✅ Es. 1 passo 3 [S7]\n- ✅ Es. 1 passo 4 [S6]\n- ✅ Es. 1 passo 5 [S3]\n- ✅ Es. 1 passo 6 [S4]\n- ✅ Es. 1 passo 7 [S6]\n- ✅ Es. 1 passo 8 [S6]\n- ✅ Es. 1 passo 9 [S3]\n- ✅ Es. 1 passo 10 [S4]\n- ✅ Es. 1 passo 11 [S7]\n- ✅ Es. 2 passo 1 [S13]\n- ✅ Es. 2 passo 2 [S15]\n- ✅ Es. 2 passo 3 [S16]\n- ✅ Es. 2 passo 4 [S10]\n- ❌ Es. 2 passo 5\n- ✅ Es. 2 passo 6 [S10]\n- ❌ Es. 2 passo 7\n- ✅ Es. 2 passo 8 [S12]\n- ✅ Es. 2 passo 9 [S14]\n- ✅ Es. 3 passo 1 [S22]\n- ✅ Es. 3 passo 2 [S22]\n- ✅ Es. 3 passo 3 [S20]\n- ✅ Es. 3 passo 4 [S22]\n- ❌ Es. 3 passo 5\n- ✅ Es. 3 passo 6 [S19]\n- ✅ Es. 3 passo 7 [S21]\n- ✅ Es. 3 passo 8 [S21]\n- ✅ Es. 3 passo 9 [S18]\n- ✅ Es. 4 passo 1 [S22]\n- ❌ Es. 4 passo 2\n- ✅ Es. 4 passo 3 [S29]\n- ✅ Es. 4 passo 4 [S30]\n- ✅ Es. 4 passo 5 [S25]\n- ✅ Es. 4 passo 6 [S11]\n- ✅ Es. 4 passo 7 [S32]\n- ✅ Es. 4 passo 8 [S32]\n- ✅ Es. 4 passo 9 [S30]\n- ✅ Es. 4 passo 10 [S30]\n- ❌ Es. 4 passo 11\n- ❌ Es. 4 passo 12\n- ✅ Es. 4 passo 13 [S30]\n- ✅ Es. 4 passo 14 [S30]\n- ✅ Es. 4 passo 15 [S29]",
+    "fantasma_lezioni": "**40 passi su 44 con una fonte**\n\n- ✅ Es. 1 passo 1 [S4]\n- ✅ Es. 1 passo 2 [S6]\n- ❌ Es. 1 passo 3\n- ✅ Es. 1 passo 4 [S6]\n- ✅ Es. 1 passo 5 [S3]\n- ✅ Es. 1 passo 6 [S4]\n- ✅ Es. 1 passo 7 [S6]\n- ✅ Es. 1 passo 8 [S6]\n- ✅ Es. 1 passo 9 [S3]\n- ✅ Es. 1 passo 10 [S4]\n- ✅ Es. 1 passo 11 [S7]\n- ✅ Es. 2 passo 1 [S13]\n- ✅ Es. 2 passo 2 [S15]\n- ✅ Es. 2 passo 3 [S16]\n- ✅ Es. 2 passo 4 [S10]\n- ✅ Es. 2 passo 5 [L2@25:15]\n- ✅ Es. 2 passo 6 [S10]\n- ❌ Es. 2 passo 7\n- ✅ Es. 2 passo 8 [S12]\n- ✅ Es. 2 passo 9 [S14]\n- ✅ Es. 3 passo 1 [S22]\n- ✅ Es. 3 passo 2 [S22]\n- ✅ Es. 3 passo 3 [S20]\n- ✅ Es. 3 passo 4 [S22]\n- ❌ Es. 3 passo 5\n- ✅ Es. 3 passo 6 [S19]\n- ✅ Es. 3 passo 7 [S21]\n- ✅ Es. 3 passo 8 [S21]\n- ✅ Es. 3 passo 9 [S18]\n- ✅ Es. 4 passo 1 [S22]\n- ❌ Es. 4 passo 2\n- ✅ Es. 4 passo 3 [S29]\n- ✅ Es. 4 passo 4 [S30]\n- ✅ Es. 4 passo 5 [S25]\n- ✅ Es. 4 passo 6 [S11]\n- ✅ Es. 4 passo 7 [S32]\n- ✅ Es. 4 passo 8 [S32]\n- ✅ Es. 4 passo 9 [S30]\n- ✅ Es. 4 passo 10 [S30]\n- ✅ Es. 4 passo 11 [L4@52:30]\n- ✅ Es. 4 passo 12 [L4@49:15]\n- ✅ Es. 4 passo 13 [S30]\n- ✅ Es. 4 passo 14 [S30]\n- ✅ Es. 4 passo 15 [S29]",
+    "fantasma_tecnico": "**3 prerequisiti analizzati**\n- Es. 2 passo 7: Proprietà dei logaritmi: ln(a/b) = ln a - ln b, ln(a^k) = k ln a (NON richiamato)\n- Es. 3 passo 5: Formula di duplicazione del coseno: sin^2 x = (1 - cos 2x)/2 (NON richiamato)\n- Es. 4 passo 11: Disequazioni di secondo grado per il segno di x^2 - 1 (richiamato)",
+    "revisore_sequenza": "**2 concetti fuori ordine proposti**\n- Integrale di ln x nella tabella (si ricava per parti): usato in S20, spiegato in S27\n- Derivata come limite usata nei limiti notevoli: usato in S5, spiegato in S9",
+    "cacciatore_trappole": "**3 possibili trappole proposte**\n- Es. 4: “Calcolare l'area della regione compresa tra il grafico di” → Nelle slide 'area' coincide con l'integrale definito (solo se f >= 0); a voce 'area' implica il valore assoluto. Chi ripassa dalle slide calcola 2/3. [S28]\n- Es. 4: “usando la sostituzione” → Nel corso la procedura di sostituzione termina sempre tornando alla x: per un integrale definito la consegna si può leggere in due modi (cambiare gli estremi o tornare alla x). [S22]\n- Es. 1: “Calcolare il limite usando solo i limiti notevoli” → Non è chiaro se sia ammesso De L'Hôpital. [S8]",
+    "verificatore": "**84 citazioni su 87 confermate**, 3 scartate perche' la fonte o il testo citato non esistono.\n\n- ❌ fantasma_slide [S7]: il testo citato non compare in S7\n- ❌ revisore_sequenza [S5]: il testo citato non compare in S5\n- ❌ cacciatore_trappole [esame]: la frase non compare nel testo d'esame\n\n**Lacune classificate:** 🔴 Mai spiegato: 2, 🟢 Solo a voce: 3, 🔵 Prerequisito dato per scontato: 2, 🟡 Fuori ordine: 1, 🪤 Trappola nel testo d'esame: 2\n\n**Copertura:** 84% slide · 7% solo a voce · 9% senza fonte",
+    "cartografo": "L'84% dei passi delle soluzioni ha una fonte nelle slide; due passi non hanno una fonte nel materiale e due si appoggiano a prerequisiti delle superiori. Il tempo stimato sta nelle due ore."
+  }
+}

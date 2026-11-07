@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dubbi del corso</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f4f0; --card:#ffffff; --ink:#1c1b19; --muted:#6b6862; --line:#e3e0d8;
+    --accent:#4b3fd8; --accent-soft:#ebe9fd; --ok:#1f8a4c; --err:#c0392b;
+    --rossa:#d64541; --rossa-soft:#fdeceb; --verde:#1f8a4c; --verde-soft:#e4f4eb;
+    --gialla:#b7791f; --gialla-soft:#fdf3df; --prereq:#2b6cb0; --prereq-soft:#e6f0fb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#131312; --card:#1d1c1a; --ink:#f0eee9; --muted:#a19d94; --line:#2f2e2b;
+      --accent:#9d95ff; --accent-soft:#25224a; --ok:#4cc184; --err:#ff6b5b;
+      --rossa:#ff7a72; --rossa-soft:#3a1d1b; --verde:#4cc184; --verde-soft:#173025;
+      --gialla:#f2b44d; --gialla-soft:#3a2e15; --prereq:#7fb3f0; --prereq-soft:#18273a; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 16px 80px}
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  h1{margin:0;font-size:30px;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin:4px 0 0}
+  .badge{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+  .badge.demo{background:#fff3d6;color:#8a5a00}
+  nav{display:flex;gap:6px;margin:14px 0 16px;flex-wrap:wrap}
+  nav a{font-size:13.5px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--card)}
+  nav a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .privata{background:var(--accent-soft);color:var(--ink);border-radius:12px;padding:10px 14px;font-size:14.5px;margin-bottom:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 18px}
+  .kpi .card{padding:12px 14px}
+  .kpi .n{font-size:26px;font-weight:700;letter-spacing:-.02em}
+  .kpi .l{font-size:12.5px;color:var(--muted)}
+  .gruppi{display:grid;gap:14px}
+  .gruppo{border-left:5px solid var(--accent)}
+  .gruppo.approvata{border-left-color:var(--ok)} .gruppo.scartata{opacity:.6;border-left-color:var(--line)}
+  .gruppo h3{margin:4px 0 2px;font-size:19px}
+  .base{color:var(--muted);font-size:14px}
+  .stato{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+  .stato.approvata{background:var(--verde-soft);color:var(--ok)} .stato.scartata{background:var(--line);color:var(--muted)}
+  .lacuna{margin:12px 0;padding:10px 12px;border-radius:10px;font-size:14.5px}
+  .lacuna.rossa{background:var(--rossa-soft)} .lacuna.verde{background:var(--verde-soft)}
+  .lacuna.gialla{background:var(--gialla-soft)} .lacuna.prerequisito{background:var(--prereq-soft)}
+  .lacuna.nessuna{background:var(--bg);color:var(--muted)}
+  .tipo{font-weight:700}
+  .tipo.rossa{color:var(--rossa)} .tipo.verde{color:var(--verde)} .tipo.gialla{color:var(--gialla)} .tipo.prerequisito{color:var(--prereq)}
+  .griglia{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media (max-width:720px){.griglia{grid-template-columns:1fr}}
+  h4{margin:12px 0 6px;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.06em}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .pill{font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 9px}
+  .pill b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+  .esempio{font-size:14px;color:var(--ink);border-left:3px solid var(--line);padding:2px 10px;margin:6px 0;font-style:italic}
+  .fonte{font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 9px;margin:5px 0}
+  .fonte b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;margin-right:6px}
+  .proposta{margin-top:14px;padding:14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+  .proposta .intervento{font-size:15px}
+  .md p{margin:.4em 0}.md ol,.md ul{padding-left:1.3em}
+  .anteprima{background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:8px}
+  .quizprev{font-size:14px;margin-top:8px}
+  .quizprev li.c{color:var(--ok);font-weight:600}
+  .azioni{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  button{padding:9px 18px;border:0;border-radius:10px;background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+  button.ok{background:var(--ok)}
+  button.sec{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+  button:disabled{opacity:.5;cursor:default}
+  textarea{width:100%;min-height:200px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;margin-top:8px}
+  .risultati{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--verde-soft);font-size:14.5px}
+  .attesa{display:grid;gap:8px}
+  .attesa .card{padding:10px 14px;color:var(--muted);font-size:14.5px}
+  .sez{margin:26px 0 10px;font-size:20px}
+  .muted{color:var(--muted);font-size:13.5px}
+  .err{color:var(--err)}
+  footer{margin-top:30px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+
+  /* --- barra di navigazione comune --- */
+  .topbar{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 1px 8px rgba(0,0,0,.04)}
+  .topbar .in{max-width:1180px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:18px;min-height:56px;flex-wrap:wrap}
+  .topbar .brand{font-weight:700;font-size:16px;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .topbar .tabs{display:flex;gap:4px;flex-wrap:wrap}
+  .topbar .tabs a{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--muted);font-size:14.5px;font-weight:500}
+  .topbar .tabs a{border:0;background:transparent}
+  .topbar .tabs a.on{background:var(--accent-soft);border:0}
+  .topbar .tabs a:hover{background:var(--bg);color:var(--ink)}
+  .topbar .tabs a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+  .topbar .chi{font-size:11px;padding:1px 7px;border-radius:999px;background:var(--line);color:var(--muted);font-weight:500}
+  @media (max-width:640px){.topbar .in{gap:6px;padding:8px 12px}.topbar .tabs{width:100%}.topbar .tabs a{flex:1;justify-content:center;padding:8px 6px;font-size:13px}.topbar .chi{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in"><a class="brand" href="/">👻 Studente Fantasma</a><nav class="tabs"><a href="/">🔬 Crash test <span class="chi">docente</span></a><a href="/docente" class="on">📬 Segnalazioni <span class="chi">docente</span></a><a href="/studente">🎓 Tutor <span class="chi">studente</span></a></nav></div></div>
+<div class="wrap">
+  <header>
+    <div><h1>👻 Studente Fantasma</h1><p class="sub">Dubbi degli studenti durante il semestre · Analisi Matematica 1 <span class="muted">(corso simulato)</span></p></div>
+    <span class="badge" id="modalita">…</span>
+  </header>
+  <div class="privata">🔒 <b>Vista privata del docente</b> · i dati non sono usati per valutare la didattica. Gli studenti sono anonimi e un gruppo compare solo da <b id="sogliaB">5</b> studenti distinti in su.</div>
+
+  <div class="kpi" id="kpi"></div>
+  <div class="gruppi" id="gruppi"><p class="muted">Caricamento…</p></div>
+  <h2 class="sez" id="attesaTit" hidden>In attesa</h2>
+  <div class="attesa" id="attesa"></div>
+
+  <footer>
+    <span class="muted">Le proposte sono suggerimenti: decidi tu se e come intervenire. Gli esempi di dubbi sono ripuliti da dati personali.</span>
+    <button class="sec" id="reset" title="Ripristina i dati di simulazione della demo">↺ Ripristina dati demo</button>
+  </footer>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// markdown: marked se disponibile, altrimenti un mini-convertitore (grassetto, corsivo, elenchi, paragrafi)
+function miniMd(t){
+  const inl = s => s.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/(^|[\s(])\*([^*\s][^*]*?)\*/g, "$1<i>$2</i>");
+  return esc(t).split(/\n{2,}/).map(b => {
+    const r = b.split("\n");
+    if (r.every(x => /^\s*(-|\d+\.)\s/.test(x))) {
+      const tag = /^\s*\d/.test(r[0]) ? "ol" : "ul";
+      return `<${tag}>${r.map(x => "<li>" + inl(x.replace(/^\s*(-|\d+\.)\s/, "")) + "</li>").join("")}</${tag}>`;
+    }
+    return "<p>" + r.map(inl).join("<br>") + "</p>";
+  }).join("");
+}
+const md = t => (window.marked ? marked.parse(esc(t)) : miniMd(t));
+const CORSO = "analisi1_simulato";
+const STATI = {proposta: "Da decidere", approvata: "Chiarimento pubblicato", scartata: "Scartata"};
+let inModifica = null, dati = null;
+
+async function api(url, body){
+  const r = await fetch(url, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)} : {method: "GET"});
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.detail || "Errore " + r.status);
+  return j;
+}
+
+function lacunaHtml(g){
+  const l = g.lacuna;
+  if (!l) return `<div class="lacuna nessuna">Il crash test non aveva segnalato questo punto: è una evidenza nuova, emersa durante il semestre.</div>`;
+  const ev = (l.evidenza || []).map(e => `<span class="pill"><b>${esc(e.fonte)}</b>${esc(e.nota || "")}</span>`).join(" ");
+  return `<div class="lacuna ${esc(l.tipo)}">🧭 <b>Il crash test l'aveva previsto:</b> <span class="tipo ${esc(l.tipo)}">${esc(l.etichetta)}</span> — «${esc(l.titolo)}» ${ev}</div>`;
+}
+
+function risultatiHtml(g){
+  const r = g.risultati;
+  if (!r) return "";
+  if (!r.risposte) return `<div class="risultati">Pubblicato agli studenti. Nessuna risposta alla domanda di verifica per ora.</div>`;
+  return `<div class="risultati">✅ <b>Domanda di verifica: ${r.risposte} rispost${r.risposte === 1 ? "a" : "e"}, ${r.corrette} corrett${r.corrette === 1 ? "a" : "e"} (${r.percentuale}%)</b><br><span class="muted">È un segnale indicativo su chi ha scelto di rispondere, non una prova statistica.</span></div>`;
+}
+
+function gruppoHtml(g){
+  const p = g.proposta || {}, ch = p.chiarimento || {}, q = p.quiz;
+  const dove = g.dove.map(d => `<span class="pill"><b>${esc(d.ancora)}</b> × ${d.n}</span>`).join("") || `<span class="muted">—</span>`;
+  const parole = g.parole_chiave.map(w => `<span class="pill">${esc(w)}</span>`).join("");
+  const esempi = g.esempi.map(e => `<div class="esempio">«${esc(e)}»</div>`).join("") || `<span class="muted">—</span>`;
+  const fonti = g.fonti.map(f => `<div class="fonte"><b>${esc(f.id)}</b>${esc(f.tipo === "slide" ? f.titolo : "videolezione " + f.lezione)} — ${esc(f.estratto || f.testo.slice(0, 140))}</div>`).join("");
+  const quiz = q ? `<div class="quizprev"><b>Domanda di verifica:</b> ${esc(q.domanda)}<ol type="A">${q.opzioni.map((o, i) => `<li class="${i === q.corretta ? "c" : ""}">${esc(o)}${i === q.corretta ? " ✓" : ""}</li>`).join("")}</ol></div>` : "";
+  let azioni = "";
+  if (g.stato === "proposta") {
+    azioni = inModifica === g.argomento
+      ? `<textarea id="mod-${g.argomento}">${esc(ch.testo || "")}</textarea>
+         <div class="azioni"><button class="ok" data-az="modifica" data-arg="${g.argomento}">Pubblica la versione modificata</button><button class="sec" data-az="annulla" data-arg="${g.argomento}">Annulla</button></div>`
+      : `<div class="azioni"><button class="ok" data-az="approva" data-arg="${g.argomento}">✓ Approva</button><button class="sec" data-az="apri" data-arg="${g.argomento}">✎ Modifica</button><button class="sec" data-az="scarta" data-arg="${g.argomento}">✕ Scarta</button></div>`;
+  } else if (g.stato === "scartata") {
+    azioni = `<div class="azioni"><button class="sec" data-az="riapri" data-arg="${g.argomento}">Riapri la proposta</button></div>`;
+  }
+  return `<div class="card gruppo ${g.stato}">
+    <span class="stato ${g.stato}">${STATI[g.stato] || g.stato}</span> <span class="muted">Lezione ${g.lezione}</span>
+    <h3>${esc(g.titolo)}</h3>
+    <div class="base">${g.n_dubbi} segnalazioni «Non ho capito» · basato su <b>${g.n_studenti} studenti su ${g.iscritti} iscritti</b> · certezza <b>${esc(g.certezza)}</b></div>
+    ${lacunaHtml(g)}
+    <div class="griglia">
+      <div><h4>Dove si bloccano</h4><div class="chips">${dove}</div><h4>Parole ricorrenti</h4><div class="chips">${parole}</div><h4>Esempi anonimi</h4>${esempi}</div>
+      <div><h4>Fonti del corso coinvolte</h4>${fonti || `<span class="muted">—</span>`}</div>
+    </div>
+    <div class="proposta">
+      <h4 style="margin-top:0">💡 Proposta di intervento <span class="muted" style="text-transform:none;letter-spacing:0">(${g.origine === "reale" ? "generata dal Consulente di intervento" : "generata in modalità simulata"})</span></h4>
+      <div class="intervento">${esc(p.intervento || "")}</div>
+      <h4>Chiarimento per gli studenti${g.stato === "approvata" ? " (pubblicato)" : " (anteprima)"}</h4>
+      <div class="anteprima md">${md((g.chiarimento && g.chiarimento.testo) || ch.testo || "")}${quiz}</div>
+      ${azioni}
+    </div>
+    ${risultatiHtml(g)}
+  </div>`;
+}
+
+async function carica(){
+  try { dati = await api(`/api/semestre/docente?corso=${CORSO}`); }
+  catch (e) { $("#gruppi").innerHTML = `<p class="err">${esc(e.message)}</p>`; return; }
+  const m = $("#modalita");
+  m.textContent = dati.modalita === "simulata" ? "modalità simulata (nessuna chiamata API)" : "modalità reale";
+  m.classList.toggle("demo", dati.modalita === "simulata");
+  $("#sogliaB").textContent = dati.soglia;
+  const daDecidere = dati.gruppi.filter(g => g.stato === "proposta").length;
+  const nAtt = dati.in_attesa.reduce((s, a) => s + a.n, 0);
+  $("#kpi").innerHTML = [
+    [dati.gruppi.length, "gruppi di dubbi visibili"], [daDecidere, "proposte da decidere"],
+    [nAtt, "segnalazioni sotto soglia"], [dati.soglia, "soglia di anonimato (studenti)"]]
+    .map(([n, l]) => `<div class="card"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+  $("#gruppi").innerHTML = dati.gruppi.map(gruppoHtml).join("") || `<p class="muted">Nessun gruppo sopra la soglia di anonimato.</p>`;
+  $("#attesaTit").hidden = !dati.in_attesa.length;
+  $("#attesa").innerHTML = dati.in_attesa.map(a => `<div class="card">⏳ <b>${esc(a.titolo)}</b>: ${a.n} segnalazion${a.n === 1 ? "e" : "i"} in attesa, sotto la soglia di anonimato (${dati.soglia} studenti). Contenuti non mostrati.</div>`).join("");
+}
+
+document.addEventListener("click", async e => {
+  const b = e.target.closest("button[data-az]"); if (!b) return;
+  const arg = b.dataset.arg, az = b.dataset.az;
+  if (az === "apri") { inModifica = arg; return carica(); }
+  if (az === "annulla") { inModifica = null; return carica(); }
+  const body = {argomento: arg, azione: az, corso: CORSO};
+  if (az === "modifica") body.testo = document.getElementById("mod-" + arg).value;
+  if (az === "scarta") body.nota = prompt("Motivo (facoltativo, resta privato):") || "";
+  b.disabled = true;
+  try { await api("/api/semestre/intervento", body); inModifica = null; }
+  catch (err) { alert(err.message); }
+  carica();
+});
+
+$("#reset").onclick = async () => {
+  if (!confirm("Ripristinare i dati di simulazione della demo? Le segnalazioni e le decisioni fatte andranno perse.")) return;
+  await api(`/api/semestre/reset?corso=${CORSO}`, {}); inModifica = null; carica();
+};
+setInterval(() => { if (!inModifica && document.visibilityState === "visible") carica(); }, 10000);
+carica();
+</script>
+</body>
+</html>

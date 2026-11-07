@@ -1,0 +1,191 @@
+[
+  {
+    "id": "seed01",
+    "pseudonimo": "anon-m9epxb",
+    "argomento": "retta_tangente",
+    "dove": "Slide 10",
+    "testo": "Sulla slide c'e' solo la pendenza, non l'equazione della retta",
+    "ts": 1791450000,
+    "simulato": true
+  },
+  {
+    "id": "seed02",
+    "pseudonimo": "anon-c5udnv",
+    "argomento": "retta_tangente",
+    "dove": "L2 minuto 25:15",
+    "testo": "Non ricordo la formula della retta tangente detta a voce",
+    "ts": 1791468000,
+    "simulato": true
+  },
+  {
+    "id": "seed03",
+    "pseudonimo": "anon-b8tgbc",
+    "argomento": "retta_tangente",
+    "dove": "Slide 10",
+    "testo": "Come si scrive la retta tangente nel punto x0?",
+    "ts": 1791486000,
+    "simulato": true
+  },
+  {
+    "id": "seed04",
+    "pseudonimo": "anon-qqchcu",
+    "argomento": "retta_tangente",
+    "dove": "Slide 10",
+    "testo": "Ho la derivata ma non so come arrivare alla retta",
+    "ts": 1791504000,
+    "simulato": true
+  },
+  {
+    "id": "seed05",
+    "pseudonimo": "anon-qb5vd9",
+    "argomento": "retta_tangente",
+    "dove": "L2 minuto 28:30",
+    "testo": "Non capisco il passaggio da y = 9 + 6(x-3) alla forma finale",
+    "ts": 1791522000,
+    "simulato": true
+  },
+  {
+    "id": "seed06",
+    "pseudonimo": "anon-hxxv9b",
+    "argomento": "retta_tangente",
+    "dove": "Slide 11",
+    "testo": "Retta tangente: quale punto devo usare?",
+    "ts": 1791540000,
+    "simulato": true
+  },
+  {
+    "id": "seed07",
+    "pseudonimo": "anon-vvpbhb",
+    "argomento": "retta_tangente",
+    "dove": "Slide 10",
+    "testo": "Manca la formula della tangente nelle slide",
+    "ts": 1791558000,
+    "simulato": true
+  },
+  {
+    "id": "seed08",
+    "pseudonimo": "anon-u6ekqe",
+    "argomento": "estremi_sostituzione",
+    "dove": "Slide 22, punto 4",
+    "testo": "Negli integrali definiti devo per forza tornare alla x? Non capisco cosa succede agli estremi",
+    "ts": 1792486800,
+    "simulato": true
+  },
+  {
+    "id": "seed09",
+    "pseudonimo": "anon-udvku5",
+    "argomento": "estremi_sostituzione",
+    "dove": "L4 minuto 80:30",
+    "testo": "Ha detto che all'esame ci sono definiti con sostituzione ma non ho trovato nessun esempio",
+    "ts": 1792504800,
+    "simulato": true
+  },
+  {
+    "id": "seed10",
+    "pseudonimo": "anon-yfdvvx",
+    "argomento": "estremi_sostituzione",
+    "dove": "Slide 31",
+    "testo": "Gli esempi di definiti sono tutti senza sostituzione, se pongo t = cos x gli estremi restano 0 e pi/2?",
+    "ts": 1792522800,
+    "simulato": true
+  },
+  {
+    "id": "seed11",
+    "pseudonimo": "anon-gnduzc",
+    "argomento": "estremi_sostituzione",
+    "dove": "Slide 22",
+    "testo": "Quando cambio variabile anche gli estremi cambiano? Con quale formula?",
+    "ts": 1792540800,
+    "simulato": true
+  },
+  {
+    "id": "seed12",
+    "pseudonimo": "anon-vbwgsy",
+    "argomento": "estremi_sostituzione",
+    "dove": "esercizi dal libro",
+    "testo": "Mi viene un risultato diverso dal libro, credo di sbagliare gli estremi dopo la sostituzione",
+    "ts": 1792558800,
+    "simulato": true
+  },
+  {
+    "id": "seed13",
+    "pseudonimo": "anon-uq3mrv",
+    "argomento": "estremi_sostituzione",
+    "dove": "Slide 23",
+    "testo": "Gli esempi svolti sono solo indefiniti, non so come fare con un integrale da a a b",
+    "ts": 1792576800,
+    "simulato": true
+  },
+  {
+    "id": "seed14",
+    "pseudonimo": "anon-8rnkh4",
+    "argomento": "estremi_sostituzione",
+    "dove": "L3 minuto 51:30",
+    "testo": "Dice di tornare alla x alla fine: nei definiti si fa lo stesso o si cambiano gli estremi?",
+    "ts": 1792594800,
+    "simulato": true
+  },
+  {
+    "id": "seed15",
+    "pseudonimo": "anon-fz3hcv",
+    "argomento": "estremi_sostituzione",
+    "dove": "Slide 30",
+    "testo": "Con t = g(x) gli estremi vanno sostituiti? Mi viene l'estremo inferiore piu' grande del superiore",
+    "ts": 1792612800,
+    "simulato": true
+  },
+  {
+    "id": "seed16",
+    "pseudonimo": "anon-kts7m2",
+    "argomento": "estremi_sostituzione",
+    "dove": "L4 minuto 80:30",
+    "testo": "Non ho capito come si cambiano gli estremi di integrazione nella sostituzione",
+    "ts": 1792630800,
+    "simulato": true
+  },
+  {
+    "id": "seed17",
+    "pseudonimo": "anon-rkwcdt",
+    "argomento": "estremi_sostituzione",
+    "dove": "Slide 29",
+    "testo": "Se dopo il cambio di variabile gli estremi si invertono devo cambiare segno?",
+    "ts": 1792648800,
+    "simulato": true
+  },
+  {
+    "id": "seed18",
+    "pseudonimo": "anon-qf3me8",
+    "argomento": "estremi_sostituzione",
+    "dove": "Slide 22",
+    "testo": "Non so se devo cambiare gli estremi o tornare alla variabile x",
+    "ts": 1792666800,
+    "simulato": true
+  },
+  {
+    "id": "seed19",
+    "pseudonimo": "anon-sqb9yc",
+    "argomento": "area_segno",
+    "dove": "Slide 28",
+    "testo": "Se la funzione e' negativa l'integrale e' ancora l'area?",
+    "ts": 1792573200,
+    "simulato": true
+  },
+  {
+    "id": "seed20",
+    "pseudonimo": "anon-3uv475",
+    "argomento": "area_segno",
+    "dove": "L4 minuto 52:30",
+    "testo": "Non ho capito come spezzare l'integrale negli zeri",
+    "ts": 1792591200,
+    "simulato": true
+  },
+  {
+    "id": "seed21",
+    "pseudonimo": "anon-mmznws",
+    "argomento": "area_segno",
+    "dove": "Slide 28",
+    "testo": "Area e integrale definito sono la stessa cosa?",
+    "ts": 1792609200,
+    "simulato": true
+  }
+]

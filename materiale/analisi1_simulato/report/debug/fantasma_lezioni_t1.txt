@@ -1,0 +1,170 @@
+# fantasma_lezioni - tentativo 1 - 6.5s - prompt 40031 caratteri
+
+=== RISPOSTA ===
+{
+  "passi": [
+    {
+      "esercizio": "1a",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1a",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1a",
+      "passo": 3,
+      "stato": "non_trovato",
+      "fonte": "",
+      "citazione": "",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1a",
+      "passo": 4,
+      "stato": "giustificato",
+      "fonte": "S5",
+      "citazione": "lim_{x\to0}\frac{\sin x}{x}=1",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1a",
+      "passo": 5,
+      "stato": "giustificato",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 3,
+      "stato": "giustificato",
+      "fonte": "S5",
+      "citazione": "lim_{x\to0}\frac{1-\cos x}{x^2}=\frac12",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 4,
+      "stato": "giustificato",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1c",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S4",
+      "citazione": "Forme che non si risolvono con l'algebra dei limiti: 1^\infty",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1c",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S7",
+      "citazione": "lim_{x\to+\infty}\left(1+\frac ax\right)^x=e^a",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S13",
+      "citazione": "(f\cdot g)'=f'\,g+f\,g'",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S15",
+      "citazione": "h'(x)=f'(g(x))\cdot g'(x)",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 3,
+      "stato": "giustificato",
+      "fonte": "S16",
+      "citazione": "Spesso servono più regole insieme: prodotto + catena",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 4,
+      "stato": "giustificato",
+      "fonte": "L2@25:15",
+      "citazione": "Vi servono due numeri: il valore della funzione e il valore della derivata",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 5,
+      "stato": "giustificato",
+      "fonte": "L2@25:15",
+      "citazione": "y uguale f di x zero più f primo di x zero per x meno x zero",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 6,
+      "stato": "giustificato",
+      "fonte": "L2@28:30",
+      "citazione": "y uguale nove più sei per x meno tre",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2b",
+      "passo": 1,
+      "stato": "non_trovato",
+      "fonte": "",
+      "citazione": "",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2b",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S15",
+      "citazione": "D[\ln(x^2+1)]=\frac{2x}{x^2+1}",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2b",
+      "passo": 3,
+      "stato": "giustificato",
+      "fonte": "S14",
+      "citazione": "\left(\frac fg\right)'=\frac{f'\,g-f\,g'}{g^2}",
+      "domanda": ""
+    }
+  ]
+}
+
+=== ULTIMO MESSAGGIO (primi 3000 caratteri) ===
+La risposta non era JSON valido. Rispondi di nuovo SOLO con il JSON richiesto, senza testo attorno.

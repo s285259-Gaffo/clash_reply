@@ -1,0 +1,605 @@
+{
+  "corso": {
+    "nome": "analisi1_simulato",
+    "slide": 32,
+    "frammenti_trascrizione": 136,
+    "lezioni": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "ha_esame": true,
+    "ha_soluzioni": true,
+    "ha_chiave": true
+  },
+  "brief": {
+    "corso": "Analisi Matematica 1 — Ingegneria (Prof.ssa Elena Rinaldi)",
+    "obiettivi": [
+      "Calcolare limiti, derivate e integrali con sicurezza.",
+      "Giustificare ogni passaggio del procedimento risolutivo negli esercizi d'esame."
+    ],
+    "esercizi": [
+      {
+        "id": "1a",
+        "argomento": "Limiti e limiti notevoli",
+        "lezione_argomento": 1,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Verificare la forma indeterminata sostituzione diretta in x=0, ottenendo 0/0."
+          },
+          {
+            "n": 2,
+            "testo": "Riscrivere la frazione moltiplicando e dividendo per 2x e 3x per isolare le strutture dei limiti notevoli."
+          },
+          {
+            "n": 3,
+            "testo": "Applicare il limite notevole del cartesiano/esponenziale (e^t - 1)/t -> 1 con t = 2x -> 0."
+          },
+          {
+            "n": 4,
+            "testo": "Applicare il limite notevole del seno sin(u)/u -> 1 (o il suo reciproco) con u = 3x -> 0."
+          },
+          {
+            "n": 5,
+            "testo": "Semplificare il fattore algebrico (2x)/(3x) = 2/3 e calcolare il limite finale per l'algebra dei limiti del prodotto."
+          }
+        ]
+      },
+      {
+        "id": "1b",
+        "argomento": "Limiti e limiti notevoli",
+        "lezione_argomento": 1,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Verificare la forma indeterminata 0/0 per x=0."
+          },
+          {
+            "n": 2,
+            "testo": "Riscrivere la frazione per far comparire (2x)^2 al denominatore del termine (1-cos(2x)) e riorganizzare i fattori."
+          },
+          {
+            "n": 3,
+            "testo": "Applicare il limite notevole del coseno (1-cos(u))/u^2 -> 1/2 con u = 2x -> 0 e il limite notevole x/sin(x) -> 1."
+          },
+          {
+            "n": 4,
+            "testo": "Moltiplicare i valori ottenuti per il fattore costante per l'algebra dei limiti (1/2 * 4 * 1 = 2)."
+          }
+        ]
+      },
+      {
+        "id": "1c",
+        "argomento": "Limiti e limiti notevoli",
+        "lezione_argomento": 1,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Riconoscere la forma indeterminata 1^infinity per x -> +infinity."
+          },
+          {
+            "n": 2,
+            "testo": "Applicare il limite notevole (1 + a/x)^x -> e^a identificando a = 2."
+          }
+        ]
+      },
+      {
+        "id": "2a",
+        "argomento": "Derivate e retta tangente",
+        "lezione_argomento": 2,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Identificare la struttura di prodotto di funzioni u(x)v(x) per applicare la regola del prodotto."
+          },
+          {
+            "n": 2,
+            "testo": "Applicare la regola della catena per derivare la funzione composta e^(-x^2)."
+          },
+          {
+            "n": 3,
+            "testo": "Combinare i termini e raccogliere e^(-x^2) per ottenere f'(x) in forma semplificata."
+          },
+          {
+            "n": 4,
+            "testo": "Calcolare il valore della funzione f(1) e della derivata prima f'(1) nel punto x0=1."
+          },
+          {
+            "n": 5,
+            "testo": "Utilizzare la formula della retta tangente y = f(x0) + f'(x0)(x - x0)."
+          },
+          {
+            "n": 6,
+            "testo": "Sostituire i valori e semplificare l'espressione algebrica della retta."
+          }
+        ]
+      },
+      {
+        "id": "2b",
+        "argomento": "Derivate e proprietà dei logaritmi",
+        "lezione_argomento": 2,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Semplificare l'argomento del logaritmo usando le proprietà algebriche dei logaritmi prima di derivare."
+          },
+          {
+            "n": 2,
+            "testo": "Derivare la somma algebrica per linearità e applicare la regola della catena a ln(x+1)."
+          },
+          {
+            "n": 3,
+            "testo": "Sommare le frazioni trovando il denominatore comune e semplificare il numeratore."
+          }
+        ]
+      }
+    ],
+    "prerequisiti_dati_per_scontati": [
+      "Algebra elementare e manipolazione di frazioni e denominatori comuni.",
+      "Proprietà delle potenze e dei radicali (es. sqrt(x+1) = (x+1)^(1/2)).",
+      "Proprietà dei logaritmi (ln(a/b) = ln(a) - ln(b), ln(a^k) = k*ln(a)).",
+      "Trigonometria di base (valori del seno e del coseno in 0 e pi/2, formula di duplicazione cos(2x) = 1 - 2sin^2(x)).",
+      "Risoluzione di equazioni e disequazioni elementari per lo studio del segno di una funzione (x^2 - 1 >= 0).",
+      "Geometria analitica della retta (formula della retta passante per un punto con pendenza m)."
+    ],
+    "domande_per_il_docente": [
+      "Nelle slide o a lezione viene spiegata esplicitamente la formula di duplicazione/bisezione usata per risolvere sin^2(x) nell'Esercizio 3b, oppure è considerata un prerequisito assunto dalle superiori?",
+      "Le proprietà di semplificazione algebrica dei logaritmi prima della derivazione (Esercizio 2b) vengono mostrate come strategia consigliata nelle slide della Lezione 2 o vengono modellate solo a voce/nelle esercitazioni?",
+      "Il cambio dei limiti di integrazione negli integrali definiti per sostituzione (Esercizio 4a) è trattato estensivamente nelle slide della Lezione 4 o solo verbalmente nelle registrazioni?"
+    ]
+  },
+  "lacune": [
+    {
+      "esercizio": "1a",
+      "passo": "3",
+      "testo_passo": "Applicare il limite notevole del cartesiano/esponenziale (e^t - 1)/t -> 1 con t = 2x -> 0.",
+      "tipo": "rossa",
+      "evidenza": [],
+      "nota_slide": "non_trovato",
+      "nota_lezioni": "non_trovato",
+      "id": "g1",
+      "chiave": "rossa:es1a-p3",
+      "titolo": "Assenza del limite notevole dell'esponenziale",
+      "perche_conta": "Essenziale per risolvere i limiti e giustificare i passaggi richiesti nell'esame.",
+      "suggerimento": "Inserire una slide o un esempio dedicato al limite notevole dell'esponenziale nelle lezioni sui limiti.",
+      "revisione": null
+    },
+    {
+      "esercizio": "2a",
+      "passo": "5",
+      "testo_passo": "Utilizzare la formula della retta tangente y = f(x0) + f'(x0)(x - x0).",
+      "tipo": "verde",
+      "evidenza": [
+        {
+          "fonte": "L2@25:15",
+          "citazione": "y uguale f di x zero più f primo di x",
+          "nota": "spiegato solo a voce"
+        }
+      ],
+      "nota_slide": "non_trovato",
+      "id": "g2",
+      "chiave": "verde:es2a-p5",
+      "titolo": "Formula della retta tangente solo orale",
+      "perche_conta": "La mancata formalizzazione scritta del calcolo della tangente ostacola la giustificazione dei passaggi.",
+      "suggerimento": "Aggiungere una slide esplicita con la formula della retta tangente dopo la lezione L2@25:15.",
+      "revisione": null
+    },
+    {
+      "esercizio": "2a",
+      "passo": "6",
+      "testo_passo": "Sostituire i valori e semplificare l'espressione algebrica della retta.",
+      "tipo": "verde",
+      "evidenza": [
+        {
+          "fonte": "L2@28:30",
+          "citazione": "Quindi y uguale nove più sei per x meno tre, cioè",
+          "nota": "spiegato solo a voce"
+        }
+      ],
+      "nota_slide": "non_trovato",
+      "id": "g3",
+      "chiave": "verde:es2a-p6",
+      "titolo": "Semplificazione della retta tangente sprovvista di supporto",
+      "perche_conta": "Disegnare o mostrare i passaggi algebrici scritti aiuta a evitare errori di calcolo d'esame.",
+      "suggerimento": "Includere nei materiali scritti lo svolgimento algebrico completo mostrato oralmente in L2@28:30.",
+      "revisione": null
+    },
+    {
+      "esercizio": "2b",
+      "passo": "1",
+      "testo_passo": "Semplificare l'argomento del logaritmo usando le proprietà algebriche dei logaritmi prima di derivare.",
+      "tipo": "rossa",
+      "evidenza": [],
+      "nota_slide": "non_trovato",
+      "nota_lezioni": "non_trovato",
+      "id": "g4",
+      "chiave": "rossa:es2b-p1",
+      "titolo": "Proprietà dei logaritmi prima della derivazione",
+      "perche_conta": "Fidarsi della derivata di catena senza semplificare algebricamente aumenta il rischio di errore d'esame.",
+      "suggerimento": "Inserire un richiamo scritto sulle proprietà algebriche dei logaritmi prima di introdurre le regole di derivazione.",
+      "revisione": null
+    },
+    {
+      "tipo": "gialla",
+      "concetto": "Integrale del logaritmo",
+      "esercizio": "",
+      "passo": "",
+      "testo_passo": "Usato in lezione 3, spiegato in lezione 4",
+      "evidenza": [
+        {
+          "fonte": "S20",
+          "citazione": "| $\\ln x$ | $x\\ln x-x+c$ |",
+          "nota": "usato qui"
+        },
+        {
+          "fonte": "S27",
+          "citazione": "Ecco da dove viene la formula della tabella degli integrali immediati",
+          "nota": "spiegato solo qui"
+        }
+      ],
+      "id": "g5",
+      "chiave": "gialla:integrale-del-logaritmo",
+      "titolo": "Propedeuticità invertita per l'integrale del logaritmo",
+      "perche_conta": "L'uso anticipato di formule non ancora dimostrate compromette il rigore logico preteso agli esami.",
+      "suggerimento": "Anticipare la spiegazione di S27 prima della tabella degli integrali immediati presente in S20.",
+      "revisione": null
+    }
+  ],
+  "passi_totali": 20,
+  "passi_coperti_da_slide": 16,
+  "citazioni_scartate": 0,
+  "domande_per_il_docente": [
+    "Nelle slide o a lezione viene spiegata esplicitamente la formula di duplicazione/bisezione usata per risolvere sin^2(x) nell'Esercizio 3b, oppure è considerata un prerequisito assunto dalle superiori?",
+    "Le proprietà di semplificazione algebrica dei logaritmi prima della derivazione (Esercizio 2b) vengono mostrate come strategia consigliata nelle slide della Lezione 2 o vengono modellate solo a voce/nelle esercitazioni?",
+    "Il cambio dei limiti di integrazione negli integrali definiti per sostituzione (Esercizio 4a) è trattato estensivamente nelle slide della Lezione 4 o solo verbalmente nelle registrazioni?"
+  ],
+  "sintesi": "La mappa rileva lacune relative a concetti assenti nei materiali e ad inversioni di propedeuticità tra argomenti. Si consiglia di integrare i passaggi solo orali nelle slide e riordinare la presentazione degli integrali.",
+  "secondi": 58.7,
+  "valutazione": {
+    "piantate": 4,
+    "trovate": 4,
+    "recall": 1.0,
+    "segnalate": 5,
+    "corrispondenti": 4,
+    "precision": 0.8,
+    "falso_amico_segnalato": 0,
+    "mancate": []
+  },
+  "registro_verifiche": [
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità per far comparire la",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Se g(x)->0 per x->x_0, allora sin g(x)/g(x)->1",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità per far comparire la",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "1-cos g(x)/(g(x))^2->1/2",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S7",
+      "citazione": "(forma 1^\ninfty)",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S7",
+      "citazione": "Generalizzazione: lim_{x->+\\infty}(1+a/x)^x=e^a per ogni a",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S13",
+      "citazione": "(f*g)'=f'*g+f*g'",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S15",
+      "citazione": "Se h(x)=f(g(x)), allora h'(x)=f'(g(x))*g'(x)",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S16",
+      "citazione": "Spesso servono più regole insieme: prodotto + catena, quoziente +",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S3",
+      "citazione": "Funzioni continue: lim_{x->x_0}f(x)=f(x_0)",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S12",
+      "citazione": "(f+g)'=f'+g'",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S14",
+      "citazione": "(f/g)'=(f'*g-f*g')/g^2",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità per far comparire",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "Se g(x)->0 per x->x_0, allora (sin g(x))/(g(x))->1",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L1@57:45",
+      "citazione": "Mi serve nove x quadro sotto, quindi moltiplico e divido",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "e (1-cos g(x))/((g(x))^2)->1/2",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S7",
+      "citazione": "lim_(x->+infty)(1+1/x)^x=e approx 2,718 (forma 1^infty)",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.88
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S7",
+      "citazione": "Generalizzazione: lim_(x->+infty)(1+a/x)^x=e^a per ogni a in RR",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.89
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S13",
+      "citazione": "(f*g)'=f'*g+f*g'",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S15",
+      "citazione": "Esempio: D[e^(x^2)]=2x e^(x^2)",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L2@50:30",
+      "citazione": "Quando la derivata ha un fattore comune, raccolgietelo.",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 2,
+      "punteggio": 0.98
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L2@25:15",
+      "citazione": "Vi servono due numeri: il valore della funzione e il valore",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L2@25:15",
+      "citazione": "y uguale f di x zero più f primo di x",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L2@28:30",
+      "citazione": "Quindi y uguale nove più sei per x meno tre, cioè",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S15",
+      "citazione": "Esempio: D[ln(x^2+1)]=(2x)/(x^2+1)",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S11",
+      "citazione": "| $\\tan x$ | $\\frac{1}{\\cos^2x}$ |",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S14",
+      "citazione": "Esempio: si ritrova $D[\\tan x]=D\\left[\\frac{\\sin x}{\\cos x}\\right]=\\frac{\\cos^2x+\\sin^2x}{\\cos^2x}=\\frac{1}{\\cos^2x}$",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 2,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S20",
+      "citazione": "| $\\ln x$ | $x\\ln x-x+c$ |",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S27",
+      "citazione": "Ecco da dove viene la formula della tabella degli integrali immediati",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 1.0
+    }
+  ]
+}

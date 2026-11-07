@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tutor · Studente Fantasma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/stile.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<style>
+  .corso-chip{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);margin-top:14px}
+  .wrap.stretto .card{margin-bottom:16px}
+  .card h2{font-size:19px;margin:0 0 4px}
+  .card .sottot{margin:0 0 12px;color:var(--muted);font-size:14px}
+  label{font-weight:700;font-size:14px;display:block;margin-bottom:6px}
+  .chiedi textarea{min-height:92px;font-size:15.5px}
+  .riga{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .esempi{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  .esempi button{font-size:12.5px;padding:6px 12px;font-weight:600;background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:999px;box-shadow:none}
+  .esempi button:hover{border-color:var(--accent)}
+  .risposta{border-left:5px solid var(--accent);margin-top:16px;box-shadow:none;background:var(--soft)}
+  .risposta.confine{border-left-color:var(--gialla);background:var(--gialla-soft)}
+  .risposta.non_trovato{border-left-color:var(--muted)}
+  .etichetta{display:inline-block;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:8px;background:var(--accent-soft);color:var(--accent-ink)}
+  .confine .etichetta{background:var(--card);color:var(--gialla)}
+  .non_trovato .etichetta{background:var(--line);color:var(--muted)}
+  .guida{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid color-mix(in srgb, var(--accent) 30%, var(--line));font-size:14.5px}
+  .guida b{color:var(--accent-ink)}
+  .chip{display:inline-block;font:700 12.5px var(--mono);padding:2px 9px;border-radius:8px;border:1px solid var(--accent);color:var(--accent-ink);background:var(--card);cursor:pointer;margin:1px 2px;vertical-align:baseline;transition:background .15s}
+  .chip:hover{background:var(--accent-soft)}
+  .chip.on{background:var(--accent);color:#fff}
+  .fonti{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .fonte-testo{margin-top:10px;font-size:13.5px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;white-space:pre-wrap}
+  .fonte-testo b{font-family:var(--mono)}
+  .quiz{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+  .quiz .q{font-weight:700;margin-bottom:8px}
+  .opz{display:block;width:100%;text-align:left;margin:6px 0;background:var(--soft);color:var(--ink);border:1px solid var(--line);font-weight:500;box-shadow:none}
+  .opz:hover:not(:disabled){border-color:var(--accent)}
+  .opz.giusta{border-color:var(--ok);background:var(--ok-soft)}
+  .opz.sbagliata{border-color:var(--err);background:var(--err-soft)}
+  .ch-arg{font-size:12px;font-weight:700;color:var(--accent-ink);text-transform:uppercase;letter-spacing:.06em}
+  .ch{border-top:4px solid var(--ok)}
+  .ch h3{margin:4px 0 6px;font-size:18px}
+  .fatto{color:var(--ok);font-weight:700}
+  .non-capito{background:linear-gradient(135deg,var(--card),var(--accent-soft))}
+  #dubbioForm{margin-top:12px}
+  #dubbioForm input{margin-bottom:10px}
+  #dubbioForm textarea{min-height:76px}
+  .md p{margin:.4em 0}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in"><a class="brand" href="/"><span class="logo">👻</span>Studente Fantasma</a><nav class="tabs" aria-label="Sezioni"><a class="tab" href="/" title="Prima del semestre: gli agenti provano l'esame usando solo il materiale del corso e trovano le lacune"><span class="num">🔬</span><span class="txt"><span class="nome">Crash test</span><span class="chi">Docente · prima del semestre</span></span></a><a class="tab" href="/docente" title="Durante il semestre: i dubbi anonimi degli studenti, raggruppati, con una proposta di intervento da approvare"><span class="num">📬</span><span class="txt"><span class="nome">Segnalazioni</span><span class="chi">Docente · durante il semestre</span></span></a><a class="tab on" href="/studente" title="Per lo studente: un tutor che risponde solo con slide e videolezioni del corso, senza risolvere gli esercizi valutati" aria-current="page"><span class="num">🎓</span><span class="txt"><span class="nome">Tutor</span><span class="chi">Studente · durante il semestre</span></span></a></nav></div></div>
+<div class="wrap stretto">
+  <section class="hero">
+    <div class="fantasmino" aria-hidden="true">🎓</div>
+    <span class="kicker">🎓 Per lo studente · durante il semestre</span> <span class="badge stato-app" id="modalita">…</span>
+    <h1>Il tutor che ti fa <em>ragionare</em>, non copiare</h1>
+    <p class="lead">Fai una domanda sul corso: risponde solo con le slide e le videolezioni del tuo docente, citando la fonte esatta. Se resti bloccato, segnalalo in forma anonima.</p>
+    <span class="corso-chip">📘 Analisi Matematica 1 · corso simulato</span>
+    <div class="passi">
+      <div class="passo"><div class="ico">📎</div><b>Cita sempre la fonte</b><span>Tocca <b>S12</b> o <b>L4@80:30</b> per leggere la slide o il minuto della lezione.</span></div>
+      <div class="passo"><div class="ico">🛡️</div><b>Niente soluzioni d'esame</b><span>Sugli esercizi valutati ti dà le fonti e una domanda per partire.</span></div>
+      <div class="passo"><div class="ico">🤫</div><b>«Non ho capito» è anonimo</b><span>Il docente lo vede solo quando lo segnalano almeno 5 studenti.</span></div>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2>📚 Di cosa vuoi parlare?</h2>
+    <p class="sottot">Scegli lezione e argomento: il tutor cerca lì per primo.</p>
+    <select id="argomento" aria-label="Lezione e argomento"></select>
+  </div>
+
+  <div class="card chiedi">
+    <h2>💬 Fai una domanda</h2>
+    <p class="sottot">Risponde solo con il materiale del corso, un passo alla volta. <span class="muted">Ctrl+Invio per inviare.</span></p>
+    <textarea id="domanda" placeholder="Es. come si cambiano gli estremi quando faccio una sostituzione in un integrale definito?"></textarea>
+    <div class="esempi" id="esempi"></div>
+    <div class="riga"><button id="chiedi">Chiedi al tutor →</button></div>
+    <div id="risposta"></div>
+  </div>
+
+  <div class="card non-capito" id="nonCapito">
+    <h2>🤔 Non ho capito</h2>
+    <p class="sottot">Segnala dove ti sei bloccato su <b id="argNome"></b>. Sei anonimo: il docente vede i dubbi solo raggruppati, quando almeno <span id="soglia">5</span> studenti segnalano lo stesso argomento. Una segnalazione per argomento.</p>
+    <div id="dubbioStato"></div>
+  </div>
+
+  <div class="sezione"><span class="n">✓</span><div><h2>Chiarimenti del docente</h2><p>Quando il docente risponde a un dubbio del corso lo trovi qui, con una domanda per verificare se ora ti torna.</p></div></div>
+  <div id="chiarimenti"><p class="vuoto">Caricamento…</p></div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// markdown: marked se disponibile, altrimenti un mini-convertitore (grassetto, corsivo, elenchi, paragrafi)
+function miniMd(t){
+  const inl = s => s.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/(^|[\s(])\*([^*\s][^*]*?)\*/g, "$1<i>$2</i>");
+  return esc(t).split(/\n{2,}/).map(b => {
+    const r = b.split("\n");
+    if (r.every(x => /^\s*(-|\d+\.)\s/.test(x))) {
+      const tag = /^\s*\d/.test(r[0]) ? "ol" : "ul";
+      return `<${tag}>${r.map(x => "<li>" + inl(x.replace(/^\s*(-|\d+\.)\s/, "")) + "</li>").join("")}</${tag}>`;
+    }
+    return "<p>" + r.map(inl).join("<br>") + "</p>";
+  }).join("");
+}
+const md = t => (window.marked ? marked.parse(esc(t)) : miniMd(t));
+const CORSO = "analisi1_simulato";
+let argomenti = [], segnalati = new Set(), fontiNote = {};
+
+function pseudonimo(){
+  let p = null;
+  try { p = localStorage.getItem("sf_pseudonimo"); } catch (e) {}
+  if (!p || !/^[a-z]{3,10}-[a-z0-9]{4,12}$/.test(p)) {
+    const a = "abcdefghijkmnpqrstuvwxyz23456789";
+    p = "stud-" + Array.from({length: 8}, () => a[Math.floor(Math.random() * a.length)]).join("");
+    try { localStorage.setItem("sf_pseudonimo", p); } catch (e) {}
+  }
+  return p;
+}
+const ME = pseudonimo();
+
+async function api(url, body){
+  const r = await fetch(url, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)} : {});
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.detail || "Errore " + r.status);
+  return j;
+}
+
+// citazioni [S22] / [L4@80:30] -> chip cliccabili
+function conChip(html, chiave){
+  return html.replace(/\[((?:S\d+)|(?:L\d+@\d{1,2}:\d{2}))\]/g,
+    (m, id) => fontiNote[id] ? `<span class="chip" data-id="${id}" data-box="${chiave}">${id}</span>` : m);
+}
+function blocchiFonti(fonti, chiave){
+  fonti.forEach(f => fontiNote[f.id] = f);
+  return `<div class="fonti">${fonti.map(f => `<span class="chip" data-id="${f.id}" data-box="${chiave}" title="${esc(f.titolo || "videolezione")}">${f.id}</span>`).join("")}</div><div id="box-${chiave}"></div>`;
+}
+document.addEventListener("click", e => {
+  const c = e.target.closest(".chip"); if (!c) return;
+  const f = fontiNote[c.dataset.id], box = document.getElementById("box-" + c.dataset.box);
+  if (!f || !box) return;
+  const aperto = box.dataset.id === f.id;
+  document.querySelectorAll(`.chip[data-box="${c.dataset.box}"]`).forEach(x => x.classList.toggle("on", !aperto && x.dataset.id === f.id));
+  box.dataset.id = aperto ? "" : f.id;
+  const dove = f.tipo === "slide" ? `Slide ${f.id.slice(1)} · Lezione ${f.lezione} · ${f.titolo}` : `Videolezione ${f.lezione} · minuto ${f.id.split("@")[1]}`;
+  box.innerHTML = aperto ? "" : `<div class="fonte-testo"><b>${esc(f.id)}</b> ${esc(dove)}\n\n${esc(f.testo)}</div>`;
+});
+
+function argCorrente(){ return argomenti.find(a => a.id === $("#argomento").value) || argomenti[0]; }
+
+async function init(){
+  try {
+    const cfg = await api(`/api/semestre/argomenti?corso=${CORSO}`);
+    argomenti = cfg.argomenti;
+    $("#soglia").textContent = cfg.soglia;
+    const m = $("#modalita");
+    m.textContent = cfg.modalita === "simulata" ? "modalità simulata (nessuna chiamata API)" : "modalità reale";
+    if (cfg.modalita === "simulata") m.classList.add("demo");
+    const sel = $("#argomento");
+    sel.innerHTML = cfg.lezioni.map(l => `<optgroup label="Lezione ${l}">${argomenti.filter(a => a.lezione === l).map(a => `<option value="${a.id}">${esc(a.titolo)}</option>`).join("")}</optgroup>`).join("");
+    let salvato = null; try { salvato = localStorage.getItem("sf_argomento"); } catch (e) {}
+    sel.value = argomenti.some(a => a.id === salvato) ? salvato : "estremi_sostituzione";
+  } catch (e) { $("#risposta").innerHTML = `<p class="err">${esc(e.message)}</p>`; return; }
+  const esempi = ["Come si cambiano gli estremi quando faccio una sostituzione in un integrale definito?",
+    "Risolvimi l'esercizio 4a dell'appello: integrale da 0 a pi/2 di sin x cos^2 x",
+    "Come funziona lo sviluppo in serie di Taylor?"];
+  $("#esempi").innerHTML = esempi.map(t => `<button type="button">${esc(t.length > 52 ? t.slice(0, 50) + "…" : t)}</button>`).join("");
+  $("#esempi").querySelectorAll("button").forEach((b, i) => b.onclick = () => { $("#domanda").value = esempi[i]; $("#domanda").focus(); });
+  await caricaMiei();
+  aggiornaArg();
+  caricaChiarimenti();
+}
+
+async function caricaMiei(){
+  try { const r = await api(`/api/semestre/miei?pseudonimo=${ME}&corso=${CORSO}`); segnalati = new Set(r.segnalati); } catch (e) {}
+}
+
+function aggiornaArg(){
+  const a = argCorrente(); if (!a) return;
+  try { localStorage.setItem("sf_argomento", a.id); } catch (e) {}
+  $("#argNome").textContent = a.titolo;
+  const st = $("#dubbioStato");
+  if (segnalati.has(a.id)) {
+    st.innerHTML = `<p class="fatto">✓ Hai già segnalato un dubbio su questo argomento. Grazie: se il docente pubblica un chiarimento lo trovi qui sotto.</p>`;
+    return;
+  }
+  st.innerHTML = `<div class="riga"><button class="sec" id="apriDubbio">🤔 Non ho capito</button></div>`;
+  $("#apriDubbio").onclick = () => apriForm("");
+}
+
+function apriForm(testo){
+  const st = $("#dubbioStato");
+  st.innerHTML = `<div id="dubbioForm">
+    <label for="dove">Dove ti sei bloccato? <span class="muted">(obbligatorio)</span></label>
+    <input id="dove" maxlength="120" placeholder="Es. Slide 22, L4 minuto 80:30, oppure 'quando cambio variabile'">
+    <label for="dubbioTesto">In due parole, cosa non torna? <span class="muted">(facoltativo, niente nomi)</span></label>
+    <textarea id="dubbioTesto" maxlength="300"></textarea>
+    <div class="riga"><button id="inviaDubbio">Invia in forma anonima</button><button class="sec" id="annulla">Annulla</button></div>
+    <p id="dubbioErr" class="err"></p></div>`;
+  $("#dubbioTesto").value = testo || "";
+  $("#dove").focus();
+  $("#annulla").onclick = aggiornaArg;
+  $("#inviaDubbio").onclick = async () => {
+    const dove = $("#dove").value.trim();
+    if (dove.length < 2) { $("#dubbioErr").textContent = "Indica dove ti sei bloccato: una slide, un minuto della lezione o una frase breve."; return; }
+    try {
+      await api("/api/semestre/dubbio", {pseudonimo: ME, argomento: argCorrente().id, dove, testo: $("#dubbioTesto").value, corso: CORSO});
+      segnalati.add(argCorrente().id);
+      aggiornaArg();
+    } catch (e) { $("#dubbioErr").textContent = e.message; }
+  };
+}
+
+async function chiedi(){
+  const q = $("#domanda").value.trim(); if (!q) return;
+  const out = $("#risposta"), btn = $("#chiedi");
+  btn.disabled = true; out.innerHTML = `<p class="muted">Il tutor cerca nel materiale del corso…</p>`;
+  try {
+    const r = await api("/api/semestre/domanda", {domanda: q, argomento: argCorrente().id, corso: CORSO});
+    (r.fonti || []).forEach(f => fontiNote[f.id] = f);
+    const et = {risposta: "💬 Tutor · risposta dal materiale del corso", confine: "🛡️ L'agente tiene il confine", non_trovato: "🔎 Fonte non trovata", errore: "Attenzione"}[r.tipo] || "Tutor";
+    let h = `<div class="card risposta ${r.tipo}"><span class="etichetta">${et}</span>`;
+    if (r.tipo === "confine") h += `<p class="muted" style="margin:0 0 6px">Non risolvo esercizi d'esame o valutati: ti aiuto a ragionare. <i>(controllo nel codice: ${esc(r.motivo || "")})</i></p>`;
+    h += `<div class="md">${conChip(md(r.testo), "r")}</div>`;
+    if (r.domanda_guida) h += `<div class="guida"><b>Prova tu:</b> ${conChip(esc(r.domanda_guida), "r")}</div>`;
+    if (r.fonti && r.fonti.length) h += `<div class="muted" style="margin-top:10px">Fonti citate (tocca per leggere):</div>` + blocchiFonti(r.fonti, "r");
+    if (r.tipo === "non_trovato") h += `<div class="riga"><button class="sec" id="mandaDocente">✉️ Invia il dubbio al docente</button></div>`;
+    out.innerHTML = h + "</div>";
+    const b = $("#mandaDocente");
+    if (b) b.onclick = () => { if (segnalati.has(argCorrente().id)) { $("#nonCapito").scrollIntoView({behavior:"smooth"}); return; } apriForm(q.slice(0, 300)); $("#nonCapito").scrollIntoView({behavior:"smooth"}); };
+  } catch (e) { out.innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+  btn.disabled = false;
+}
+
+async function caricaChiarimenti(){
+  const box = $("#chiarimenti");
+  try {
+    const r = await api(`/api/semestre/chiarimenti?pseudonimo=${ME}&corso=${CORSO}`);
+    if (!r.chiarimenti.length) { box.innerHTML = `<p class="vuoto">Nessun chiarimento pubblicato per ora.</p>`; return; }
+    box.innerHTML = r.chiarimenti.map(ch => {
+      (ch.fonti || []).forEach(f => fontiNote[f.id] = f);
+      return `<div class="card ch" id="ch-${ch.id}">
+        <div class="ch-arg">${esc(ch.argomento_titolo)}</div><h3>${esc(ch.titolo)}</h3>
+        <div class="md">${conChip(md(ch.testo), ch.id)}</div>
+        ${ch.fonti && ch.fonti.length ? blocchiFonti(ch.fonti, ch.id) : ""}
+        ${ch.quiz ? quizHtml(ch) : ""}</div>`;
+    }).join("");
+    box.querySelectorAll(".opz").forEach(b => b.onclick = () => rispondiQuiz(b.dataset.ch, +b.dataset.i));
+  } catch (e) { box.innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+}
+
+function quizHtml(ch){
+  const q = ch.quiz, risposto = q.mia !== undefined;
+  const opz = q.opzioni.map((o, i) => {
+    let cl = "";
+    if (risposto && i === q.corretta) cl = "giusta"; else if (risposto && i === q.mia) cl = "sbagliata";
+    return `<button class="opz ${cl}" data-ch="${ch.id}" data-i="${i}" ${risposto ? "disabled" : ""}>${String.fromCharCode(65 + i)}. ${esc(o)}</button>`;
+  }).join("");
+  const fb = risposto ? `<p class="${q.mia === q.corretta ? "ok" : "err"}"><b>${q.mia === q.corretta ? "Corretto!" : "Non ancora: rileggi il chiarimento."}</b> ${esc(q.spiegazione)}</p>` : `<p class="muted">Non è un voto: serve al docente per capire se il chiarimento funziona.</p>`;
+  return `<div class="quiz"><div class="muted">✅ Domanda di verifica</div><div class="q">${esc(q.domanda)}</div>${opz}${fb}</div>`;
+}
+
+async function rispondiQuiz(ch, i){
+  try { await api("/api/semestre/verifica", {pseudonimo: ME, chiarimento: ch, risposta: i, corso: CORSO}); }
+  catch (e) { alert(e.message); }
+  caricaChiarimenti();
+}
+
+$("#chiedi").onclick = chiedi;
+$("#domanda").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) chiedi(); });
+$("#argomento").onchange = aggiornaArg;
+init();
+</script>
+</body>
+</html>

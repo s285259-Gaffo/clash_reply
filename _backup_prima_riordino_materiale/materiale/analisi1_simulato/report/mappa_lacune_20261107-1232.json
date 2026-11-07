@@ -1,0 +1,333 @@
+{
+  "corso": {
+    "nome": "analisi1_simulato",
+    "slide": 32,
+    "frammenti_trascrizione": 136,
+    "lezioni": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "ha_esame": true,
+    "ha_soluzioni": true,
+    "ha_chiave": true
+  },
+  "brief": {
+    "corso": "Analisi Matematica 1 - Ingegneria",
+    "obiettivi": [
+      "Calcolare limiti, derivate e integrali con sicurezza",
+      "Giustificare formalmente ogni passaggio del ragionamento senza limitarsi al risultato"
+    ],
+    "esercizi": [
+      {
+        "id": "1a",
+        "argomento": "Limiti di funzioni (forme indeterminate e limiti notevoli)",
+        "lezione_argomento": 1,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Verificare la forma indeterminata 0/0 mediante sostituzione diretta x=0."
+          },
+          {
+            "n": 2,
+            "testo": "Moltiplicare e dividere l'espressione per 2x e 3x per ricondursi ai limiti notevoli del seno e dell'esponenziale."
+          },
+          {
+            "n": 3,
+            "testo": "Applicare il limite notevole lim_{t->0} (e^t - 1)/t = 1 ponendo t = 2x."
+          },
+          {
+            "n": 4,
+            "testo": "Applicare il limite notevole del seno lim_{t->0} t/sin(t) = 1 ponendo t = 3x."
+          },
+          {
+            "n": 5,
+            "testo": "Semplificare il rapporto algebrico residuo (2x/3x = 2/3) ed eseguire il prodotto dei limiti."
+          }
+        ]
+      },
+      {
+        "id": "1b",
+        "argomento": "Limiti di funzioni (forme indeterminate e limiti notevoli)",
+        "lezione_argomento": 1,
+        "passi": [
+          {
+            "n": 1,
+            "testo": "Verificare la forma indeterminata 0/0 mediante sostituzione diretta x=0."
+          },
+          {
+            "n": 2,
+            "testo": "Riscrivere la frazione moltiplicando e dividendo per (2x)^2 per isolare il limite notevole del coseno."
+          },
+          {
+            "n": 3,
+            "testo": "Applicare il limite notevole lim_{t->0} (1-cos t)/t^2 = 1/2 con t = 2x e il limite notevole del seno lim_{x->0} x/sin x = 1."
+          },
+          {
+            "n": 4,
+            "testo": "Calcolare il valore finale moltiplicando i singoli limiti ottenuti per l'algebra dei limiti."
+          }
+        ]
+      }
+    ],
+    "prerequisiti_dati_per_scontati": [
+      "Algebra elementare e manipolazione di frazioni",
+      "Risoluzione di equazioni e disequazioni di secondo grado",
+      "Proprietà delle potenze e dei radicali",
+      "Proprietà dei logaritmi e dell'esponenziale",
+      "Trigonometria di base e formule di duplicazione/bisezione",
+      "Geometria analitica della retta (equazione per un punto e pendenza)"
+    ],
+    "domande_per_il_docente": [
+      "Nelle slide o a lezione viene spiegata la formula generica lim_{x->+inf} (1 + a/x)^x = e^a usata nell'Esercizio 1c, oppure ci si aspetta che gli studenti la ricavino dal limite notevole fondamentale con e?",
+      "L'uso dell'identità trigonometrica sin^2(x) = (1 - cos(2x))/2 (Esercizio 3b) è trattato esplicitamente nelle slide o nelle videolezioni dell'insegnamento, o si dà per scontato che sia nota dalle scuole superiori?",
+      "Il concetto di area compresa tramite il valore assoluto dell'integrale definito e lo studio del segno (Esercizio 4c) viene spiegato nelle videolezioni, dato che nelle slide della Lezione 4 compaiono principalmente esempi e proprietà di base dell'integrale?"
+    ]
+  },
+  "lacune": [
+    {
+      "esercizio": "1a",
+      "passo": "3",
+      "testo_passo": "Applicare il limite notevole lim_{t->0} (e^t - 1)/t = 1 ponendo t = 2x.",
+      "tipo": "rossa",
+      "evidenza": [],
+      "nota_slide": "non_trovato",
+      "nota_lezioni": "non_trovato",
+      "id": "g1",
+      "chiave": "rossa:es1a-p3",
+      "titolo": "Passaggio formale nel cambio di variabile dei limiti",
+      "perche_conta": "Impedisce agli studenti di giustificare correttamente la sostituzione nei limiti notevoli richiesti dall'esame.",
+      "suggerimento": "Inserire un esempio pratico nelle slide dei limiti per mostrare esplicitamente la verifica delle condizioni di cambio variabile.",
+      "revisione": null
+    },
+    {
+      "tipo": "prerequisito",
+      "esercizio": "1a",
+      "passo": "3",
+      "prerequisito": "limite notevole dell'esponenziale lim_{t->0} (e^t-1)/t = 1",
+      "testo_passo": "Applicare il limite notevole lim_{t->0} (e^t - 1)/t = 1 ponendo t = 2x.",
+      "evidenza": [],
+      "perche": "Il corso presenta solo limiti notevoli con logaritmi/numero e",
+      "id": "g2",
+      "chiave": "prerequisito:limite-notevole-dell-esponenziale-lim_-t",
+      "titolo": "Mancanza del limite notevole dell'esponenziale",
+      "perche_conta": "È un prerequisito fondamentale indispensabile per il calcolo dei limiti e lo svolgimento degli esercizi.",
+      "suggerimento": "Aggiungere un richiamo al limite notevole dell'esponenziale nella slide iniziale dedicata ai limiti fondamentali.",
+      "revisione": null
+    },
+    {
+      "tipo": "gialla",
+      "concetto": "Integrale di ln(x)",
+      "esercizio": "",
+      "passo": "",
+      "testo_passo": "Usato in lezione 3, spiegato in lezione 4",
+      "evidenza": [
+        {
+          "fonte": "S20",
+          "citazione": "| \\ln x | x\\ln x-x+c |",
+          "nota": "usato qui"
+        },
+        {
+          "fonte": "S27",
+          "citazione": "\\int\\ln x\\,dx=x\\ln x-\\int x\\cdot\\frac1x\\,dx=x\\ln x-x+c",
+          "nota": "spiegato solo qui"
+        }
+      ],
+      "id": "g3",
+      "chiave": "gialla:integrale-di-ln-x",
+      "titolo": "Inversione temporale nell'uso dell'integrale di ln(x)",
+      "perche_conta": "L'uso anticipato di una formula rispetto alla sua dimostrazione crea confusione concettuale negli studenti.",
+      "suggerimento": "Spostare l'esempio di S20 dopo la spiegazione dell'integrazione per parti presente in S27.",
+      "revisione": null
+    }
+  ],
+  "passi_totali": 9,
+  "passi_coperti_da_slide": 8,
+  "citazioni_scartate": 0,
+  "domande_per_il_docente": [
+    "Nelle slide o a lezione viene spiegata la formula generica lim_{x->+inf} (1 + a/x)^x = e^a usata nell'Esercizio 1c, oppure ci si aspetta che gli studenti la ricavino dal limite notevole fondamentale con e?",
+    "L'uso dell'identità trigonometrica sin^2(x) = (1 - cos(2x))/2 (Esercizio 3b) è trattato esplicitamente nelle slide o nelle videolezioni dell'insegnamento, o si dà per scontato che sia nota dalle scuole superiori?",
+    "Il concetto di area compresa tramite il valore assoluto dell'integrale definito e lo studio del segno (Esercizio 4c) viene spiegato nelle videolezioni, dato che nelle slide della Lezione 4 compaiono principalmente esempi e proprietà di base dell'integrale?"
+  ],
+  "sintesi": "La mappa evidenzia due lacune nell'applicazione formale dei limiti notevoli e un'incongruenza nella sequenza didattica degli integrali. Si raccomanda di riordinare la presentazione dei concetti e inserire richiami formali mirati.",
+  "secondi": 125.9,
+  "valutazione": {
+    "piantate": 3,
+    "trovate": 0,
+    "recall": 0.0,
+    "segnalate": 3,
+    "corrispondenti": 0,
+    "precision": 0.0,
+    "falso_amico_segnalato": 0,
+    "mancate": [
+      "Equazione della retta tangente y = f(x0) + f'(x0)(x - x0)",
+      "Limite notevole dell'esponenziale: (e^t - 1)/t tende a 1 per t che tende a 0",
+      "Proprietà dei logaritmi: ln(a/b) = ln a - ln b, ln(a^k) = k ln a"
+    ]
+  },
+  "registro_verifiche": [
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità per far comparire la forma",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Se g(x)->0 per x->x_0, allora sin g(x)/g(x)->1",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità per far comparire la forma",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S6",
+      "citazione": "e (1-cos g(x))/(g(x))^2->1/2",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_slide",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità per far comparire",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "Se g(x)->0 per x->x_0, allora (sin g(x))/g(x)->1",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "L1@57:45",
+      "citazione": "moltiplico e divido per nove",
+      "valida": true,
+      "tipo": "trascrizione",
+      "lezione": 1,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S6",
+      "citazione": "(1-cos g(x))/(g(x))^2->1/2",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.95
+    },
+    {
+      "agente": "fantasma_lezioni",
+      "fonte": "S3",
+      "citazione": "f*g->l_1 l_2",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 1,
+      "punteggio": 0.64
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S20",
+      "citazione": "| \\ln x | x\\ln x-x+c |",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 3,
+      "punteggio": 1.0
+    },
+    {
+      "agente": "revisore_sequenza",
+      "fonte": "S27",
+      "citazione": "\\int\\ln x\\,dx=x\\ln x-\\int x\\cdot\\frac1x\\,dx=x\\ln x-x+c",
+      "valida": true,
+      "tipo": "slide",
+      "lezione": 4,
+      "punteggio": 0.95
+    }
+  ]
+}

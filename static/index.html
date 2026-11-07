@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crash test · Studente Fantasma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/stile.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="/static/fonti.js"></script>
+<style>  /* legenda dei tipi di lacuna */
+  .legenda-tipi{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:0 0 6px}
+  .lt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;border-top:4px solid var(--c);box-shadow:var(--ombra)}
+  .lt b{display:block;font-size:14.5px;color:var(--c)}
+  .lt span{font-size:13px;color:var(--muted);line-height:1.4;display:block;margin-top:2px}
+  .lt.rossa{--c:var(--rossa)} .lt.verde{--c:var(--verde)} .lt.gialla{--c:var(--gialla)} .lt.prerequisito{--c:var(--prereq)} .lt.trappola{--c:var(--trappola)}
+
+  /* scelta del corso: drop + elenco */
+  .scelta{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:stretch}
+  @media (max-width:860px){.scelta{grid-template-columns:1fr}}
+  .drop{position:relative;border:2px dashed color-mix(in srgb, var(--accent) 45%, var(--line));border-radius:20px;background:
+      radial-gradient(500px 200px at 50% 0%, var(--accent-soft), transparent 70%), var(--card);
+    padding:28px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;transition:border-color .15s, background .15s, transform .15s}
+  .drop.sopra{border-color:var(--accent);border-style:solid;background:var(--accent-soft);transform:scale(1.01)}
+  .drop.sopra .drop-ico{transform:translateY(-6px) scale(1.12)}
+  .drop[data-stato=fatto]{border-style:solid;border-color:var(--ok);background:radial-gradient(500px 200px at 50% 0%, var(--ok-soft), transparent 70%), var(--card)}
+  .drop[data-stato=errore]{border-color:var(--err)}
+  .drop-ico{font-size:52px;line-height:1;transition:transform .2s}
+  .drop-ico.gira{animation:pulse 1s infinite}
+  .drop h3{margin:12px 0 4px;font-size:20px}
+  .drop > p, #dropCorpo > p{margin:0;color:var(--muted);font-size:14.5px;max-width:460px}
+  #dropCorpo{display:flex;flex-direction:column;align-items:center;width:100%}
+  .drop-az{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+  .formato{margin-top:16px;font-size:13.5px;text-align:left;max-width:480px;width:100%}
+  .formato summary{cursor:pointer;color:var(--accent-ink);font-weight:600;text-align:center;list-style:none}
+  .formato summary::-webkit-details-marker{display:none}
+  .formato ul{margin:10px 0 6px;padding-left:1.1em;color:var(--muted)}
+  .formato code{font:600 12.5px var(--mono);color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:6px}
+  .riconosciuti{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 4px}
+  .ric{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .ric b{background:var(--accent);color:#fff;border-radius:999px;padding:0 8px;font-size:12px}
+  .avviso{margin-top:10px;font-size:13.5px;background:var(--gialla-soft);color:var(--gialla);border-radius:10px;padding:8px 12px;max-width:480px}
+  .okmsg{margin-top:10px;font-size:13.5px;font-weight:600;color:var(--ok)}
+  .campo{width:100%;max-width:360px;text-align:left;margin-top:14px}
+  .campo label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
+  .small{font-size:13px}
+
+  .corsi-box{display:flex;flex-direction:column;gap:10px}
+  .corsi-tit{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding-left:2px}
+  .corsi{display:flex;flex-direction:column;gap:10px}
+  .corso-card{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .12s;box-shadow:var(--ombra);outline:none}
+  .corso-card:hover,.corso-card:focus-visible{border-color:color-mix(in srgb, var(--accent) 55%, var(--line));transform:translateY(-1px)}
+  .corso-card.sel{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft), var(--ombra)}
+  .cc-top{display:flex;align-items:center;gap:10px}
+  .cc-ico{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--soft);font-size:18px;flex:none}
+  .corso-card.sel .cc-ico{background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .cc-nome{font-weight:700;font-size:15.5px}
+  .cc-radio{margin-left:auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none}
+  .corso-card.sel .cc-radio{border:6px solid var(--accent)}
+  .tag-test{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--sim-soft);color:var(--sim)}
+  .cc-check{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .cc-check span{font-size:12.5px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--muted)}
+  .cc-check .si{background:var(--ok-soft);color:var(--ok);font-weight:600}
+  .cc-check .no{background:var(--err-soft);color:var(--err);font-weight:600}
+
+  .lancio{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:16px;padding:18px 22px;border:1px solid color-mix(in srgb, var(--accent) 25%, var(--line));background:linear-gradient(90deg,var(--accent-soft),var(--card) 70%)}
+  .sel-info{flex:1;min-width:220px}
+  .sel-info .et{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+  .sel-nome{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .riep{color:var(--muted);font-size:13.5px}
+
+  /* pipeline degli agenti */
+  .progresso{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin:-4px 0 14px}
+  .progresso span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .5s ease}
+  .progresso-testo{font-size:13.5px;font-weight:600;color:var(--accent-ink)}
+  .pipeline{display:flex;align-items:stretch;gap:6px;overflow-x:auto;padding:4px 2px 10px}
+  .fase{display:flex;flex-direction:column;gap:10px;flex:1 1 0;min-width:205px}
+  .fase .etichetta{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;padding:4px 10px;border-radius:999px;background:var(--soft);align-self:flex-start}
+  .freccia{align-self:center;color:var(--muted);font-size:20px;padding-top:26px;opacity:.6}
+  .agent{position:relative;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;transition:border-color .2s, box-shadow .2s, transform .12s;box-shadow:var(--ombra)}
+  .agent:hover{transform:translateY(-1px)}
+  .agent .top{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;line-height:1.25}
+  .agent .ico{font-size:20px}
+  .agent .role{color:var(--muted);font-size:12.5px;margin-top:4px;line-height:1.4}
+  .agent .tag{font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--prereq-soft);color:var(--prereq);margin-left:auto;text-transform:uppercase;letter-spacing:.04em}
+  .agent .st{font-size:12px;margin-top:9px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:6px}
+  .agent .st::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--line)}
+  .agent.lavora{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft), var(--ombra)}
+  .agent.lavora .st{color:var(--accent-ink)}
+  .agent.lavora .st::before{background:var(--accent);animation:pulse 1s infinite}
+  .agent.fatto{border-color:color-mix(in srgb, var(--ok) 60%, var(--line))}
+  .agent.fatto .st{color:var(--ok)} .agent.fatto .st::before{background:var(--ok)}
+  .agent.sel{outline:2px solid var(--ink);outline-offset:2px}
+  .agent.umano{border-style:dashed;background:var(--soft);cursor:default;box-shadow:none}
+  .agent.umano .tag{background:var(--sim-soft);color:var(--sim)}
+  .pannello{margin-top:16px}
+  .pannello h4{margin:0 0 8px;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.07em}
+  #out{max-height:420px;overflow:auto}
+  @media (max-width:640px){.pipeline{flex-direction:column}.freccia{transform:rotate(90deg);padding:0}}
+
+  /* risultati */
+  .sim{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--sim-soft);color:var(--sim);margin-left:8px;vertical-align:4px;letter-spacing:0}
+  .verdetto{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;padding:24px 26px;margin-bottom:16px}
+  @media (max-width:760px){.verdetto{grid-template-columns:1fr;justify-items:center;text-align:center}}
+  .cop-box{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .donut{width:176px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+    background:conic-gradient(var(--verde) 0 calc(var(--a) * 1%), var(--voce-bar) 0 calc(var(--b) * 1%), var(--rossa) 0 100%)}
+  .donut-in{width:128px;aspect-ratio:1;border-radius:50%;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px}
+  .donut-in b{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .donut-in span{font-size:11.5px;color:var(--muted);line-height:1.25;margin-top:4px}
+  .leg-cop{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
+  .leg-cop i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px}
+  .b-slide{background:var(--verde)} .b-voce{background:var(--voce-bar)} .b-mai{background:var(--rossa)}
+  .sintesi{font-size:17px;font-weight:600;margin:0 0 14px;line-height:1.5}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px}
+  .tile{border-radius:14px;padding:12px 14px;background:var(--cs);border:1.5px solid transparent;cursor:pointer;transition:transform .12s,border-color .15s;text-align:left}
+  .tile:hover{transform:translateY(-2px)}
+  .tile.on{border-color:var(--c)}
+  .tile .n{font-size:30px;font-weight:800;color:var(--c);line-height:1.05;letter-spacing:-.03em}
+  .tile .l{font-size:12.5px;font-weight:600;color:var(--ink);opacity:.85}
+  .tile.zero{opacity:.5}
+  .tile.rossa{--c:var(--rossa);--cs:var(--rossa-soft)} .tile.verde{--c:var(--verde);--cs:var(--verde-soft)}
+  .tile.gialla{--c:var(--gialla);--cs:var(--gialla-soft)} .tile.prerequisito{--c:var(--prereq);--cs:var(--prereq-soft)}
+  .tile.trappola{--c:var(--trappola);--cs:var(--trappola-soft)}
+  .stat-mini{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--muted)}
+  .stat-mini b{color:var(--ink)}
+  .valut{border-left:5px solid var(--accent);margin-bottom:16px}
+  /* quattro studenti, quattro voti */
+  .sez-pers{margin:0 0 20px}
+  .pers-testa{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:8px 0 12px}
+  .pers-testa h3{margin:0;font-size:20px}
+  .pers-frase{margin:4px 0 0;font-size:16px;font-weight:600;color:var(--accent-ink)}
+  .persone{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .persona{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--ombra);display:flex;flex-direction:column;gap:12px;border-top:5px solid var(--c)}
+  .persona.rosso{--c:var(--rossa);--cs:var(--rossa-soft)} .persona.giallo{--c:var(--gialla);--cs:var(--gialla-soft)} .persona.verde{--c:var(--verde);--cs:var(--verde-soft)}
+  .p-top{display:flex;gap:10px;align-items:flex-start}
+  .p-ico{font-size:26px;line-height:1;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--soft);flex:none}
+  .p-top b{display:block;font-size:15.5px}
+  .p-top span{display:block;font-size:12.5px;color:var(--muted);line-height:1.4;margin-top:2px}
+  .p-voto{display:flex;align-items:baseline;gap:4px}
+  .p-voto .v{font-size:46px;font-weight:800;letter-spacing:-.04em;color:var(--c);line-height:1}
+  .p-voto .su{font-size:16px;color:var(--muted);font-weight:700}
+  .p-voto .esito{margin-left:auto;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--cs);color:var(--c)}
+  .p-barra{position:relative;height:8px;border-radius:999px;background:var(--line)}
+  .p-barra span{display:block;height:100%;border-radius:999px;background:var(--c)}
+  .p-barra i{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.5;border-radius:2px}
+  .p-barra i::after{content:"18";position:absolute;top:-16px;left:-6px;font:700 10px var(--font);font-style:normal;color:var(--muted)}
+  .p-es{display:grid;gap:5px}
+  .p-e{display:grid;grid-template-columns:44px 1fr 56px;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+  .p-e b{text-align:right;color:var(--ink);font-weight:600}
+  .mini{height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+  .mini span{display:block;height:100%;background:var(--c);opacity:.75}
+  .p-blocchi .lab{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+  .p-blocchi .m{font-size:13px;padding:6px 9px;border-radius:9px;background:var(--cs);margin-top:4px;cursor:help}
+  .p-blocchi .m b{white-space:nowrap;color:var(--c)}
+  .p-ok{font-size:13px;font-weight:600;color:var(--ok)}
+  .p-nota{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+
+
+  .prio{position:relative;border-radius:20px;padding:18px 18px 16px;margin:0 0 20px;background:linear-gradient(var(--card),var(--card)) padding-box, linear-gradient(135deg,var(--accent),var(--accent-2),#f59e0b) border-box;border:2px solid transparent;box-shadow:var(--ombra-forte)}
+  .prio h3{margin:0 0 4px;font-size:18px}
+  .prio .sotto{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+  .prio .lacune{gap:10px}
+  .filtri{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px;position:sticky;top:70px;z-index:5;padding:8px 0;background:var(--bg)}
+  .filtri button{padding:6px 13px;font-size:13px;border-radius:999px}
+  @media (max-width:860px){.filtri{position:static}}
+  .lacune{display:grid;gap:12px}
+  .lacuna{border-left:6px solid var(--line);transition:opacity .2s}
+  .lacuna.rossa{border-left-color:var(--rossa)} .lacuna.verde{border-left-color:var(--verde)}
+  .lacuna.gialla{border-left-color:var(--gialla)} .lacuna.prerequisito{border-left-color:var(--prereq)}
+  .lacuna.trappola{border-left-color:var(--trappola)}
+  .lacuna.voluta,.lacuna.falso_allarme{opacity:.5}
+  .lacuna.da_sistemare{box-shadow:0 0 0 2px color-mix(in srgb, var(--ok) 50%, transparent), var(--ombra)}
+  .tipo{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
+  .tipo.rossa{background:var(--rossa-soft);color:var(--rossa)} .tipo.verde{background:var(--verde-soft);color:var(--verde)}
+  .tipo.gialla{background:var(--gialla-soft);color:var(--gialla)} .tipo.prerequisito{background:var(--prereq-soft);color:var(--prereq)}
+  .tipo.trappola{background:var(--trappola-soft);color:var(--trappola)}
+  .lacuna h3{margin:10px 0 6px;font-size:18px}
+  .dove{color:var(--muted);font-size:14px}
+  .ev{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .fonte{font-size:13px;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:6px 10px;max-width:100%}
+  .fonte b{font:700 12.5px var(--mono);margin-right:6px;color:var(--accent-ink)}
+  .riga{font-size:14.5px;margin:5px 0}
+  .riga b{color:var(--muted);font-weight:700}
+  .decidi{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;align-items:center;padding-top:12px;border-top:1px solid var(--line)}
+  .decidi span{font-size:12.5px;color:var(--muted);margin-right:4px;font-weight:600}
+  .decidi button{padding:6px 12px;font-size:13px}
+  .cert{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-left:6px;vertical-align:1px}
+  .cert.alta{color:var(--ok);border-color:currentColor} .cert.bassa{color:var(--err);border-color:currentColor}
+  .frase{font-style:italic;background:var(--trappola-soft);border-radius:6px;padding:1px 6px}
+  .tabella{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  .car{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px}
+  .car.basso{background:var(--verde-soft);color:var(--verde)} .car.medio{background:var(--gialla-soft);color:var(--gialla)}
+  .car.alto{background:var(--rossa-soft);color:var(--rossa)}
+  .tempo{height:10px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:8px;max-width:460px}
+  .tempo span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+  /* azioni del report */
+  .azioni-report{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+  .azioni-report .btn{padding:8px 14px;font-size:14px}
+  .riapri{font-size:13.5px;color:var(--muted)} .riapri a{color:var(--accent-ink);font-weight:600;cursor:pointer}
+  .lacuna h3.apri{cursor:pointer} .lacuna h3.apri:hover{color:var(--accent-ink)}
+  .decidi .det{margin-left:auto}
+
+  /* risultati dell'esame */
+  .voti{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:14px}
+  .voto{padding:16px 18px}
+  .voto .chi{font-size:13px;font-weight:700;color:var(--muted)}
+  .voto .num{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .voto .num small{font-size:16px;color:var(--muted);font-weight:700}
+  .voto .barra{height:8px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:8px}
+  .voto .barra span{display:block;height:100%;border-radius:999px}
+  .voto.slide .barra span{background:var(--accent)} .voto.video .barra span{background:var(--verde)} .voto.piena .barra span{background:var(--muted)}
+  .voto p{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
+  .esercizio{margin-bottom:10px;padding:0;overflow:hidden}
+  .esercizio summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 18px;flex-wrap:wrap}
+  .esercizio summary::-webkit-details-marker{display:none}
+  .esercizio summary .es-n{font-weight:800;font-size:16px}
+  .esercizio summary .es-arg{color:var(--muted);font-size:14px}
+  .esercizio summary .es-dx{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:13px}
+  .pti{font-weight:700;padding:3px 10px;border-radius:999px;background:var(--soft)}
+  .pti.pieno{background:var(--ok-soft);color:var(--ok)} .pti.parz{background:var(--gialla-soft);color:var(--gialla)} .pti.zero{background:var(--rossa-soft);color:var(--rossa)}
+  .mini-bar{display:flex;width:120px;height:8px;border-radius:999px;overflow:hidden;background:var(--line)}
+  .mini-bar i{display:block;height:100%}
+  .passi-es{border-top:1px solid var(--line)}
+  .passo-es{display:grid;grid-template-columns:34px 1fr auto;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line);align-items:start;font-size:14px}
+  .passo-es:last-child{border-bottom:0}
+  .passo-es .pn{font:700 12.5px var(--mono);color:var(--muted);padding-top:2px}
+  .passo-es .chip-st{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .st-slide{background:var(--soft);color:var(--ok)} .st-voce{background:var(--verde-soft);color:var(--verde)} .st-mai{background:var(--rossa-soft);color:var(--rossa)}
+  .passo-es .lac{display:block;margin-top:4px;font-size:12.5px;color:var(--accent-ink);font-weight:600;cursor:pointer}
+  .passo-es.evid{background:var(--accent-soft)}
+
+  /* domanda libera */
+  .chiedi{display:grid;gap:10px}
+  .chiedi textarea{width:100%;min-height:76px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;resize:vertical;box-sizing:border-box}
+  .chiedi .az{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .chiedi .esempi button{padding:5px 11px;font-size:12.5px;border-radius:999px}
+  .risposta-f{border-left:5px solid var(--accent);margin-top:4px}
+  .risposta-f.confine{border-left-color:var(--gialla)} .risposta-f.non_trovato{border-left-color:var(--rossa)}
+  .esito{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:6px}
+  .esito.risposta{background:var(--ok-soft);color:var(--ok)} .esito.confine{background:var(--gialla-soft);color:var(--gialla)} .esito.non_trovato{background:var(--rossa-soft);color:var(--rossa)}
+
+  /* dettaglio lacuna */
+  .det-sez{margin-top:16px}
+  .det-sez h4{margin:0 0 6px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+  .fantasmi{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:560px){.fantasmi{grid-template-columns:1fr}}
+  .fant{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px}
+  .fant b{display:block;margin-bottom:3px}
+  .fant.no{background:var(--rossa-soft)} .fant.si{background:var(--verde-soft)}
+  .ver{font-size:13px;display:flex;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line)}
+  .ver:last-child{border-bottom:0}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in"><a class="brand" href="/"><span class="logo">👻</span>Studente Fantasma</a><nav class="tabs" aria-label="Sezioni"><a class="tab on" href="/" title="Prima del semestre: gli agenti provano l'esame usando solo il materiale del corso e trovano le lacune" aria-current="page"><span class="num">🔬</span><span class="txt"><span class="nome">Crash test</span><span class="chi">Docente · prima del semestre</span></span></a><a class="tab" href="/docente" title="Durante il semestre: i dubbi anonimi degli studenti, raggruppati, con una proposta di intervento da approvare"><span class="num">📬</span><span class="txt"><span class="nome">Segnalazioni</span><span class="chi">Docente · durante il semestre</span></span></a><a class="tab" href="/studente" title="Per lo studente: un tutor che risponde solo con slide e videolezioni del corso, senza risolvere gli esercizi valutati"><span class="num">🎓</span><span class="txt"><span class="nome">Tutor</span><span class="chi">Studente · durante il semestre</span></span></a></nav></div></div>
+<div class="wrap">
+  <section class="hero">
+    <div class="fantasmino" aria-hidden="true">👻</div>
+    <span class="kicker">🔬 Fase 1 · prima del semestre · per il docente</span> <span class="badge stato-app" id="modalita">Connessione al server…</span>
+    <h1>Il <em>crash test</em> del tuo corso, prima che lo facciano gli studenti</h1>
+    <p class="lead">Un gruppo di studenti AI prova a superare il tuo esame usando <b>solo</b> slide e videolezioni. Dove si bloccano c'è una lacuna nel materiale: te la mostriamo con la fonte esatta e un suggerimento su dove intervenire.</p>
+    <div class="passi">
+      <div class="passo"><span class="n">1</span><div class="ico">📂</div><b>Carica il corso</b><span>Trascina la cartella con slide, trascrizioni, esame e soluzioni.</span></div>
+      <div class="passo"><span class="n">2</span><div class="ico">🤖</div><b>Quattro studenti provano l'esame</b><span>Frettoloso, visivo, mnemonico e pratico, in parallelo. Un verificatore in codice scarta le citazioni inventate.</span></div>
+      <div class="passo"><span class="n">3</span><div class="ico">🗺️</div><b>Voti e Mappa delle Lacune</b><span>Che voto prenderebbe ogni tipo di studente, e dove si blocca. Decidi tu cosa sistemare.</span></div>
+    </div>
+  </section>
+
+  <div class="legenda-tipi" aria-label="Cosa può trovare il crash test">
+    <div class="lt rossa"><b>🔴 Mai spiegato</b><span>Serve all'esame, ma non c'è né nelle slide né nelle lezioni</span></div>
+    <div class="lt verde"><b>🟢 Solo a voce</b><span>Detto a lezione (con il minuto), assente nelle slide</span></div>
+    <div class="lt gialla"><b>🟡 Fuori ordine</b><span>Usato in una lezione, spiegato solo più avanti</span></div>
+    <div class="lt prerequisito"><b>🔵 Prerequisito</b><span>Conoscenza delle superiori che il corso non richiama</span></div>
+    <div class="lt trappola"><b>🪤 Trappola nel testo</b><span>Frase d'esame che si può leggere in due modi</span></div>
+  </div>
+
+  <div class="sezione"><span class="n">1</span><div><h2>Scegli il corso da testare</h2><p>Trascina la cartella di un nuovo corso oppure scegline uno già caricato.</p></div></div>
+  <div class="scelta">
+    <div class="drop" id="drop" data-stato="vuoto"><div id="dropCorpo"></div></div>
+    <div class="corsi-box">
+      <div class="corsi-tit">Corsi già caricati</div>
+      <div class="corsi" id="corsi"><p class="vuoto">Caricamento…</p></div>
+    </div>
+  </div>
+  <input type="file" id="pickCartella" webkitdirectory directory multiple hidden>
+  <input type="file" id="pickFile" multiple accept=".md,.txt,.json" hidden>
+  <select id="corso" hidden aria-hidden="true"></select>
+
+  <div class="card lancio">
+    <div class="sel-info"><div class="et">Corso selezionato</div><div class="sel-nome" id="selNome">—</div><div class="riep" id="riep"></div></div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+      <button class="grande" id="vai">▶ Avvia il crash test</button>
+      <span class="riapri">oppure <a id="apriUltimo" role="button" tabindex="0">apri l'ultimo crash test salvato</a></span>
+    </div>
+  </div>
+
+  <div id="lavoro">
+    <div class="sezione"><span class="n">2</span><div><h2>Il team di agenti</h2><p>Ogni scheda è un agente. Quelli nella stessa fase lavorano in parallelo: cliccane uno per leggere cosa ha prodotto.</p></div><span class="dx progresso-testo" id="progTesto"></span></div>
+    <div class="progresso" id="progWrap" hidden><span id="progBarra"></span></div>
+    <div class="pipeline" id="pipeline"></div>
+    <div class="card pannello" id="pannelloOut">
+      <h4 id="outTitolo">Lavoro degli agenti</h4>
+      <div class="md" id="out"><p class="vuoto">Avvia il crash test: qui comparirà, agente per agente, quello che ciascuno ha prodotto.</p></div>
+    </div>
+  </div>
+
+  <div id="risultati" hidden>
+    <div class="sezione"><span class="n">3</span><div><h2>Mappa delle Lacune<span class="sim" id="simBadge" hidden>simulazione</span></h2><p>🔒 Report privato del docente · le decisioni restano tue · non serve a valutare la didattica</p></div><div class="azioni-report"><a class="btn sec" id="scarica" href="#" target="_blank">⬇ Report .md</a><a class="btn sec" id="pdf" href="#" target="_blank">🖨️ Esporta PDF</a><a class="btn sec" id="confronta" href="#" target="_blank">↔ Prima / dopo</a></div></div>
+    <div class="card verdetto">
+      <div id="copertura"></div>
+      <div><p class="sintesi" id="sintesi"></p><div class="tiles" id="kpi"></div><div class="stat-mini" id="statMini"></div></div>
+    </div>
+    <div id="personas"></div>
+    <div id="valutazione"></div>
+    <div id="priorita"></div>
+    <div class="filtri" id="filtri"></div>
+    <div class="lacune" id="lacune"></div>
+    <div class="card pannello" id="cronometro" hidden></div>
+    <div class="card pannello" id="domande" hidden><h4>❓ Domande per il docente</h4><ul id="domandeLista"></ul></div>
+
+    <div class="sezione"><span class="n">4</span><div><h2>Risultati dell'esame</h2><p>Come se la cava lo studente fantasma, esercizio per esercizio. Un passo vale se ha una fonte verificata nel materiale.</p></div></div>
+    <div id="esame"></div>
+
+    <div class="sezione"><span class="n">5</span><div><h2>Fai una domanda allo studente fantasma</h2><p>Controlla al volo se il materiale del corso basta a rispondere. Il fantasma usa solo slide e videolezioni.</p></div></div>
+    <div class="card chiedi">
+      <textarea id="domandaLibera" placeholder="Es. Come si trova l'equazione della retta tangente?" maxlength="800"></textarea>
+      <div class="az"><button id="inviaDomanda">Chiedi</button><span class="esempi" id="esempiDomanda"></span></div>
+      <div id="rispostaLibera"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const md = t => (window.marked ? marked.parse(String(t ?? "")) : "<pre>" + esc(t) + "</pre>");
+const ETICHETTE = {rossa:"🔴 Mai spiegato", verde:"🟢 Solo a voce", gialla:"🟡 Fuori ordine", prerequisito:"🔵 Prerequisito dato per scontato", trappola:"🪤 Trappola nel testo"};
+// ordine di importanza per la "priorita' della settimana"
+const PESO = {rossa:0, prerequisito:1, trappola:2, gialla:3, verde:4};
+const numEs = x => { const m = String(x ?? "").match(/\d+/); return m ? +m[0] : 0; };
+const DECISIONI = {da_sistemare:"Da sistemare", voluta:"Voluta", falso_allarme:"Falso allarme"};
+let agenti = [], corsi = [], output = {}, risultato = null, filtro = "tutte";
+
+function mostra(id){
+  document.querySelectorAll(".agent").forEach(a => a.classList.toggle("sel", a.dataset.id === id));
+  const a = agenti.find(x => x.id === id);
+  if (a && output[id]) { $("#outTitolo").textContent = a.icona + " " + a.nome; $("#out").innerHTML = md(output[id]); Fonti.linka($("#out"), $("#corso").value); }
+}
+function stato(id, cls, txt){
+  const el = document.querySelector(`.agent[data-id="${id}"]`);
+  if (!el) return;
+  el.classList.remove("lavora","fatto"); if (cls) el.classList.add(cls);
+  el.querySelector(".st").textContent = txt;
+  aggiornaProgresso();
+}
+function aggiornaRiepilogo(){
+  const c = corsi.find(x => x.nome === $("#corso").value);
+  if (!c) { $("#riep").textContent = "Nessun corso nella cartella materiale."; $("#vai").disabled = true; return; }
+  if (c.errore) { $("#riep").innerHTML = `<span class="err">${esc(c.errore)}</span>`; $("#vai").disabled = true; return; }
+  $("#vai").disabled = false;
+  $("#riep").textContent = `${c.slide} slide · ${c.frammenti_trascrizione} frammenti di videolezione · lezioni ${c.lezioni.join(", ")} · ` +
+    (c.ha_esame ? "esame ✓" : "esame mancante") + (c.ha_soluzioni ? " · soluzioni ✓" : "") + (c.ha_chiave ? " · corso di test con lacune note" : "");
+}
+
+async function caricaConfig(){
+  for (let i = 0; i < 60; i++) {
+    try { const r = await fetch("/api/config"); if (r.ok) return await r.json(); } catch (e) {}
+    $("#modalita").textContent = "Avvio del server…";
+    await new Promise(res => setTimeout(res, 1000));
+  }
+  throw new Error("Server non raggiungibile");
+}
+
+async function init(){
+  const c = await caricaConfig();
+  const b = $("#modalita");
+  b.textContent = c.modalita === "demo" ? "Modalità demo · nessuna chiamata API" : "Modello: " + c.modello;
+  b.classList.toggle("demo", c.modalita === "demo");
+  corsi = c.corsi || [];
+  $("#corso").innerHTML = corsi.map(x => `<option value="${esc(x.nome)}">${esc(x.nome)}</option>`).join("");
+  $("#corso").onchange = aggiornaRiepilogo; aggiornaRiepilogo();
+  disegnaCorsi();
+  agenti = c.agenti;
+  const nFasi = Math.max(...agenti.map(a => a.fase || 1));
+  const colonne = [];
+  for (let f = 1; f <= nFasi; f++) {
+    const qui = agenti.filter(a => (a.fase || 1) === f);
+    colonne.push(`<div class="fase">
+      <div class="etichetta">Fase ${f}${qui.length > 1 ? " · in parallelo" : ""}</div>
+      ${qui.map(a => `
+        <div class="agent" data-id="${a.id}">
+          <div class="top"><span class="ico">${a.icona}</span>${esc(a.nome)}${a.codice ? '<span class="tag">codice</span>' : ""}</div>
+          <div class="role">${esc(a.ruolo)}</div>
+          <div class="st">In attesa</div>
+        </div>`).join("")}
+    </div>`);
+  }
+  colonne.push(colonnaDocente(nFasi + 1));
+  $("#pipeline").innerHTML = colonne.join('<div class="freccia">→</div>');
+  document.querySelectorAll(".agent:not(.umano)").forEach(el => el.onclick = () => {
+    mostra(el.dataset.id);
+    if (output[el.dataset.id]) $("#pannelloOut").scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+}
+
+// una scheda lacuna (usata sia nel riquadro priorita' sia nella lista)
+function scheda(g){
+  return `
+    <div class="card lacuna ${g.tipo} ${g.revisione||""}" data-k="${esc(g.chiave)}">
+      <span class="tipo ${g.tipo}">${ETICHETTE[g.tipo] || esc(g.tipo)}</span>${g.certezza ? `<span class="cert ${g.certezza}" title="Grado di certezza calcolato dal verificatore">certezza ${esc(g.certezza)}</span>` : ""}
+      <h3 class="apri" data-det="${esc(g.chiave)}" title="Apri il dettaglio">${esc(g.titolo)}</h3>
+      ${g.tipo === "trappola" ? `<div class="dove">${g.esercizio ? `Esercizio <b>${esc(g.esercizio)}</b> · ` : ""}nel testo d'esame: <span class="frase">“${esc(g.frase_esame)}”</span></div>`
+        : g.esercizio ? `<div class="dove">Serve in: <b>Esercizio ${esc(g.esercizio)}, passo ${esc(g.passo)}</b> — ${esc(g.testo_passo)}</div>` : (g.testo_passo ? `<div class="dove">${esc(g.testo_passo)}</div>` : "")}
+      ${g.tipo === "trappola" && g.problema ? `<div class="riga"><b>Doppia lettura:</b> ${esc(g.problema)}</div>` : ""}
+      ${g.evidenza && g.evidenza.length ? `<div class="ev">${g.evidenza.map(e => `<div class="fonte">${Fonti.chip(e.fonte)} ${esc(e.nota||"")}${e.citazione?` — “${esc(e.citazione)}”`:""}</div>`).join("")}</div>` : ""}
+      ${g.perche_conta && g.perche_conta !== g.problema ? `<div class="riga"><b>Perché conta:</b> ${esc(g.perche_conta)}</div>` : ""}
+      ${g.suggerimento ? `<div class="riga"><b>Suggerimento:</b> ${esc(g.suggerimento)}</div>` : ""}
+      <div class="decidi"><span>Decisione del docente:</span>
+        ${Object.entries(DECISIONI).map(([k,l]) => `<button class="sec ${g.revisione===k?"on":""}" data-d="${k}">${l}</button>`).join("")}
+        <button class="sec det" data-det="${esc(g.chiave)}">🔍 Dettagli</button>
+      </div>
+    </div>`;
+}
+
+// le 3 segnalazioni piu' importanti: tipo, poi punti dell'esercizio, poi esercizio piu' in alto
+function priorita(r){
+  const punti = {};
+  ((r.brief || {}).esercizi || []).forEach(e => { if (e.punti) punti[numEs(e.id)] = Math.max(punti[numEs(e.id)] || 0, +e.punti); });
+  return r.lacune
+    .filter(g => g.revisione !== "voluta" && g.revisione !== "falso_allarme")
+    .map((g, i) => ({g, i}))
+    .sort((a, b) => (PESO[a.g.tipo] ?? 9) - (PESO[b.g.tipo] ?? 9)
+      || (punti[numEs(b.g.esercizio)] || 0) - (punti[numEs(a.g.esercizio)] || 0)
+      || (numEs(a.g.esercizio) || 99) - (numEs(b.g.esercizio) || 99) || a.i - b.i)
+    .slice(0, 3).map(x => x.g);
+}
+
+function disegnaCopertura(c){
+  if (!c || !c.passi) { $("#copertura").innerHTML = ""; return; }
+  $("#copertura").innerHTML = `<div class="cop-box">
+    <div class="donut" style="--a:${+c.pct_slide || 0};--b:${(+c.pct_slide || 0) + (+c.pct_voce || 0)}" role="img"
+      aria-label="Copertura: ${c.pct_slide}% slide, ${c.pct_voce}% solo a voce, ${c.pct_mai}% mai spiegati">
+      <div class="donut-in"><b>${c.pct_slide}%</b><span>dei passi d'esame<br>coperto dalle slide</span></div></div>
+    <div class="leg-cop"><span><i class="b-slide"></i>Nelle slide · ${c.slide}</span>
+      <span><i class="b-voce"></i>Solo a voce · ${c.voce}</span>
+      <span><i class="b-mai"></i>Senza fonte · ${c.mai}</span></div></div>`;
+}
+
+function disegnaCronometro(t){
+  const el = $("#cronometro");
+  if (!t || !(t.esercizi || []).length) { el.hidden = true; return; }
+  el.hidden = false;
+  const quota = t.quota_tempo ? Math.min(100, t.quota_tempo) : 0;
+  el.innerHTML = `<h4>⏱️ Cronometro e carico</h4>
+    <p style="margin:0"><b>${esc(t.messaggio)}</b></p>
+    ${quota ? `<div class="tempo" title="${t.quota_tempo}% del tempo"><span style="width:${quota}%"></span></div>` : ""}
+    <p class="vuoto" style="font-size:13px;margin:6px 0 10px">Minuti stimati per uno studente medio con il metodo visto a lezione. Il carico conta le lezioni diverse citate dalle fonti verificate.</p>
+    <div class="tabella"><table><thead><tr><th>Esercizio</th><th>Punti</th><th>Minuti</th><th>Lezioni coinvolte</th><th>Carico</th><th>Nota</th></tr></thead><tbody>
+    ${t.esercizi.map(e => `<tr><td><b>${esc(e.esercizio)}</b> ${esc(e.argomento || "")}</td><td>${esc(e.punti ?? "–")}</td><td>~${esc(e.minuti)}</td>
+      <td>${(e.lezioni || []).length ? esc(e.lezioni.join(", ")) + (e.distanza_lezioni ? ` <span class="vuoto">(distanza ${e.distanza_lezioni})</span>` : "") : "–"}</td>
+      <td><span class="car ${esc(e.carico)}">${esc(e.carico)}</span></td><td>${esc(e.suggerimento || "")}</td></tr>`).join("")}
+    </tbody></table></div>`;
+}
+
+function disegnaRisultati(){
+  const r = risultato; if (!r) return;
+  r.lacune = r.lacune || [];
+  $("#risultati").hidden = false;
+  const sim = r.simulato || /simulaz|replay/i.test(r.origine || "");
+  $("#simBadge").hidden = !sim;
+  $("#simBadge").title = r.origine || "";
+  $("#sintesi").textContent = r.sintesi || "";
+  const corsoQ = encodeURIComponent($("#corso").value);
+  $("#scarica").href = "/api/report/" + corsoQ;
+  $("#pdf").href = "/stampa?corso=" + corsoQ + (r.file ? "&file=" + encodeURIComponent(r.file) : "");
+  $("#confronta").href = "/confronto?corso=" + corsoQ;
+  disegnaCopertura(r.copertura);
+  disegnaPersonas(r.personas);
+  const conta = t => r.lacune.filter(g => g.tipo === t).length;
+  const TIPI_TILE = ["rossa", "verde", "gialla", "prerequisito", "trappola"];
+  $("#kpi").innerHTML = TIPI_TILE.map(t => `<div class="tile ${t} ${filtro === t ? "on" : ""} ${conta(t) ? "" : "zero"}" role="button" tabindex="0" data-f="${t}" title="Mostra solo questo tipo">
+    <div class="n">${conta(t)}</div><div class="l">${ETICHETTE[t]}</div></div>`).join("");
+  document.querySelectorAll("#kpi .tile").forEach(el => el.onclick = () => {
+    filtro = filtro === el.dataset.f ? "tutte" : el.dataset.f; disegnaRisultati();
+    $("#filtri").scrollIntoView({behavior: "smooth", block: "start"});
+  });
+  $("#statMini").innerHTML = `<span><b>${r.passi_totali ?? 0}</b> passi delle soluzioni analizzati</span>
+    <span><b>${r.lacune.length}</b> segnalazioni in totale</span>
+    <span><b>${r.citazioni_scartate ?? 0}</b> citazioni inventate scartate dal verificatore</span>`;
+  const v = r.valutazione;
+  $("#valutazione").innerHTML = v ? `<div class="card valut">
+      <b>Test su corso con lacune piantate:</b> trovate <b>${v.trovate} su ${v.piantate}</b> (recall ${Math.round(v.recall*100)}%) ·
+      precisione ${Math.round(v.precision*100)}% · falso amico segnalato: ${v.falso_amico_segnalato ? "sì" : "no"}
+      ${v.mancate && v.mancate.length ? `<div class="riga"><b>Mancate:</b> ${v.mancate.map(esc).join("; ")}</div>` : ""}</div>` : "";
+  // priorita' della settimana (solo nella vista "tutte")
+  const top = filtro === "tutte" ? priorita(r) : [];
+  $("#priorita").innerHTML = top.length ? `<div class="prio comparsa"><h3>📌 Priorità della settimana</h3><p class="sotto">Se hai tempo per sistemare solo tre cose, parti da queste.</p><div class="lacune">${top.map(scheda).join("")}</div></div>` : "";
+  const tipi = ["tutte","rossa","verde","gialla","prerequisito","trappola"].filter(t => t === "tutte" || t !== "trappola" || conta(t));
+  $("#filtri").innerHTML = tipi.map(t => `<button class="sec ${filtro===t?"on":""}" data-f="${t}">${t==="tutte"?"Tutte ("+r.lacune.length+")":ETICHETTE[t]+" ("+conta(t)+")"}</button>`).join("");
+  document.querySelectorAll("#filtri button").forEach(b => b.onclick = () => { filtro = b.dataset.f; disegnaRisultati(); });
+  const lista = r.lacune.filter(g => (filtro === "tutte" || g.tipo === filtro) && !top.includes(g));
+  $("#lacune").innerHTML = lista.length ? (top.length ? '<h4 class="vuoto" style="margin:4px 0 0;font-size:13px;text-transform:uppercase;letter-spacing:.06em">Tutte le altre segnalazioni</h4>' : "") + lista.map(scheda).join("")
+    : (top.length ? "" : '<p class="vuoto">Nessuna lacuna di questo tipo.</p>');
+  document.querySelectorAll(".lacuna .decidi button[data-d]").forEach(b => b.onclick = () => decidi(b.closest(".lacuna").dataset.k, b.dataset.d));
+  document.querySelectorAll("#risultati [data-det]").forEach(b => b.onclick = () => dettaglio(b.dataset.det));
+  disegnaCronometro(r.cronometro);
+  const dom = r.domande_per_il_docente || [];
+  $("#domande").hidden = !dom.length;
+  $("#domandeLista").innerHTML = dom.map(d => `<li>${esc(d)}</li>`).join("");
+  disegnaEsame(r);
+  Fonti.linka($("#risultati"), $("#corso").value);
+}
+
+// ---------------------------------------------------------------------------
+//  Decisione del docente (dalla scheda o dal dettaglio)
+// ---------------------------------------------------------------------------
+async function decidi(chiave, d){
+  const g = (risultato.lacune || []).find(x => x.chiave === chiave);
+  if (!g) return;
+  const nuova = g.revisione === d ? "" : d;
+  try {
+    const res = await fetch("/api/revisione", {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({corso: $("#corso").value, chiave, decisione: nuova})});
+    if (res.ok) { g.revisione = nuova || null; disegnaRisultati(); }
+  } catch (e) {}
+}
+
+// ---------------------------------------------------------------------------
+//  Risultati dell'esame: voto stimato e passi, esercizio per esercizio
+// ---------------------------------------------------------------------------
+const STATO_PASSO = {slide: ["st-slide", "✓ nelle slide"], voce: ["st-voce", "🎬 solo a voce"], mai: ["st-mai", "✗ senza fonte"]};
+const chiavePasso = (e, p) => numEs(e) + "-" + String(p ?? "");
+
+function calcolaEsame(r){
+  const stati = {};
+  (r.stato_passi || []).forEach(p => stati[chiavePasso(p.esercizio, p.passo)] = p.stato);
+  const lacunaDi = {};
+  (r.lacune || []).forEach(g => { if (g.esercizio && g.passo) lacunaDi[chiavePasso(g.esercizio, g.passo)] = g; });
+  const esercizi = ((r.brief || {}).esercizi || []).map(es => {
+    const passi = (es.passi || []).map(p => {
+      const k = chiavePasso(es.id, p.n);
+      return {...p, stato: stati[k] || (lacunaDi[k] ? (lacunaDi[k].tipo === "verde" ? "voce" : "mai") : "slide"), lacuna: lacunaDi[k]};
+    });
+    const n = passi.length || 1, punti = +es.punti || 0;
+    const cSlide = passi.filter(p => p.stato === "slide").length;
+    const cVideo = passi.filter(p => p.stato !== "mai").length;
+    return {...es, passi, punti, ptSlide: punti * cSlide / n, ptVideo: punti * cVideo / n, cSlide, cVideo};
+  });
+  const tot = esercizi.reduce((a, e) => a + e.punti, 0);
+  return {esercizi, tot, slide: esercizi.reduce((a, e) => a + e.ptSlide, 0), video: esercizi.reduce((a, e) => a + e.ptVideo, 0)};
+}
+
+function disegnaEsame(r){
+  const el = $("#esame");
+  const E = calcolaEsame(r);
+  if (!E.esercizi.length) { el.innerHTML = '<p class="vuoto">Il report non contiene i passi delle soluzioni.</p>'; return; }
+  const fmt = x => (Math.round(x * 10) / 10).toLocaleString("it-IT");
+  const conPunti = E.tot > 0;
+  const den = conPunti ? E.tot : E.esercizi.reduce((a, e) => a + e.passi.length, 0);
+  const valS = conPunti ? E.slide : E.esercizi.reduce((a, e) => a + e.cSlide, 0);
+  const valV = conPunti ? E.video : E.esercizi.reduce((a, e) => a + e.cVideo, 0);
+  const unita = conPunti ? "punti" : "passi";
+  const voto = (cls, chi, v, nota) => `<div class="card voto ${cls}"><div class="chi">${chi}</div>
+    <div class="num">${fmt(v)}<small> / ${den} ${unita}</small></div>
+    <div class="barra"><span style="width:${den ? Math.round(100 * v / den) : 0}%"></span></div><p>${nota}</p></div>`;
+  el.innerHTML = `<div class="voti">
+      ${voto("slide", "📄 Fantasma «solo slide»", valS, "Studia solo sulle slide pubblicate.")}
+      ${voto("video", "🎬 Fantasma «slide + videolezioni»", valV, "Ha seguito anche tutte le lezioni registrate.")}
+      ${voto("piena", "🎯 Soluzione ufficiale", den, "Il massimo, se il materiale coprisse ogni passo.")}
+    </div>
+    <p class="vuoto" style="font-size:13px;margin:-4px 0 12px">Stima: ogni esercizio vale i suoi punti in proporzione ai passi della soluzione che hanno una fonte verificata. Misura il materiale, non la bravura degli studenti.</p>
+    ${E.esercizi.map((es, i) => {
+      const pt = conPunti ? es.ptVideo : es.cVideo, max = conPunti ? es.punti : es.passi.length;
+      const cls = pt >= max ? "pieno" : pt > 0 ? "parz" : "zero";
+      const n = es.passi.length || 1;
+      const ns = es.passi.filter(p => p.stato === "slide").length, nv = es.passi.filter(p => p.stato === "voce").length, nm = es.passi.length - ns - nv;
+      return `<details class="card esercizio" ${i === 0 ? "open" : ""} data-es="${esc(numEs(es.id))}">
+        <summary><span class="es-n">Esercizio ${esc(es.id)}</span><span class="es-arg">${esc(es.argomento || "")}</span>
+          <span class="es-dx"><span class="mini-bar" title="${ns} nelle slide · ${nv} solo a voce · ${nm} senza fonte">
+            <i style="width:${100 * ns / n}%;background:var(--verde)"></i><i style="width:${100 * nv / n}%;background:var(--voce-bar)"></i><i style="width:${100 * nm / n}%;background:var(--rossa)"></i></span>
+            <span class="pti ${cls}">${fmt(pt)} / ${max} ${conPunti ? "pt" : "passi"}</span></span></summary>
+        <div class="passi-es">${es.passi.map(p => `<div class="passo-es" data-k="${esc(chiavePasso(es.id, p.n))}">
+          <span class="pn">${esc(p.n)}</span>
+          <div>${esc(p.testo)}${p.lacuna ? `<a class="lac" data-det="${esc(p.lacuna.chiave)}">${ETICHETTE[p.lacuna.tipo] || ""} · ${esc(p.lacuna.titolo)} →</a>` : ""}</div>
+          <span class="chip-st ${STATO_PASSO[p.stato][0]}">${STATO_PASSO[p.stato][1]}</span></div>`).join("")}</div>
+      </details>`;
+    }).join("")}`;
+}
+
+// ---------------------------------------------------------------------------
+//  Dettaglio di una lacuna (finestra modale)
+// ---------------------------------------------------------------------------
+const MOTIVI = {non_trovato: "nessuna fonte trovata", chiarimento: "passo ambiguo: ha chiesto un chiarimento"};
+const motivo = m => MOTIVI[m] || m || "nessuna fonte trovata";
+
+function dettaglio(chiave){
+  const r = risultato, g = (r.lacune || []).find(x => x.chiave === chiave);
+  if (!g) return;
+  const E = calcolaEsame(r);
+  const es = g.esercizio ? E.esercizi.find(e => numEs(e.id) === numEs(g.esercizio)) : null;
+  const fonti = (g.evidenza || []).map(e => e.fonte);
+  const verifiche = (r.registro_verifiche || []).filter(v => v.fonte && fonti.includes(v.fonte));
+  const haSlide = g.tipo === "verde" || g.tipo === "rossa" || g.tipo === "prerequisito";
+  const fantasmi = haSlide && g.esercizio ? `<div class="det-sez"><h4>Cosa hanno trovato gli studenti fantasma</h4><div class="fantasmi">
+      <div class="fant no"><b>📄 Solo slide</b>${esc(motivo(g.nota_slide))}</div>
+      <div class="fant ${g.tipo === "verde" ? "si" : "no"}"><b>🎬 Slide + videolezioni</b>${g.tipo === "verde" ? "trovato a voce: " + (g.evidenza || []).map(e => Fonti.chip(e.fonte)).join(" ") : esc(motivo(g.nota_lezioni))}</div>
+    </div></div>` : "";
+  const corpo = Fonti.apri(`
+    <span class="tipo ${g.tipo}">${ETICHETTE[g.tipo] || esc(g.tipo)}</span>${g.certezza ? `<span class="cert ${g.certezza}">certezza ${esc(g.certezza)}</span>` : ""}
+    <h2 style="margin:10px 0 4px">${esc(g.titolo)}</h2>
+    <div class="dove">${g.esercizio ? `Esercizio <b>${esc(g.esercizio)}</b>${g.passo ? `, passo <b>${esc(g.passo)}</b>` : ""}` : ""}${g.tipo === "trappola" ? ` · nel testo d'esame: <span class="frase">“${esc(g.frase_esame)}”</span>` : ""}</div>
+    ${g.problema ? `<div class="riga"><b>${g.tipo === "trappola" ? "Doppia lettura" : "Problema"}:</b> ${esc(g.problema)}</div>` : ""}
+    ${g.prerequisito ? `<div class="riga"><b>Prerequisito:</b> ${esc(g.prerequisito)}</div>` : ""}
+    ${es ? `<div class="det-sez"><h4>Dove serve nella soluzione</h4><div class="card" style="padding:0">${es.passi.map(p => `<div class="passo-es ${String(p.n) === String(g.passo) ? "evid" : ""}">
+        <span class="pn">${esc(p.n)}</span><div>${esc(p.testo)}</div><span class="chip-st ${STATO_PASSO[p.stato][0]}">${STATO_PASSO[p.stato][1]}</span></div>`).join("")}</div></div>` : ""}
+    ${fantasmi}
+    ${(g.evidenza || []).length ? `<div class="det-sez"><h4>Evidenze nel materiale (clicca per leggere)</h4>${g.evidenza.map(e => `<div class="riga">${Fonti.chip(e.fonte)} <span class="vuoto">${esc(e.nota || "")}</span>${e.citazione ? ` — “${esc(e.citazione)}”` : ""}</div>`).join("")}</div>`
+      : `<div class="det-sez"><h4>Evidenze nel materiale</h4><p class="vuoto" style="margin:0">Nessuna: né le slide né le videolezioni contengono questo passo.</p></div>`}
+    ${g.perche_conta ? `<div class="det-sez"><h4>Perché conta</h4><div>${esc(g.perche_conta)}</div></div>` : ""}
+    ${g.suggerimento ? `<div class="det-sez"><h4>Suggerimento</h4><div>${esc(g.suggerimento)}</div></div>` : ""}
+    ${verifiche.length ? `<div class="det-sez"><h4>Controlli del verificatore</h4>${verifiche.map(v => `<div class="ver"><span>${v.valida ? "✅" : "❌"}</span><span><b>${esc(v.agente)}</b> ha citato ${Fonti.chip(v.fonte)} ${v.valida ? `(somiglianza ${Math.round((v.punteggio || 0) * 100)}%)` : "— " + esc(v.motivo || "")}</span></div>`).join("")}</div>` : ""}
+    <div class="decidi"><span>Decisione del docente:</span>
+      ${Object.entries(DECISIONI).map(([k,l]) => `<button class="sec ${g.revisione===k?"on":""}" data-d="${k}">${l}</button>`).join("")}</div>`, {larga: true});
+  Fonti.linka(corpo, $("#corso").value);
+  corpo.querySelectorAll(".decidi button[data-d]").forEach(b => b.onclick = async () => { await decidi(chiave, b.dataset.d); dettaglio(chiave); });
+}
+
+// ---------------------------------------------------------------------------
+//  Riapri l'ultimo crash test salvato (senza rilanciare gli agenti)
+// ---------------------------------------------------------------------------
+async function apriUltimo(){
+  const corso = $("#corso").value;
+  if (!corso) return;
+  try {
+    const res = await fetch("/api/report/" + encodeURIComponent(corso) + "/dati");
+    if (!res.ok) { alert((await res.json()).detail || "Nessun crash test salvato per questo corso."); return; }
+    risultato = await res.json(); filtro = "tutte";
+    disegnaRisultati();
+    $("#risultati").scrollIntoView({behavior: "smooth"});
+  } catch (e) { alert("Server non raggiungibile."); }
+}
+$("#apriUltimo").onclick = apriUltimo;
+$("#apriUltimo").onkeydown = e => { if (e.key === "Enter") apriUltimo(); };
+
+// ---------------------------------------------------------------------------
+//  Domanda libera allo studente fantasma (stesso tutor della pagina studente)
+// ---------------------------------------------------------------------------
+const ESITO = {risposta: "✓ Il materiale risponde", confine: "🛡️ Esercizio d'esame: niente soluzione", non_trovato: "✗ Il materiale non basta", errore: "Errore"};
+const ESEMPI_DOMANDA = ["Come si trova l'equazione della retta tangente?", "Perché (e^t − 1)/t tende a 1?", "Come si sceglie il fattore da derivare nell'integrazione per parti?"];
+$("#esempiDomanda").innerHTML = ESEMPI_DOMANDA.map(t => `<button type="button" class="sec">${esc(t)}</button>`).join(" ");
+document.querySelectorAll("#esempiDomanda button").forEach(b => b.onclick = () => { $("#domandaLibera").value = b.textContent; chiediLibera(); });
+$("#inviaDomanda").onclick = chiediLibera;
+$("#domandaLibera").onkeydown = e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) chiediLibera(); };
+async function chiediLibera(){
+  const domanda = $("#domandaLibera").value.trim(), out = $("#rispostaLibera"), btn = $("#inviaDomanda");
+  if (!domanda) return;
+  btn.disabled = true; out.innerHTML = '<p class="vuoto">Lo studente fantasma cerca nel materiale del corso…</p>';
+  try {
+    const res = await fetch("/api/semestre/domanda", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({domanda, corso: $("#corso").value})});
+    const r = await res.json();
+    if (!res.ok) throw new Error(r.detail || "Errore");
+    const fonti = (r.fonti || []).map(f => f.id);
+    out.innerHTML = `<div class="card risposta-f ${esc(r.tipo)}"><span class="esito ${esc(r.tipo)}">${ESITO[r.tipo] || esc(r.tipo)}</span>
+      <div class="md">${md(r.testo || "")}</div>
+      ${r.domanda_guida ? `<div class="riga"><b>Domanda guida:</b> ${esc(r.domanda_guida)}</div>` : ""}
+      ${fonti.length ? `<div class="riga"><b>Fonti:</b> ${fonti.map(Fonti.chip).join(" ")}</div>` : ""}</div>`;
+    Fonti.linka(out, $("#corso").value);
+  } catch (e) { out.innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+  btn.disabled = false;
+}
+
+$("#vai").onclick = async () => {
+  if (!agenti.length) await init();
+  output = {}; risultato = null; filtro = "tutte";
+  $("#risultati").hidden = true;
+  $("#progWrap").hidden = false;
+  agenti.forEach(a => stato(a.id, "", "In attesa"));
+  $("#vai").disabled = true;
+  $("#lavoro").scrollIntoView({behavior:"smooth", block:"start"});
+  $("#outTitolo").textContent = "Lavoro degli agenti";
+  $("#out").innerHTML = '<p class="vuoto">Il crash test è in corso…</p>';
+  let r;
+  try {
+    r = await fetch("/api/run", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({corso: $("#corso").value})});
+  } catch (e) { $("#vai").disabled = false; return; }
+  if (!r.ok) { $("#out").innerHTML = `<p class="err">${esc((await r.json()).detail || "Errore")}</p>`; $("#vai").disabled = false; return; }
+  const {run_id} = await r.json();
+  const es = new EventSource("/api/stream/" + run_id);
+  es.onmessage = m => {
+    const ev = JSON.parse(m.data);
+    if (ev.tipo === "avviso") $("#modalita").textContent = "⚠ " + ev.messaggio;
+    if (ev.tipo === "modello") setTimeout(() => { $("#modalita").textContent = "Modello: " + ev.modello; }, 2500);
+    if (ev.tipo === "inizio" && ev.modello) $("#modalita").textContent = "Modello: " + ev.modello;
+    if (ev.tipo === "agente_inizio") stato(ev.id, "lavora", "Sta lavorando…");
+    if (ev.tipo === "agente_fine") { output[ev.id] = ev.output; stato(ev.id, "fatto", "Fatto ✓"); mostra(ev.id); }
+    if (ev.tipo === "lacune") { risultato = ev.risultato; disegnaRisultati(); $("#progBarra").style.width = "100%"; $("#progTesto").textContent = "Completato ✓"; $("#risultati").scrollIntoView({behavior:"smooth"}); }
+    if (ev.tipo === "errore") {
+      $("#outTitolo").textContent = "Errore";
+      $("#out").innerHTML = `<p class="err"><b>${esc(ev.consiglio || "Qualcosa è andato storto.")}</b></p><pre>${esc(ev.messaggio)}</pre>`;
+      document.querySelectorAll(".agent.lavora").forEach(a => stato(a.dataset.id, "", "Interrotto"));
+    }
+  };
+  es.addEventListener("chiuso", () => { es.close(); $("#vai").disabled = false; });
+  es.onerror = () => { es.close(); $("#vai").disabled = false; };
+};
+
+
+// ---------------------------------------------------------------------------
+//  Elenco dei corsi come schede selezionabili
+// ---------------------------------------------------------------------------
+const nomeBello = n => String(n ?? "").replace(/[_-]+/g, " ").trim().replace(/^\w/, c => c.toUpperCase());
+
+function disegnaCorsi(){
+  const sel = $("#corso").value;
+  const c0 = corsi.find(x => x.nome === sel);
+  $("#selNome").textContent = c0 ? nomeBello(c0.nome) : "Nessun corso selezionato";
+  if (!corsi.length) { $("#corsi").innerHTML = '<p class="vuoto">Nessun corso ancora: trascina qui accanto la cartella del primo corso.</p>'; return; }
+  $("#corsi").innerHTML = corsi.map(c => `
+    <div class="corso-card ${c.nome === sel ? "sel" : ""}" role="radio" aria-checked="${c.nome === sel}" tabindex="0" data-n="${esc(c.nome)}">
+      <div class="cc-top"><span class="cc-ico">📘</span><span class="cc-nome">${esc(nomeBello(c.nome))}</span>
+        ${c.ha_chiave ? '<span class="tag-test" title="Corso di prova con lacune piantate apposta">test</span>' : ""}<span class="cc-radio"></span></div>
+      ${c.errore ? `<div class="err small" style="margin-top:8px">${esc(c.errore)}</div>` : `<div class="cc-check">
+        <span>🖼️ ${c.slide} slide</span><span>🎧 ${(c.lezioni || []).length} lezioni</span>
+        <span class="${c.ha_esame ? "si" : "no"}">${c.ha_esame ? "✓" : "✗"} esame</span>
+        <span class="${c.ha_soluzioni ? "si" : "no"}">${c.ha_soluzioni ? "✓" : "✗"} soluzioni</span></div>`}
+    </div>`).join("");
+  document.querySelectorAll(".corso-card").forEach(el => {
+    const scegli = () => { $("#corso").value = el.dataset.n; aggiornaRiepilogo(); disegnaCorsi(); };
+    el.onclick = scegli;
+    el.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); scegli(); } };
+  });
+}
+
+async function ricaricaCorsi(seleziona){
+  const c = await (await fetch("/api/config")).json();
+  corsi = c.corsi || [];
+  $("#corso").innerHTML = corsi.map(x => `<option value="${esc(x.nome)}">${esc(x.nome)}</option>`).join("");
+  if (seleziona) $("#corso").value = seleziona;
+  aggiornaRiepilogo(); disegnaCorsi();
+}
+
+// il docente come ultima "fase" della pipeline: decide lui
+function colonnaDocente(n){
+  return `<div class="fase"><div class="etichetta">Fase ${n} · umano</div>
+    <div class="agent umano" data-id="docente"><div class="top"><span class="ico">🧑‍🏫</span>Tu, il docente<span class="tag">umano</span></div>
+    <div class="role">Rivedi ogni lacuna: da sistemare, voluta o falso allarme</div><div class="st">Decide alla fine</div></div></div>`;
+}
+
+function aggiornaProgresso(){
+  const tot = document.querySelectorAll(".agent:not(.umano)").length;
+  const fatti = document.querySelectorAll(".agent.fatto:not(.umano)").length;
+  const inCorso = document.querySelectorAll(".agent.lavora").length;
+  $("#progBarra").style.width = (tot ? Math.round(100 * (fatti + inCorso * 0.35) / tot) : 0) + "%";
+  if (!$("#progWrap").hidden) $("#progTesto").textContent = tot && fatti === tot ? "Completato ✓" : `${fatti} di ${tot} agenti hanno finito`;
+}
+
+// ---------------------------------------------------------------------------
+//  Caricamento di un corso: trascina la cartella
+// ---------------------------------------------------------------------------
+const GRUPPI = [["slide","🖼️","Slide"],["trascr","🎧","Trascrizioni"],["esame","📝","Testo d'esame"],
+                ["soluz","✅","Soluzioni"],["brief","🧭","Brief del docente"],["chiave","🔑","Chiave di test"]];
+function gruppoDi(nome){
+  const n = String(nome).toLowerCase();
+  if (!/\.(md|txt|json)$/.test(n)) return null;
+  if (n.startsWith("slide")) return "slide";
+  if (n.startsWith("trascrizion") || n.startsWith("transcript")) return "trascr";
+  if (n.startsWith("soluzion") || n.startsWith("solution")) return "soluz";
+  if (n.startsWith("esame") || n.startsWith("exam")) return "esame";
+  if (n.startsWith("brief")) return "brief";
+  if (n.startsWith("chiave") && n.endsWith(".json")) return "chiave";
+  return null;
+}
+function accettabile(percorso){
+  const parti = percorso.split(/[\\/]+/).filter(Boolean);
+  if (parti.slice(0, -1).some(p => /^(report|semestre)$/i.test(p))) return false;  // file generati dall'app
+  return gruppoDi(parti[parti.length - 1] || "") !== null;
+}
+let inAttesa = null;  // {nome, files: [{percorso, file}], ignorati}
+const drop = $("#drop");
+
+function leggiEntry(entry, prefisso){
+  return new Promise(res => {
+    if (entry.isFile) { entry.file(f => res([{percorso: prefisso + f.name, file: f}]), () => res([])); return; }
+    if (!entry.isDirectory) { res([]); return; }
+    const reader = entry.createReader(), figli = [];
+    const leggi = () => reader.readEntries(async parte => {
+      if (parte.length) { figli.push(...parte); leggi(); return; }
+      const tutti = await Promise.all(figli.map(e => leggiEntry(e, prefisso + entry.name + "/")));
+      res(tutti.flat());
+    }, () => res([]));
+    leggi();
+  });
+}
+
+function preparaFile(lista){
+  const ok = lista.filter(x => accettabile(x.percorso));
+  const conCartella = lista.find(x => x.percorso.includes("/"));
+  const nome = conCartella ? conCartella.percorso.split("/")[0] : "nuovo_corso";
+  if (!ok.length) {
+    mostraDrop("errore", {msg: lista.length ? `Ho trovato ${lista.length} file, ma nessuno sembra materiale del corso` : "La cartella è vuota"});
+    return;
+  }
+  inAttesa = {nome, files: ok, ignorati: lista.length - ok.length};
+  mostraDrop("anteprima");
+}
+
+function mostraDrop(stato, o = {}){
+  const d = $("#dropCorpo");
+  drop.dataset.stato = stato;
+  if (stato === "vuoto") {
+    d.innerHTML = `<div class="drop-ico">📂</div>
+      <h3>Trascina qui la cartella del corso</h3>
+      <p>Slide, trascrizioni delle videolezioni, testo d'esame e soluzioni ufficiali, in file .md o .txt.</p>
+      <div class="drop-az"><button type="button" id="sceltaCartella">📁 Scegli cartella</button><button type="button" class="sec" id="sceltaFile">Scegli singoli file</button></div>
+      <details class="formato"><summary>Cosa deve contenere la cartella? ▾</summary>
+        <ul>
+          <li><code>slide_01.md</code> le slide, con titoli «## Slide 12 — Titolo»</li>
+          <li><code>trascrizione_01.md</code> la videolezione, righe «[mm:ss] testo»</li>
+          <li><code>esame_*.md</code> il testo d'esame</li>
+          <li><code>soluzioni_*.md</code> le soluzioni ufficiali, passo per passo</li>
+          <li><code>brief_docente.md</code> obiettivi del corso <i>(facoltativo)</i></li>
+        </ul>
+        Il numero della lezione si legge dal nome del file. I PDF vanno prima convertiti in testo.
+      </details>`;
+    $("#sceltaCartella").onclick = () => $("#pickCartella").click();
+    $("#sceltaFile").onclick = () => $("#pickFile").click();
+  } else if (stato === "lettura") {
+    d.innerHTML = `<div class="drop-ico gira">⏳</div><h3>Leggo la cartella…</h3>`;
+  } else if (stato === "anteprima") {
+    const conta = {};
+    inAttesa.files.forEach(x => { const g = gruppoDi(x.percorso.split("/").pop()); conta[g] = (conta[g] || 0) + 1; });
+    const manca = [];
+    if (!conta.slide && !conta.trascr) manca.push("slide o trascrizioni");
+    if (!conta.esame) manca.push("testo d'esame");
+    if (!conta.soluz) manca.push("soluzioni ufficiali");
+    d.innerHTML = `<div class="drop-ico">📦</div>
+      <h3>Ho trovato ${inAttesa.files.length} file del corso</h3>
+      <div class="riconosciuti">${GRUPPI.filter(([g]) => conta[g]).map(([g, i, l]) => `<span class="ric">${i} ${l} <b>${conta[g]}</b></span>`).join("")}</div>
+      ${manca.length ? `<div class="avviso">⚠️ Manca: ${manca.join(", ")}. Puoi caricarlo lo stesso, ma il crash test sarà incompleto.</div>`
+                     : `<div class="okmsg">✓ C'è tutto quello che serve per il crash test</div>`}
+      ${inAttesa.ignorati ? `<p class="small" style="margin-top:8px">${inAttesa.ignorati} file ignorati (report già generati, PDF o altri formati).</p>` : ""}
+      <div class="campo"><label for="nomeCorso">Nome del corso</label><input id="nomeCorso" maxlength="60" value="${esc(inAttesa.nome)}"></div>
+      <div class="drop-az"><button type="button" id="confermaCarica">⬆ Carica il corso</button><button type="button" class="sec" id="annullaCarica">Annulla</button></div>
+      <p class="err small" id="dropErr" style="margin-top:8px"></p>`;
+    $("#confermaCarica").onclick = () => caricaCorso(false);
+    $("#annullaCarica").onclick = () => { inAttesa = null; mostraDrop("vuoto"); };
+  } else if (stato === "fatto") {
+    const c = o.corso || {};
+    d.innerHTML = `<div class="drop-ico">🎉</div><h3>Corso «${esc(nomeBello(c.nome))}» caricato</h3>
+      <p>${c.slide ?? 0} slide · ${(c.lezioni || []).length} lezioni${c.ha_esame ? " · esame ✓" : ""}${c.ha_soluzioni ? " · soluzioni ✓" : ""}.<br>È già selezionato: premi <b>Avvia il crash test</b>.</p>
+      <div class="drop-az"><button type="button" class="sec" id="altroCorso">Carica un altro corso</button></div>`;
+    $("#altroCorso").onclick = () => mostraDrop("vuoto");
+  } else if (stato === "errore") {
+    d.innerHTML = `<div class="drop-ico">😕</div><h3>${esc(o.msg || "Qualcosa non va")}</h3>
+      <p>Servono file .md o .txt che iniziano con <b>slide_</b>, <b>trascrizione_</b>, <b>esame</b> e <b>soluzioni</b>.</p>
+      <div class="drop-az"><button type="button" class="sec" id="riprova">Riprova</button></div>`;
+    $("#riprova").onclick = () => mostraDrop("vuoto");
+  }
+}
+
+async function caricaCorso(sovrascrivi){
+  const btn = $("#confermaCarica"), errore = $("#dropErr");
+  btn.disabled = true; btn.textContent = "Caricamento…"; errore.textContent = "";
+  try {
+    const files = await Promise.all(inAttesa.files.map(async x => ({percorso: x.percorso, testo: await x.file.text()})));
+    const r = await fetch("/api/corsi", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({nome: $("#nomeCorso").value, files, sovrascrivi})});
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 409 && !sovrascrivi) {
+      if (confirm((j.detail || "Il corso esiste già.") + "\nVuoi aggiornarlo con questi file? Report e decisioni già salvati restano.")) return caricaCorso(true);
+      btn.disabled = false; btn.textContent = "⬆ Carica il corso"; return;
+    }
+    if (!r.ok) throw new Error(j.detail || "Errore " + r.status);
+    inAttesa = null;
+    await ricaricaCorsi(j.corso.nome);
+    mostraDrop("fatto", {corso: j.corso});
+  } catch (e) {
+    errore.textContent = e.message; btn.disabled = false; btn.textContent = "⬆ Carica il corso";
+  }
+}
+
+["dragenter", "dragover"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add("sopra"); }));
+drop.addEventListener("dragleave", e => { if (!drop.contains(e.relatedTarget)) drop.classList.remove("sopra"); });
+drop.addEventListener("drop", async e => {
+  e.preventDefault(); drop.classList.remove("sopra");
+  const voci = [...(e.dataTransfer.items || [])].map(i => i.webkitGetAsEntry ? i.webkitGetAsEntry() : null).filter(Boolean);
+  const semplici = [...(e.dataTransfer.files || [])];
+  mostraDrop("lettura");
+  const lista = voci.length ? (await Promise.all(voci.map(v => leggiEntry(v, "")))).flat()
+                            : semplici.map(f => ({percorso: f.name, file: f}));
+  preparaFile(lista);
+});
+// un file lasciato fuori dalla zona non deve far uscire dalla pagina
+window.addEventListener("dragover", e => e.preventDefault());
+window.addEventListener("drop", e => e.preventDefault());
+["pickCartella", "pickFile"].forEach(id => $("#" + id).onchange = e => {
+  const lista = [...e.target.files].map(f => ({percorso: f.webkitRelativePath || f.name, file: f}));
+  e.target.value = "";
+  if (lista.length) preparaFile(lista);
+});
+mostraDrop("vuoto");
+
+// ---------------------------------------------------------------------------
+//  Quattro studenti, quattro voti
+// ---------------------------------------------------------------------------
+function disegnaPersonas(pe){
+  const box = $("#personas");
+  if (!pe || !(pe.schede || []).length) { box.innerHTML = ""; return; }
+  const classe = v => v < 18 ? "rosso" : (v < 24 ? "giallo" : "verde");
+  box.innerHTML = `<div class="sez-pers comparsa">
+    <div class="pers-testa"><div><h3>🎭 Quattro studenti, quattro voti</h3><p class="pers-frase">${esc(pe.titolo)}</p></div>
+      ${pe.divario ? `<span class="muted small">${pe.divario} punti di distanza tra il profilo più favorito e il meno favorito</span>` : ""}</div>
+    <div class="persone">${pe.schede.map(s => `
+      <div class="persona ${classe(s.voto)}">
+        <div class="p-top"><span class="p-ico">${s.icona}</span><div><b>${esc(s.nome)}</b><span>${esc(s.descrizione)}</span></div></div>
+        <div class="p-voto"><span class="v">${s.voto}</span><span class="su">/30</span><span class="esito">${s.superato ? "superato" : "non superato"}</span></div>
+        <div class="p-barra" role="img" aria-label="${s.voto} su 30"><span style="width:${Math.round(100 * s.voto / 30)}%"></span><i style="left:60%"></i></div>
+        <div class="p-es">${(s.esercizi || []).map(e => `<div class="p-e" title="${e.riusciti} passi su ${e.passi}${e.argomento ? " · " + esc(e.argomento) : ""}">
+          <span>Es. ${esc(e.esercizio)}</span><div class="mini"><span style="width:${e.passi ? Math.round(100 * e.riusciti / e.passi) : 0}%"></span></div><b>${e.punti_ottenuti}/${e.punti}</b></div>`).join("")}</div>
+        ${(s.motivi || []).length ? `<div class="p-blocchi"><div class="lab">Si blocca su</div>${s.motivi.map(m =>
+          `<div class="m" title="${esc(m.esempio)}">${esc(m.motivo)} · <b>${m.passi} pass${m.passi === 1 ? "o" : "i"}</b></div>`).join("")}</div>`
+          : `<div class="p-ok">Nessun passo bloccato 🎉</div>`}
+      </div>`).join("")}</div>
+    <p class="p-nota">ℹ️ ${esc(pe.nota)}</p></div>`;
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+# fantasma_slide - tentativo 1 - 4.5s - prompt 17107 caratteri
+
+=== RISPOSTA ===
+{
+  "passi": [
+    {
+      "esercizio": "1a",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1a",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1a",
+      "passo": 3,
+      "stato": "non_trovato",
+      "fonte": "S7",
+      "citazione": "non trovato",
+      "domanda": "Non trovo il limite notevole per (e^t - 1)/t nelle slide fornite."
+    },
+    {
+      "esercizio": "1a",
+      "passo": 4,
+      "stato": "giustificato",
+      "fonte": "S6",
+      "citazione": "Se $g(x)\to0$ per $x\to x_0$, allora $\frac{\sin g(x)}{g(x)}\to1$",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1a",
+      "passo": 5,
+      "stato": "giustificato",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S8",
+      "citazione": "Prima di tutto: sostituire e capire se c'è una forma indeterminata",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S6",
+      "citazione": "Trucco: moltiplicare e dividere per la stessa quantità",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 3,
+      "stato": "giustificato",
+      "fonte": "S6",
+      "citazione": "$\frac{1-\cos g(x)}{(g(x))^2}\to\frac12$",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1b",
+      "passo": 4,
+      "stato": "giustificato",
+      "fonte": "S3",
+      "citazione": "Il limite di un prodotto di più fattori è il prodotto dei limiti",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1c",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S4",
+      "citazione": "Forme che **non** si risolvono con l'algebra dei limiti: 1^\infty",
+      "domanda": ""
+    },
+    {
+      "esercizio": "1c",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S7",
+      "citazione": "Generalizzazione: $\displaystyle\lim_{x\to+\infty}\left(1+\frac ax\right)^x=e^a$",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 1,
+      "stato": "giustificato",
+      "fonte": "S13",
+      "citazione": "$(f\cdot g)'=f'\,g+f\,g'$",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S15",
+      "citazione": "Se $h(x)=f(g(x))$, allora $h'(x)=f'(g(x))\cdot g'(x)$",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 3,
+      "stato": "giustificato",
+      "fonte": "S16",
+      "citazione": "Spesso servono più regole insieme",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2a",
+      "passo": 4,
+      "stato": "non_trovato",
+      "fonte": "S1",
+      "citazione": "non trovato",
+      "domanda": "Le slide non spiegano come valutare una funzione in un punto specifico, solo il concetto di limite."
+    },
+    {
+      "esercizio": "2a",
+      "passo": 5,
+      "stato": "non_trovato",
+      "fonte": "S10",
+      "citazione": "non trovato",
+      "domanda": "Le slide definiscono il coefficiente angolare ma non riportano esplicitamente la formula y = f(x0) + f'(x0)(x - x0)."
+    },
+    {
+      "esercizio": "2a",
+      "passo": 6,
+      "stato": "non_trovato",
+      "fonte": "S10",
+      "citazione": "non trovato",
+      "domanda": "Non trovo la procedura per scrivere l'equazione della retta tangente."
+    },
+    {
+      "esercizio": "2b",
+      "passo": 1,
+      "stato": "non_trovato",
+      "fonte": "S11",
+      "citazione": "non trovato",
+      "domanda": "Le slide non elencano le proprietà algebriche dei logaritmi."
+    },
+    {
+      "esercizio": "2b",
+      "passo": 2,
+      "stato": "giustificato",
+      "fonte": "S12",
+      "citazione": "$(f+g)'=f'+g'$",
+      "domanda": ""
+    },
+    {
+      "esercizio": "2b",
+      "passo": 3,
+      "stato": "non_trovato",
+      "fonte": "S12",
+      "citazione": "non trovato",
+      "domanda": "Non trovo regole specifiche per la semplificazione algebrica come unica frazione."
+    }
+  ]
+}
+
+=== ULTIMO MESSAGGIO (primi 3000 caratteri) ===
+La risposta non era JSON valido. Rispondi di nuovo SOLO con il JSON richiesto, senza testo attorno.

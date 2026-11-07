@@ -1,0 +1,34 @@
+[
+  {
+    "pseudonimo": "anon-v4rc5c",
+    "chiarimento": "ch-seed01",
+    "risposta": 1,
+    "corretta": true,
+    "ts": 1792141200,
+    "simulato": true
+  },
+  {
+    "pseudonimo": "anon-9jszyc",
+    "chiarimento": "ch-seed01",
+    "risposta": 1,
+    "corretta": true,
+    "ts": 1792144800,
+    "simulato": true
+  },
+  {
+    "pseudonimo": "anon-b2zkxv",
+    "chiarimento": "ch-seed01",
+    "risposta": 0,
+    "corretta": false,
+    "ts": 1792148400,
+    "simulato": true
+  },
+  {
+    "pseudonimo": "anon-y5rkzp",
+    "chiarimento": "ch-seed01",
+    "risposta": 1,
+    "corretta": true,
+    "ts": 1792152000,
+    "simulato": true
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ch-seed01",
+    "argomento": "retta_tangente",
+    "titolo": "Dalla pendenza all'equazione della retta tangente",
+    "testo": "La [S10] dice che f'(x0) e' il **coefficiente angolare** (la pendenza) della retta tangente. Per scriverne l'equazione serve anche il punto di tangenza (x0, f(x0)):\n\n**y = f(x0) + f'(x0)(x - x0)**\n\nE' la formula dettata a lezione in [L2@25:15].\n\n**Esempio** f(x) = x^2 in x0 = 2: f(2) = 4, f'(2) = 4, quindi y = 4 + 4(x - 2), cioe' y = 4x - 4.",
+    "fonti": [
+      "S10",
+      "L2@25:15"
+    ],
+    "quiz": {
+      "domanda": "Hai f(1) = 2 e f'(1) = 3. Qual e' l'equazione della retta tangente al grafico di f nel punto di ascissa 1?",
+      "opzioni": [
+        "y = 3x + 2",
+        "y = 2 + 3(x - 1)",
+        "y = 3 + 2(x - 1)",
+        "y = 2x + 3"
+      ],
+      "corretta": 1,
+      "spiegazione": "La retta tangente in x0 e' y = f(x0) + f'(x0)(x - x0): qui y = 2 + 3(x - 1), cioe' y = 3x - 1."
+    },
+    "approvato": 1792054800,
+    "modificato_dal_docente": false,
+    "simulato": true
+  }
+]

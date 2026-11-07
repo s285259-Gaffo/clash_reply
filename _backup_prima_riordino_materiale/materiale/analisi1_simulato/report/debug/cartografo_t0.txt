@@ -1,0 +1,121 @@
+# cartografo - tentativo 0 - 12.5s - prompt 3162 caratteri
+
+=== RISPOSTA ===
+```json
+{
+  "schede": [
+    {
+      "id": "g1",
+      "titolo": "Assenza del limite notevole dell'esponenziale",
+      "perche_conta": "Essenziale per risolvere i limiti e giustificare i passaggi richiesti nell'esame.",
+      "suggerimento": "Inserire una slide o un esempio dedicato al limite notevole dell'esponenziale nelle lezioni sui limiti."
+    },
+    {
+      "id": "g2",
+      "titolo": "Formula della retta tangente solo orale",
+      "perche_conta": "La mancata formalizzazione scritta del calcolo della tangente ostacola la giustificazione dei passaggi.",
+      "suggerimento": "Aggiungere una slide esplicita con la formula della retta tangente dopo la lezione L2@25:15."
+    },
+    {
+      "id": "g3",
+      "titolo": "Semplificazione della retta tangente sprovvista di supporto",
+      "perche_conta": "Disegnare o mostrare i passaggi algebrici scritti aiuta a evitare errori di calcolo d'esame.",
+      "suggerimento": "Includere nei materiali scritti lo svolgimento algebrico completo mostrato oralmente in L2@28:30."
+    },
+    {
+      "id": "g4",
+      "titolo": "Proprietà dei logaritmi prima della derivazione",
+      "perche_conta": "Fidarsi della derivata di catena senza semplificare algebricamente aumenta il rischio di errore d'esame.",
+      "suggerimento": "Inserire un richiamo scritto sulle proprietà algebriche dei logaritmi prima di introdurre le regole di derivazione."
+    },
+    {
+      "id": "g5",
+      "titolo": "Propedeuticità invertita per l'integrale del logaritmo",
+      "perche_conta": "L'uso anticipato di formule non ancora dimostrate compromette il rigore logico preteso agli esami.",
+      "suggerimento": "Anticipare la spiegazione di S27 prima della tabella degli integrali immediati presente in S20."
+    }
+  ],
+  "sintesi": "La mappa rileva lacune relative a concetti assenti nei materiali e ad inversioni di propedeuticità tra argomenti. Si consiglia di integrare i passaggi solo orali nelle slide e riordinare la presentazione degli integrali."
+}
+```
+
+=== ULTIMO MESSAGGIO (primi 3000 caratteri) ===
+CORSO: Analisi Matematica 1 — Ingegneria (Prof.ssa Elena Rinaldi)
+OBIETTIVI: ['Calcolare limiti, derivate e integrali con sicurezza.', "Giustificare ogni passaggio del procedimento risolutivo negli esercizi d'esame."]
+
+LACUNE VERIFICATE:
+[
+ {
+  "id": "g1",
+  "tipo": "rossa",
+  "esercizio": "1a",
+  "passo": "3",
+  "testo_passo": "Applicare il limite notevole del cartesiano/esponenziale (e^t - 1)/t -> 1 con t = 2x -> 0.",
+  "concetto": null,
+  "prerequisito": null,
+  "evidenza": []
+ },
+ {
+  "id": "g2",
+  "tipo": "verde",
+  "esercizio": "2a",
+  "passo": "5",
+  "testo_passo": "Utilizzare la formula della retta tangente y = f(x0) + f'(x0)(x - x0).",
+  "concetto": null,
+  "prerequisito": null,
+  "evidenza": [
+   {
+    "fonte": "L2@25:15",
+    "citazione": "y uguale f di x zero più f primo di x",
+    "nota": "spiegato solo a voce"
+   }
+  ]
+ },
+ {
+  "id": "g3",
+  "tipo": "verde",
+  "esercizio": "2a",
+  "passo": "6",
+  "testo_passo": "Sostituire i valori e semplificare l'espressione algebrica della retta.",
+  "concetto": null,
+  "prerequisito": null,
+  "evidenza": [
+   {
+    "fonte": "L2@28:30",
+    "citazione": "Quindi y uguale nove più sei per x meno tre, cioè",
+    "nota": "spiegato solo a voce"
+   }
+  ]
+ },
+ {
+  "id": "g4",
+  "tipo": "rossa",
+  "esercizio": "2b",
+  "passo": "1",
+  "testo_passo": "Semplificare l'argomento del logaritmo usando le proprietà algebriche dei logaritmi prima di derivare.",
+  "concetto": null,
+  "prerequisito": null,
+  "evidenza": []
+ },
+ {
+  "id": "g5",
+  "tipo": "gialla",
+  "esercizio": "",
+  "passo": "",
+  "testo_passo": "Usato in lezione 3, spiegato in lezione 4",
+  "concetto": "Integrale del logaritmo",
+  "prerequisito": null,
+  "evidenza": [
+   {
+    "fonte": "S20",
+    "citazione": "| $\\ln x$ | $x\\ln x-x+c$ |",
+    "nota": "usato qui"
+   },
+   {
+    "fonte": "S27",
+    "citazione": "Ecco da dove viene la formula della tabella degli integrali immediati",
+    "nota": "spiegato solo qui"
+   }
+  ]
+ }
+]

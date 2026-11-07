@@ -1,0 +1,62 @@
+{
+  "retta_tangente": {
+    "stato": "approvata",
+    "chiarimento": "ch-seed01",
+    "origine": "simulata",
+    "n_studenti": 7,
+    "creata": 1791968400,
+    "simulato": true,
+    "proposta": {
+      "intervento": "Riprendere per 3 minuti, all'inizio della Lezione 3, l'equazione della retta tangente detta a voce in [L2@25:15] e aggiungerla alla Slide 10, che oggi riporta solo la pendenza.",
+      "chiarimento": {
+        "titolo": "Dalla pendenza all'equazione della retta tangente",
+        "testo": "La [S10] dice che f'(x0) e' il **coefficiente angolare** (la pendenza) della retta tangente. Per scriverne l'equazione serve anche il punto di tangenza (x0, f(x0)):\n\n**y = f(x0) + f'(x0)(x - x0)**\n\nE' la formula dettata a lezione in [L2@25:15].\n\n**Esempio** f(x) = x^2 in x0 = 2: f(2) = 4, f'(2) = 4, quindi y = 4 + 4(x - 2), cioe' y = 4x - 4.",
+        "fonti": [
+          "S10",
+          "L2@25:15"
+        ]
+      },
+      "quiz": {
+        "domanda": "Hai f(1) = 2 e f'(1) = 3. Qual e' l'equazione della retta tangente al grafico di f nel punto di ascissa 1?",
+        "opzioni": [
+          "y = 3x + 2",
+          "y = 2 + 3(x - 1)",
+          "y = 3 + 2(x - 1)",
+          "y = 2x + 3"
+        ],
+        "corretta": 1,
+        "spiegazione": "La retta tangente in x0 e' y = f(x0) + f'(x0)(x - x0): qui y = 2 + 3(x - 1), cioe' y = 3x - 1."
+      }
+    }
+  },
+  "estremi_sostituzione": {
+    "stato": "proposta",
+    "proposta": {
+      "intervento": "Dedicare circa 5 minuti all'inizio della Lezione 5 al cambio degli estremi nella sostituzione per integrali definiti. Si puo' riprendere la procedura di [S22], che oggi si chiude con \"tornare alla variabile x\", e affiancarle la variante per i definiti: trasformare gli estremi con t = g(x) e non tornare piu' a x, ricordando lo scambio degli estremi con cambio di segno di [S29]. Esempio proposto (non d'esame): ∫₀^{π/2} cos x · e^{sin x} dx con t = sin x. Eventualmente aggiungere un punto alla Slide 22 o una slide dopo la Slide 31.",
+      "chiarimento": {
+        "titolo": "Sostituzione negli integrali definiti: cosa fare con gli estremi",
+        "testo": "Quando usi la sostituzione **t = g(x)** in un integrale definito da *a* a *b* hai due strade, entrambe corrette:\n\n1. **Cambi anche gli estremi**: quando x = a, t vale g(a); quando x = b, t vale g(b). Integri in t tra g(a) e g(b) e **non torni piu' a x**.\n2. **Torni a x** come nella procedura di [S22] e valuti la primitiva agli estremi originali, come in [S30].\n\n**Esempio** ∫₀^{π/2} cos x · e^{sin x} dx, con t = sin x, dt = cos x dx.\nEstremi: x = 0 → t = sin 0 = 0; x = π/2 → t = sin(π/2) = 1.\nDiventa ∫₀¹ e^t dt = [e^t]₀¹ = e − 1.\n\nSe il nuovo estremo inferiore e' piu' grande del superiore va bene lo stesso: puoi scambiarli cambiando segno [S29].",
+        "fonti": [
+          "S22",
+          "S29",
+          "S30",
+          "L4@80:30"
+        ]
+      },
+      "quiz": {
+        "domanda": "Vuoi calcolare ∫₁² 2x·cos(x²) dx con t = x² e integrare direttamente in t, senza tornare a x. Tra quali estremi integri in t?",
+        "opzioni": [
+          "da 1 a 2",
+          "da 1 a 4",
+          "da 0 a 4",
+          "da 1 a √2"
+        ],
+        "corretta": 1,
+        "spiegazione": "Gli estremi si trasformano con t = x²: x = 1 → t = 1, x = 2 → t = 4. Lasciare 1 e 2 e' corretto solo se torni alla variabile x."
+      }
+    },
+    "origine": "simulata",
+    "creata": 1794054057,
+    "n_studenti": 11
+  }
+}
